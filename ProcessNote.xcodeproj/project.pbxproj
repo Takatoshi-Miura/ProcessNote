@@ -273,6 +273,9 @@
 		8D09E74827488DA40005F809 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8D09E75A2749BE950005F809 /* Task */,
+				8D09E75B2749BEED0005F809 /* Note */,
+				8D09E75C2749BEFF0005F809 /* Setting */,
 				8D09E74927488DD40005F809 /* CustomHeader */,
 				8D0F86FD271A8447004E2A7D /* CustomCell */,
 			);
@@ -311,6 +314,35 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24EC273D32EA0078F4B5 /* SettingCoordinator.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		8D09E75A2749BE950005F809 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */,
+				8D2B24DC273649750078F4B5 /* TaskDetailViewController.xib */,
+				8D09E7552749AF8F0005F809 /* MeasuresViewController.xib */,
+				8D2B24DE27364A7D0078F4B5 /* AddGroupViewController.xib */,
+				8D2B24E027364CED0078F4B5 /* AddTaskViewController.xib */,
+				8D09E74B27488FC10005F809 /* CompletedTaskViewController.xib */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		8D09E75B2749BEED0005F809 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				8D2B24D6273639150078F4B5 /* NoteViewController.xib */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		8D09E75C2749BEFF0005F809 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				8D2B24D8273639B50078F4B5 /* SettingViewController.xib */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -436,17 +468,11 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86CF270C7D6B004E2A7D /* TaskViewController.swift */,
-				8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */,
-				8D0F86EF2712C7BD004E2A7D /* AddGroupViewController.swift */,
-				8D2B24DE27364A7D0078F4B5 /* AddGroupViewController.xib */,
-				8D0F86F5271A65CE004E2A7D /* AddTaskViewController.swift */,
-				8D2B24E027364CED0078F4B5 /* AddTaskViewController.xib */,
 				8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */,
-				8D2B24DC273649750078F4B5 /* TaskDetailViewController.xib */,
 				8D09E7542749AF8F0005F809 /* MeasuresViewController.swift */,
-				8D09E7552749AF8F0005F809 /* MeasuresViewController.xib */,
+				8D0F86EF2712C7BD004E2A7D /* AddGroupViewController.swift */,
+				8D0F86F5271A65CE004E2A7D /* AddTaskViewController.swift */,
 				8D09E74A27488FC10005F809 /* CompletedTaskViewController.swift */,
-				8D09E74B27488FC10005F809 /* CompletedTaskViewController.xib */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -455,7 +481,6 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86CD270C7AB2004E2A7D /* NoteViewController.swift */,
-				8D2B24D6273639150078F4B5 /* NoteViewController.xib */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -464,7 +489,6 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86D1270C7DA7004E2A7D /* SettingViewController.swift */,
-				8D2B24D8273639B50078F4B5 /* SettingViewController.xib */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
