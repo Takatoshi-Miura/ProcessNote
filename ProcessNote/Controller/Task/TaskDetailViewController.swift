@@ -10,38 +10,86 @@ import UIKit
 class TaskDetailViewController: UIViewController {
     
     // MARK: UI,Variable
-    
     @IBOutlet weak var tableView: UITableView!
-    
     var task = Task()
-    
     var sectionTitle: [String] = []
-    
+    var measuresArray: [Measures] = []
     enum Section: Int {
-        case title
+        case title = 0
         case cause
         case measures
     }
     
-    
     // MARK: LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationBar()
         initTableView()
+        measuresArray = getMeasuresInTask(ID: task.getTaskID())
     }
     
-    /**
-     NavigationBarの初期設定
-     */
     func initNavigationBar() {
         self.title = NSLocalizedString("TaskDetailTitle", comment: "")
+        if !task.getIsCompleted() {
+            let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMeasures(_:)))
+            navigationItem.rightBarButtonItems = [addButton]
+        }
     }
     
-    /**
-     tableViewの初期設定
-     */
+    /// 対策を追加
+    @objc func addMeasures(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: NSLocalizedString("AddMeasuresTitle", comment: ""),
+                                      message: NSLocalizedString("AddMeasuresMessage", comment: ""),
+                                      preferredStyle: .alert)
+        
+        var alertTextField: UITextField?
+        alert.addTextField(configurationHandler: {(textField) -> Void in
+            alertTextField = textField
+        })
+        
+        let OKAction = UIAlertAction(title: NSLocalizedString("Add", comment: ""),
+                                     style: UIAlertAction.Style.default,
+                                     handler: {(action: UIAlertAction) in
+            if (alertTextField?.text != nil) {
+                self.addMeasures(title: alertTextField!.text!)
+            } else {
+                self.showErrorAlert(message: "EmptyTitle")
+            }
+        })
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+                                         style: UIAlertAction.Style.cancel,
+                                         handler: nil)
+        
+        let actions = [OKAction, cancelAction]
+        actions.forEach { alert.addAction($0) }
+        present(alert, animated: true)
+    }
+    
+    func addMeasures(title: String) {
+        // 対策データを作成＆保存
+        let measures = Measures()
+        measures.setFixedProperty()
+        measures.setTaskID(task.getTaskID())
+        measures.setTitle(title)
+        measures.setOrder(getMeasuresInTask(ID: task.getTaskID()).count)
+        measures.setUpdated_at(measures.getCreated_at())
+        if !createRealm(object: measures) {
+            showErrorAlert(message: "TaskCreateError")
+            return
+        }
+        
+        // Firebaseに送信
+        if Network.isOnline() {
+            saveMeasures(measures: measures, completion: {})
+        }
+        
+        // tableView更新
+        let index: IndexPath = [Section.measures.rawValue, measures.getOrder()]
+        measuresArray.append(measures)
+        tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
+    }
+    
     func initTableView() {
         sectionTitle = [NSLocalizedString("Title", comment: ""),
                         NSLocalizedString("Cause", comment: ""),
@@ -79,13 +127,17 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case Section.title.rawValue:
+        switch Section(rawValue: section) {
+        case .title:
             return 1
-        case Section.cause.rawValue:
+        case .cause:
             return 1
-        case Section.measures.rawValue:
-            return getMeasuresInTask(ID: task.getTaskID()).count
+        case .measures:
+            if measuresArray.isEmpty {
+                return 0
+            } else {
+                return measuresArray.count
+            }
         default:
             return 0
         }
@@ -93,8 +145,8 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch indexPath.section {
-        case Section.title.rawValue:
+        switch Section(rawValue: indexPath.section) {
+        case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.setTitle(task.getTitle())
@@ -102,7 +154,7 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
-        case Section.cause.rawValue:
+        case .cause:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell", for: indexPath) as! TextViewCell
             cell.textView.delegate = self
             cell.setText(task.getCause())
@@ -110,9 +162,9 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
-        case Section.measures.rawValue:
+        case .measures:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = getMeasuresInTask(ID: task.getTaskID())[indexPath.row].getTitle()
+            cell.textLabel?.text = measuresArray[indexPath.row].getTitle()
             cell.backgroundColor = UIColor.systemGray6
             let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.5))
             separatorView.backgroundColor = UIColor.gray
