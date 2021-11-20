@@ -66,6 +66,10 @@
 "Add" = "Add";
 
 
+// MARK: - MeasuresViewController
+"MeasuresTitle" = "Measures details";
+
+
 // MARK: - SettingViewController
 "Basic configuration" = "Basic Configuration";
 "Data" = "Data";

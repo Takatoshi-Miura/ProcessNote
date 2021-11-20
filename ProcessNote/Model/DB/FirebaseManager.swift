@@ -107,11 +107,8 @@ func saveMeasures(measures: Measures, completion: @escaping () -> ()) {
     - task: 課題データ
  */
 func updateTask(_ task: Task) {
-    // ユーザーIDを取得
-    let userID = UserDefaults.standard.object(forKey: "userID") as! String
-    
-    // 更新処理
     let db = Firestore.firestore()
+    let userID = UserDefaults.standard.object(forKey: "userID") as! String
     let database = db.collection("Task").document("\(userID)_\(task.getTaskID())")
     database.updateData([
         "groupID"       : task.getGroupID(),
@@ -122,6 +119,28 @@ func updateTask(_ task: Task) {
         "completed_at"  : task.getCompleted_at(),
         "isCompleted"   : task.getIsCompleted(),
         "isDeleted"     : task.getIsDeleted()
+    ]) { err in
+        if let err = err {
+            print("Error updating document: \(err)")
+        } else {
+        }
+    }
+}
+
+/**
+ 対策を更新
+ - Parameters:
+    - measures: 対策データ
+ */
+func updateMeasures(_ measures: Measures) {
+    let db = Firestore.firestore()
+    let userID = UserDefaults.standard.object(forKey: "userID") as! String
+    let database = db.collection("Measures").document("\(userID)_\(measures.getMeasuresID())")
+    database.updateData([
+        "title"         : measures.getTitle(),
+        "order"         : measures.getOrder(),
+        "updated_at"    : measures.getUpdated_at(),
+        "isDeleted"     : measures.getIsDeleted()
     ]) { err in
         if let err = err {
             print("Error updating document: \(err)")

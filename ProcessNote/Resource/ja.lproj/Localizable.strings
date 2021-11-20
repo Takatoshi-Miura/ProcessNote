@@ -66,6 +66,10 @@
 "Add" = "追加";
 
 
+// MARK: - MeasuresViewController
+"MeasuresTitle" = "対策の詳細";
+
+
 // MARK: - SettingViewController
 "Basic configuration" = "基本設定";
 "Data" = "データ";

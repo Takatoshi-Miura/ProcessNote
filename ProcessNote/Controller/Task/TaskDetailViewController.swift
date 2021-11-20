@@ -7,13 +7,22 @@
 
 import UIKit
 
+
+protocol TaskDetailViewControllerDelegate: AnyObject {
+    // 対策セルタップ時の処理
+    func taskDetailVCMeasuresCellDidTap(measures: Measures)
+}
+
+
 class TaskDetailViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     var task = Task()
+    var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
     var measuresArray: [Measures] = []
+    var delegate: TaskDetailViewControllerDelegate?
     enum Section: Int {
         case title = 0
         case cause
@@ -102,11 +111,19 @@ class TaskDetailViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if (selectedIndex != nil) {
+            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+            tableView.reloadRows(at: [selectedIndex!], with: .none)
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // Firebaseに送信
         if Network.isOnline() {
-            updateTask(selectTaskRealm(ID: task.getTaskID()))
+            updateTask(task)
         }
     }
 }
@@ -179,6 +196,15 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func completeAction() {
         // キーボードを閉じる
         self.view.endEditing(true)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 対策画面へ遷移
+        if indexPath.section == Section.measures.rawValue {
+            selectedIndex = indexPath
+            let measures = measuresArray[indexPath.row]
+            delegate?.taskDetailVCMeasuresCellDidTap(measures: measures)
+        }
     }
 }
 

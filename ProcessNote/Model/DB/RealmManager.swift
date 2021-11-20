@@ -144,6 +144,21 @@ func updateTaskIsDeleted(task: Task) {
     }
 }
 
+/**
+ 対策のタイトルを更新
+ - Parameters:
+    - ID: 更新したい対策のID
+    - title: 新しいタイトル文字列
+ */
+func updateMeasuresTitleRealm(ID measuresID: String, title: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Measures.self).filter("measuresID == '\(measuresID)'").first
+    try! realm.write {
+        result?.setTitle(title)
+        result?.setUpdated_at(getCurrentTime())
+    }
+}
+
 
 // MARK: - Select
 
