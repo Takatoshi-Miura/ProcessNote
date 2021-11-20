@@ -1,0 +1,88 @@
+/* 
+  Localizable.strings
+  ProcessNote
+
+  Created by Takatoshi Miura on 2021/10/05.
+  
+*/
+
+// MARK: - Common
+
+"White" = "White";
+"Black" = "Black";
+"Red" = "Red";
+"Pink" = "Pink";
+"Orange" = "Orange";
+"Yellow" = "Yellow";
+"Green" = "Green";
+"Blue" = "Blue";
+"Purple" = "Purple";
+
+"ServerCommunication" = "During server communication...";
+
+
+// MARK: - TabBarController
+
+"Task" = "Task";
+"Note" = "Note";
+"Setting" = "Setting";
+
+
+// MARK: - TaskViewController
+
+"AddGroupTaskTitle" = "Add group and task";
+"AddGroupTaskMessage" = "What do you want to add?";
+"Group" = "Group";
+"DeleteTaskTitle" = "Delete task";
+"DeleteTaskMessage" = "Do you want to delete the task?\nIf you delete an task, you cannot restore it.";
+"DeleteGroupTitle" = "Delete group";
+"DeleteGroupMessage" = "Do you want to delete the group?\nDeleting a group also deletes all tasks contained in the group. Once deleted, groups and tasks cannot be restored.";
+"Delete" = "Delete";
+"Complete" = "Complete";
+"CompletedTask" = "CompletedTask";
+
+
+// MARK: - AddGroupViewController
+
+"Cancel" = "Cancel";
+"AddGroupTitle" = "Add group";
+"Title" = "Title";
+"Color" = "Color";
+"Addition" = "Addition";
+"EmptyTitle" = "Please input a title.";
+"GroupCreateError" = "Failed to create a group.";
+
+
+// MARK: - AddTaskViewController
+
+"AddTaskTitle" = "Add task";
+"Cause" = "Cause";
+"Measures" = "Measures";
+"TaskCreateError" = "Failed to create a task.";
+
+
+// MARK: - TaskDetailViewController
+
+"TaskDetailTitle" = "Task details";
+
+
+// MARK: - SettingViewController
+
+"Basic configuration" = "Basic Configuration";
+"Data" = "Data";
+"Help" = "Help";
+
+"Theme" = "Theme";
+"Notification" = "Notification";
+"Data transfer" = "Data transfer";
+"How to use this App?" = "How to use this App?";
+"Inquiry" = "Inquiry";
+
+"Error" = "Error";
+"Success" = "Success";
+"Internet Error" = "Internet connection is offline.";
+"Mailer Error" = "The email account has not been set.Set up an account with Apple's mail app.";
+"Mail Subject" = "Example: Bug report";
+"Mail Message" = "Please fill in the content of your inquiry.";
+"Mail Send Success" = "The email was sent successfully. Please wait for the reply from the developer.";
+"Mail Send Failed" = "The email could not be sent.";

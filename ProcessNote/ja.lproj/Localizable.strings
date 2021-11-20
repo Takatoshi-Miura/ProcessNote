@@ -1,0 +1,88 @@
+/* 
+  Localizable.strings
+  ProcessNote
+
+  Created by Takatoshi Miura on 2021/10/05.
+  
+*/
+
+// MARK: - Common
+
+"White" = "白";
+"Black" = "黒";
+"Red" = "赤";
+"Pink" = "ピンク";
+"Orange" = "オレンジ";
+"Yellow" = "黄";
+"Green" = "緑";
+"Blue" = "青";
+"Purple" = "紫";
+
+"ServerCommunication" = "サーバー通信中";
+
+
+// MARK: - TabBarController
+
+"Task" = "課題";
+"Note" = "ノート";
+"Setting" = "設定";
+
+
+// MARK: - TaskViewController
+
+"AddGroupTaskTitle" = "グループ・課題の追加";
+"AddGroupTaskMessage" = "何を追加しますか？";
+"Group" = "グループ";
+"DeleteTaskTitle" = "課題の削除";
+"DeleteTaskMessage" = "課題を削除しますか？\n課題を削除すると復元できません。";
+"DeleteGroupTitle" = "グループの削除";
+"DeleteGroupMessage" = "グループを削除しますか？\nグループを削除するとグループに含まれる課題も全て削除されます。一度削除したグループと課題は復元できません。";
+"Delete" = "削除";
+"Complete" = "完了";
+"CompletedTask" = "完了済み";
+
+
+// MARK: - AddGroupViewController
+
+"Cancel" = "キャンセル";
+"AddGroupTitle" = "グループの追加";
+"Title" = "タイトル";
+"Color" = "色";
+"Addition" = "追加";
+"EmptyTitle" = "タイトルを入力して下さい。";
+"GroupCreateError" = "グループの作成に失敗しました。";
+
+
+// MARK: - AddTaskViewController
+
+"AddTaskTitle" = "課題の追加";
+"Cause" = "原因";
+"Measures" = "対策";
+"TaskCreateError" = "課題の作成に失敗しました。";
+
+
+// MARK: - TaskDetailViewController
+
+"TaskDetailTitle" = "課題の詳細";
+
+
+// MARK: - SettingViewController
+
+"Basic configuration" = "基本設定";
+"Data" = "データ";
+"Help" = "ヘルプ";
+
+"Theme" = "テーマ";
+"Notification" = "通知";
+"Data transfer" = "データの引継ぎ";
+"How to use this App?" = "アプリの使い方";
+"Inquiry" = "お問い合わせ";
+
+"Error" = "エラー";
+"Success" = "成功";
+"Internet Error" = "インターネット接続がオフラインです。";
+"Mailer Error" = "メールアカウントが未設定です。\nApple社の「メール」アプリでアカウントを設定して下さい。";
+"Mail Subject" = "例：バグの報告";
+"Mail Message" = "お問い合わせ内容をご記入下さい";
+"Mail Send Success" = "メールを送信しました。\n開発者からの返信をお待ち下さい。";
+"Mail Send Failed" = "メールを送信できませんでした。";
