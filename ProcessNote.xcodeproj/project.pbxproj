@@ -200,6 +200,82 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8D09E74227488B520005F809 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F86DC270C8580004E2A7D /* Localizable.strings */,
+				8D0F86A5270C7771004E2A7D /* Assets.xcassets */,
+				8D0F86AA270C7771004E2A7D /* Info.plist */,
+				8D0F86E02711BDEF004E2A7D /* GoogleService-Info.plist */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		8D09E74327488C660005F809 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F86A7270C7771004E2A7D /* LaunchScreen.storyboard */,
+				8D0F869C270C776F004E2A7D /* AppDelegate.swift */,
+				8D0F869E270C776F004E2A7D /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		8D09E74427488C950005F809 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F86E527128ECE004E2A7D /* Task.swift */,
+				8D0F86E327127FF8004E2A7D /* Group.swift */,
+				8D0F86E72712965C004E2A7D /* Measures.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		8D09E74527488CC40005F809 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				8D7E41AC2723F5EC00D87DD0 /* SyncManager.swift */,
+				8D0F870C271BD1A2004E2A7D /* RealmManager.swift */,
+				8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
+		8D09E74627488CF20005F809 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F86E927129F88004E2A7D /* Note.swift */,
+				8D0F86EB2712A8F1004E2A7D /* Memo.swift */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		8D09E74727488D050005F809 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F86ED2712AC1F004E2A7D /* Setting.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		8D09E74827488DA40005F809 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8D09E74927488DD40005F809 /* CustomHeader */,
+				8D0F86FD271A8447004E2A7D /* CustomCell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8D09E74927488DD40005F809 /* CustomHeader */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F8712271BDF07004E2A7D /* GroupHeaderView.swift */,
+				8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */,
+			);
+			path = CustomHeader;
+			sourceTree = "<group>";
+		};
 		8D0F8690270C776F004E2A7D = {
 			isa = PBXGroup;
 			children = (
@@ -225,17 +301,13 @@
 		8D0F869B270C776F004E2A7D /* ProcessNote */ = {
 			isa = PBXGroup;
 			children = (
-				8D0F86A7270C7771004E2A7D /* LaunchScreen.storyboard */,
-				8D0F869C270C776F004E2A7D /* AppDelegate.swift */,
-				8D0F869E270C776F004E2A7D /* SceneDelegate.swift */,
+				8D09E74327488C660005F809 /* Application */,
 				8D0F86E227127F64004E2A7D /* Model */,
-				8D0F86CC270C7A4C004E2A7D /* ViewController */,
+				8D09E74827488DA40005F809 /* View */,
+				8D0F86CC270C7A4C004E2A7D /* Controller */,
 				8DAA5D3B2736194D00FC0FD0 /* Coordinator */,
-				8D0F86D3270C7F25004E2A7D /* Common */,
-				8D0F86A5270C7771004E2A7D /* Assets.xcassets */,
-				8D0F86AA270C7771004E2A7D /* Info.plist */,
-				8D0F86E02711BDEF004E2A7D /* GoogleService-Info.plist */,
-				8D0F86DC270C8580004E2A7D /* Localizable.strings */,
+				8D0F86D3270C7F25004E2A7D /* Utils */,
+				8D09E74227488B520005F809 /* Resource */,
 			);
 			path = ProcessNote;
 			sourceTree = "<group>";
@@ -257,18 +329,17 @@
 			path = ProcessNoteUITests;
 			sourceTree = "<group>";
 		};
-		8D0F86CC270C7A4C004E2A7D /* ViewController */ = {
+		8D0F86CC270C7A4C004E2A7D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				8DAA5D3C2736199300FC0FD0 /* Task */,
 				8DAA5D3D273619B000FC0FD0 /* Note */,
 				8DAA5D3E273619E500FC0FD0 /* Setting */,
-				8D0F86FD271A8447004E2A7D /* CustomCell */,
 			);
-			path = ViewController;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		8D0F86D3270C7F25004E2A7D /* Common */ = {
+		8D0F86D3270C7F25004E2A7D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				8D0F870A271AA938004E2A7D /* Definition.swift */,
@@ -278,21 +349,16 @@
 				8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */,
 				8DB579A0271C3CBD005F8625 /* UIViewController+TextField.swift */,
 			);
-			path = Common;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		8D0F86E227127F64004E2A7D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8D7E41AC2723F5EC00D87DD0 /* SyncManager.swift */,
-				8D0F870C271BD1A2004E2A7D /* RealmManager.swift */,
-				8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */,
-				8D0F86E327127FF8004E2A7D /* Group.swift */,
-				8D0F86E527128ECE004E2A7D /* Task.swift */,
-				8D0F86E72712965C004E2A7D /* Measures.swift */,
-				8D0F86E927129F88004E2A7D /* Note.swift */,
-				8D0F86EB2712A8F1004E2A7D /* Memo.swift */,
-				8D0F86ED2712AC1F004E2A7D /* Setting.swift */,
+				8D09E74527488CC40005F809 /* DB */,
+				8D09E74427488C950005F809 /* Task */,
+				8D09E74627488CF20005F809 /* Note */,
+				8D09E74727488D050005F809 /* Setting */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -339,8 +405,6 @@
 				8D2B24E027364CED0078F4B5 /* AddTaskViewController.xib */,
 				8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */,
 				8D2B24DC273649750078F4B5 /* TaskDetailViewController.xib */,
-				8D0F8712271BDF07004E2A7D /* GroupHeaderView.swift */,
-				8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */,
 			);
 			path = Task;
 			sourceTree = "<group>";
