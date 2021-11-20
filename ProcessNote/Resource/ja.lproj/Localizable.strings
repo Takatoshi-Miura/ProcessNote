@@ -7,7 +7,6 @@
 */
 
 // MARK: - Common
-
 "White" = "白";
 "Black" = "黒";
 "Red" = "赤";
@@ -17,19 +16,16 @@
 "Green" = "緑";
 "Blue" = "青";
 "Purple" = "紫";
-
 "ServerCommunication" = "サーバー通信中";
 
 
 // MARK: - TabBarController
-
 "Task" = "課題";
 "Note" = "ノート";
 "Setting" = "設定";
 
 
 // MARK: - TaskViewController
-
 "AddGroupTaskTitle" = "グループ・課題の追加";
 "AddGroupTaskMessage" = "何を追加しますか？";
 "Group" = "グループ";
@@ -39,11 +35,14 @@
 "DeleteGroupMessage" = "グループを削除しますか？\nグループを削除するとグループに含まれる課題も全て削除されます。一度削除したグループと課題は復元できません。";
 "Delete" = "削除";
 "Complete" = "完了";
-"CompletedTask" = "完了済み";
+"CompletedTask" = "完了した課題";
+
+
+// MARK: - CompletedTaskViewController
+"InComplete" = "未完了";
 
 
 // MARK: - AddGroupViewController
-
 "Cancel" = "キャンセル";
 "AddGroupTitle" = "グループの追加";
 "Title" = "タイトル";
@@ -54,7 +53,6 @@
 
 
 // MARK: - AddTaskViewController
-
 "AddTaskTitle" = "課題の追加";
 "Cause" = "原因";
 "Measures" = "対策";
@@ -62,22 +60,18 @@
 
 
 // MARK: - TaskDetailViewController
-
 "TaskDetailTitle" = "課題の詳細";
 
 
 // MARK: - SettingViewController
-
 "Basic configuration" = "基本設定";
 "Data" = "データ";
 "Help" = "ヘルプ";
-
 "Theme" = "テーマ";
 "Notification" = "通知";
 "Data transfer" = "データの引継ぎ";
 "How to use this App?" = "アプリの使い方";
 "Inquiry" = "お問い合わせ";
-
 "Error" = "エラー";
 "Success" = "成功";
 "Internet Error" = "インターネット接続がオフラインです。";

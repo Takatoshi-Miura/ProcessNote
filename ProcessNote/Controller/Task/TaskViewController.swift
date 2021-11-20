@@ -15,6 +15,8 @@ protocol TaskViewControllerDelegate: AnyObject {
     func taskVCAddGroupDidTap(_ viewController: UIViewController)
     // 課題追加タップ時の処理
     func taskVCAddTaskDidTap(_ viewController: UIViewController)
+    // 完了した課題セルタップ時の処理
+    func taskVCCompletedTaskCellDidTap(groupID: String)
 }
 
 
@@ -36,17 +38,11 @@ class TaskViewController: UIViewController {
         syncData()
     }
     
-    /**
-     NavigationControllerの初期設定
-     */
     func initNavigationController() {
         self.title = NSLocalizedString("Task", comment: "")
         setNavigationBarButtonDefault()
     }
     
-    /**
-     tableViewの初期設定
-     */
     func initTableView() {
         tableView.tableFooterView = UIView()
         tableView.refreshControl = UIRefreshControl()
@@ -60,9 +56,7 @@ class TaskViewController: UIViewController {
         }
     }
     
-    /**
-     データ同期処理
-     */
+    /// データの同期処理
     @objc func syncData() {
         if tableView.isEditing {
             tableView.refreshControl?.endRefreshing()
@@ -86,12 +80,8 @@ class TaskViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if (selectedIndex != nil) {
-            // タップしたときの選択色を消去
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
-
-            // タップした課題セルを更新
             tableView.reloadRows(at: [selectedIndex!], with: .none)
         }
     }
@@ -186,7 +176,7 @@ class TaskViewController: UIViewController {
      */
     func completeTask(index: IndexPath) {
         let task = realmTaskArray[index.section][index.row]
-        updateTaskIsCompleted(task: task)
+        updateTaskIsCompleted(task: task, isCompleted: true)
         realmTaskArray[index.section].remove(at: index.row)
         tableView.deleteRows(at: [index], with: UITableView.RowAnimation.right)
         selectedIndex = nil
@@ -344,11 +334,14 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
         selectedIndex = indexPath
         // 完了済み課題セル
         if indexPath.row >= realmTaskArray[indexPath.section].count {
+            let groupID = realmGroupArray[indexPath.section].getGroupID()
+            delegate?.taskVCCompletedTaskCellDidTap(groupID: groupID)
             return
         }
         // 課題セル
         if !tableView.isEditing {
-            delegate?.taskVCTaskCellDidTap(task: realmTaskArray[selectedIndex!.section][selectedIndex!.row])
+            let task = realmTaskArray[selectedIndex!.section][selectedIndex!.row]
+            delegate?.taskVCTaskCellDidTap(task: task)
         }
     }
 }

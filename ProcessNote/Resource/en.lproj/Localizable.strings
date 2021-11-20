@@ -7,7 +7,6 @@
 */
 
 // MARK: - Common
-
 "White" = "White";
 "Black" = "Black";
 "Red" = "Red";
@@ -17,19 +16,16 @@
 "Green" = "Green";
 "Blue" = "Blue";
 "Purple" = "Purple";
-
 "ServerCommunication" = "During server communication...";
 
 
 // MARK: - TabBarController
-
 "Task" = "Task";
 "Note" = "Note";
 "Setting" = "Setting";
 
 
 // MARK: - TaskViewController
-
 "AddGroupTaskTitle" = "Add group and task";
 "AddGroupTaskMessage" = "What do you want to add?";
 "Group" = "Group";
@@ -42,8 +38,11 @@
 "CompletedTask" = "CompletedTask";
 
 
-// MARK: - AddGroupViewController
+// MARK: - CompletedTaskViewController
+"InComplete" = "InComplete";
 
+
+// MARK: - AddGroupViewController
 "Cancel" = "Cancel";
 "AddGroupTitle" = "Add group";
 "Title" = "Title";
@@ -54,7 +53,6 @@
 
 
 // MARK: - AddTaskViewController
-
 "AddTaskTitle" = "Add task";
 "Cause" = "Cause";
 "Measures" = "Measures";
@@ -62,22 +60,18 @@
 
 
 // MARK: - TaskDetailViewController
-
 "TaskDetailTitle" = "Task details";
 
 
 // MARK: - SettingViewController
-
 "Basic configuration" = "Basic Configuration";
 "Data" = "Data";
 "Help" = "Help";
-
 "Theme" = "Theme";
 "Notification" = "Notification";
 "Data transfer" = "Data transfer";
 "How to use this App?" = "How to use this App?";
 "Inquiry" = "Inquiry";
-
 "Error" = "Error";
 "Success" = "Success";
 "Internet Error" = "Internet connection is offline.";

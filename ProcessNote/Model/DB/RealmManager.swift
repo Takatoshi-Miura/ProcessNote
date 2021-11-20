@@ -119,12 +119,13 @@ func updateTaskGroupIdRealm(task: Task, ID: String) {
  課題の完了フラグを更新
  - Parameters:
     - task: 課題
+    - isCompleted: 完了or未完了
  */
-func updateTaskIsCompleted(task: Task) {
+func updateTaskIsCompleted(task: Task, isCompleted: Bool) {
     let realm = try! Realm()
     let result = realm.objects(Task.self).filter("taskID == '\(task.getTaskID())'").first
     try! realm.write {
-        result?.setIsCompleted(true)
+        result?.setIsCompleted(isCompleted)
         result?.setUpdated_at(getCurrentTime())
     }
 }
@@ -208,16 +209,17 @@ func selectTaskRealm(ID taskID: String) -> Task {
  グループに含まれる課題を取得
  - Parameters:
     - groupID: グループID
+    - isCompleted: 完了or未完了
  - Returns: グループに含まれる課題
  */
-func getTasksInGroup(ID groupID: String) -> [Task] {
+func getTasksInGroup(ID groupID: String, isCompleted: Bool) -> [Task] {
     var taskArray: [Task] = []
     let realm = try! Realm()
     let sortProperties = [
         SortDescriptor(keyPath: "order", ascending: true),
     ]
     let results = realm.objects(Task.self)
-                        .filter("(groupID == '\(groupID)') && (isDeleted == false) && (isCompleted == false)")
+                        .filter("(groupID == '\(groupID)') && (isDeleted == false) && (isCompleted == \(String(isCompleted)))")
                         .sorted(by: sortProperties)
     for task in results {
         taskArray.append(task)
@@ -234,7 +236,7 @@ func getTaskArrayForTaskView() -> [[Task]] {
     
     let groupArray: [Group] = getGroupArrayForTaskView()
     for group in groupArray {
-        let tasks = getTasksInGroup(ID: group.getGroupID())
+        let tasks = getTasksInGroup(ID: group.getGroupID(), isCompleted: false)
         taskArray.append(tasks)
     }
     

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1A70F61EFF9E77D65CCD2F54 /* Pods_ProcessNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E2ABEF8C514445F42EFA42D /* Pods_ProcessNote.framework */; };
+		8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E74A27488FC10005F809 /* CompletedTaskViewController.swift */; };
+		8D09E74D27488FC10005F809 /* CompletedTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E74B27488FC10005F809 /* CompletedTaskViewController.xib */; };
+		8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E74E274897F40005F809 /* CompletedTaskCoordinator.swift */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -88,6 +91,9 @@
 		1F8EAD993DB9D1FA2F0ACF7D /* Pods_ProcessNoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProcessNoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E2ABEF8C514445F42EFA42D /* Pods_ProcessNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProcessNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5BCAD8E5282481EA12FA28 /* Pods-ProcessNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProcessNote.debug.xcconfig"; path = "Target Support Files/Pods-ProcessNote/Pods-ProcessNote.debug.xcconfig"; sourceTree = "<group>"; };
+		8D09E74A27488FC10005F809 /* CompletedTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskViewController.swift; sourceTree = "<group>"; };
+		8D09E74B27488FC10005F809 /* CompletedTaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompletedTaskViewController.xib; sourceTree = "<group>"; };
+		8D09E74E274897F40005F809 /* CompletedTaskCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskCoordinator.swift; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -276,6 +282,32 @@
 			path = CustomHeader;
 			sourceTree = "<group>";
 		};
+		8D09E7512748A4CC0005F809 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				8D2B24E4273651F40078F4B5 /* TaskCoordinator.swift */,
+				8D2B24E62736532E0078F4B5 /* TaskDetailCoordinator.swift */,
+				8D09E74E274897F40005F809 /* CompletedTaskCoordinator.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		8D09E7522748A4E30005F809 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				8D2B24EA273D328E0078F4B5 /* NoteCoordinator.swift */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		8D09E7532748A4F50005F809 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				8D2B24EC273D32EA0078F4B5 /* SettingCoordinator.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		8D0F8690270C776F004E2A7D = {
 			isa = PBXGroup;
 			children = (
@@ -383,13 +415,12 @@
 		8DAA5D3B2736194D00FC0FD0 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				8D09E7512748A4CC0005F809 /* Task */,
+				8D09E7522748A4E30005F809 /* Note */,
+				8D09E7532748A4F50005F809 /* Setting */,
 				8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */,
 				8D2B24DA273644190078F4B5 /* AppCoordinator.swift */,
 				8D2B24E827365A260078F4B5 /* TabCoordinator.swift */,
-				8D2B24EA273D328E0078F4B5 /* NoteCoordinator.swift */,
-				8D2B24E4273651F40078F4B5 /* TaskCoordinator.swift */,
-				8D2B24E62736532E0078F4B5 /* TaskDetailCoordinator.swift */,
-				8D2B24EC273D32EA0078F4B5 /* SettingCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -405,6 +436,8 @@
 				8D2B24E027364CED0078F4B5 /* AddTaskViewController.xib */,
 				8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */,
 				8D2B24DC273649750078F4B5 /* TaskDetailViewController.xib */,
+				8D09E74A27488FC10005F809 /* CompletedTaskViewController.swift */,
+				8D09E74B27488FC10005F809 /* CompletedTaskViewController.xib */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -548,6 +581,7 @@
 				8D0F86E12711BDEF004E2A7D /* GoogleService-Info.plist in Resources */,
 				8D24BA93272041D2004367F6 /* SettingCell.xib in Resources */,
 				8D0F8705271A9414004E2A7D /* ColorCell.xib in Resources */,
+				8D09E74D27488FC10005F809 /* CompletedTaskViewController.xib in Resources */,
 				8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */,
 				8D2B24DF27364A7D0078F4B5 /* AddGroupViewController.xib in Resources */,
 				8D2B24DD273649750078F4B5 /* TaskDetailViewController.xib in Resources */,
@@ -668,9 +702,11 @@
 				8DB579A1271C3CBD005F8625 /* UIViewController+TextField.swift in Sources */,
 				8D0F8713271BDF07004E2A7D /* GroupHeaderView.swift in Sources */,
 				8D0F86F6271A65CE004E2A7D /* AddTaskViewController.swift in Sources */,
+				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
 				8D0F870D271BD1A2004E2A7D /* RealmManager.swift in Sources */,
 				8D0F86EE2712AC1F004E2A7D /* Setting.swift in Sources */,
 				8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */,
+				8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */,
 				8D0F86CE270C7AB2004E2A7D /* NoteViewController.swift in Sources */,
 				8D0F86D0270C7D6B004E2A7D /* TaskViewController.swift in Sources */,
 				8D0F86F02712C7BD004E2A7D /* AddGroupViewController.swift in Sources */,
@@ -878,7 +914,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9YB68MR5FL;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ProcessNote/Info.plist;
+				INFOPLIST_FILE = ProcessNote/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -907,7 +943,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9YB68MR5FL;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ProcessNote/Info.plist;
+				INFOPLIST_FILE = ProcessNote/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
