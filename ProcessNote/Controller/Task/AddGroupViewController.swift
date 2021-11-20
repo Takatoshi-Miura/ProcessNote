@@ -195,7 +195,8 @@ extension AddGroupViewController: SaveButtonCellDelegate {
         group.setFixedProperty()
         group.setColor(colorNumber[colorTitle[pickerIndex]]!)
         group.setTitle(cell.textField.text!)
-        group.setOrder(0)
+        group.setOrder(getGroupArrayForTaskView().count)
+        print(group.getOrder())
         group.setUpdated_at(group.getCreated_at())
         if !createRealm(object: group) {
             showErrorAlert(message: "GroupCreateError")

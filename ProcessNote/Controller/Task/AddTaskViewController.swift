@@ -166,7 +166,6 @@ extension AddTaskViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 extension AddTaskViewController: UITextFieldDelegate {
-    // MARK: 【Delegate】TextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -177,28 +176,28 @@ extension AddTaskViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
 }
 
 
 extension AddTaskViewController: UITextViewDelegate {
-    // MARK: 【Delegate】TextViewDelegate
     
     func textViewDidChange(_ textView: UITextView) {
     }
+    
 }
 
 
 extension AddTaskViewController: ColorCellDelegate {
-    // MARK: 【Delegate】ColorCellDelegate
     
     func tapColorButton() {
         openPicker(pickerView)
     }
+    
 }
 
 
 extension AddTaskViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    // MARK: 【Delegate】UIPickerViewDelegate
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1    // 列数
@@ -211,11 +210,11 @@ extension AddTaskViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return realmGroupArray[row].getTitle()   // グループ名
     }
+    
 }
 
 
 extension AddTaskViewController: SaveButtonCellDelegate {
-    // MARK: 【Delegate】SaveButtonCellDelegate
     
     func tapSaveButton() {
         // 入力チェック
@@ -233,7 +232,7 @@ extension AddTaskViewController: SaveButtonCellDelegate {
         task.setGroupID(realmGroupArray[pickerIndex].getGroupID())
         task.setTitle(titleCell.textField.text!)
         task.setCause(causeTextCell.textView.text!)
-        task.setOrder(0)
+        task.setOrder(getTasksInGroup(ID: task.getGroupID(), isCompleted: false).count)
         task.setUpdated_at(task.getCreated_at())
         if !createRealm(object: task) {
             showErrorAlert(message: "TaskCreateError")

@@ -206,9 +206,9 @@ class TaskViewController: UIViewController {
         - group: 挿入するグループ
      */
     func insertGroup(group: Group) {
-        let index: IndexPath = [0, 0]
-        realmGroupArray.insert(group, at: index.row)
-        realmTaskArray.insert([], at: index.row)
+        let index: IndexPath = [group.getOrder(), 0]
+        realmGroupArray.append(group)
+        realmTaskArray.append([])
         tableView.insertSections(IndexSet(integer: index.section), with: UITableView.RowAnimation.right)
     }
     
@@ -218,13 +218,13 @@ class TaskViewController: UIViewController {
         - task: 挿入する課題
      */
     func insertTask(task: Task) {
-        var index: IndexPath = [0, 0]
+        var index: IndexPath = [0, task.getOrder()]
         for group in realmGroupArray {
             if task.getGroupID() == group.getGroupID() {
-                realmTaskArray[index.section].insert(task, at: index.row)
+                realmTaskArray[index.section].append(task)
                 tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
             }
-            index = [index.section + 1, 0]
+            index = [index.section + 1, task.getOrder()]
         }
     }
 }
