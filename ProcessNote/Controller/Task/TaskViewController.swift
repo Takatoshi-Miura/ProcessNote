@@ -152,6 +152,7 @@ class TaskViewController: UIViewController {
      課題を複数削除
      */
     @objc func deleteTasks(_ sender: UIBarButtonItem) {
+        if tableView.indexPathsForSelectedRows == nil { return }
         showDeleteAlert(title: "DeleteTaskTitle", message: "DeleteTaskMessage", OKAction: {
             // 配列の要素削除でindexの矛盾を防ぐため、降順にソートしてから削除
             guard let selectedIndexPaths = self.tableView.indexPathsForSelectedRows else { return }
