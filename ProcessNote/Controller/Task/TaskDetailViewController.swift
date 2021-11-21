@@ -59,10 +59,10 @@ class TaskDetailViewController: UIViewController {
         let OKAction = UIAlertAction(title: NSLocalizedString("Add", comment: ""),
                                      style: UIAlertAction.Style.default,
                                      handler: {(action: UIAlertAction) in
-            if (alertTextField?.text != nil) {
-                self.addMeasures(title: alertTextField!.text!)
-            } else {
+            if (alertTextField?.text == nil || alertTextField?.text == "") {
                 self.showErrorAlert(message: "EmptyTitle")
+            } else {
+                self.addMeasures(title: alertTextField!.text!)
             }
         })
         
@@ -141,6 +141,28 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         return sectionTitle[section]
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        // 左スワイプで対策を削除
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            showDeleteAlert(title: "DeleteMeasuresTitle", message: "DeleteMeasuresMessage", OKAction: {
+                self.deleteMeasures(index: indexPath)
+            })
+        }
+    }
+    
+    /**
+     対策を削除
+     - Parameters:
+        - index: IndexPath
+     */
+    func deleteMeasures(index: IndexPath) {
+        let measures = measuresArray[index.row]
+        updateMeasuresIsDeleted(measures: measures)
+        measuresArray.remove(at: index.row)
+        tableView.deleteRows(at: [index], with: UITableView.RowAnimation.left)
+        selectedIndex = nil
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

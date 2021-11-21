@@ -159,6 +159,20 @@ func updateMeasuresTitleRealm(ID measuresID: String, title: String) {
     }
 }
 
+/**
+ 対策の削除フラグを更新
+ - Parameters:
+    - measures: 対策
+ */
+func updateMeasuresIsDeleted(measures: Measures) {
+    let realm = try! Realm()
+    let result = realm.objects(Measures.self).filter("measuresID == '\(measures.getMeasuresID())'").first
+    try! realm.write {
+        result?.setIsDeleted(true)
+        result?.setUpdated_at(getCurrentTime())
+    }
+}
+
 
 // MARK: - Select
 

@@ -64,6 +64,8 @@
 "AddMeasuresTitle" = "Add Measures";
 "AddMeasuresMessage" = "Please enter the measures.";
 "Add" = "Add";
+"DeleteMeasuresTitle" = "Delete measures";
+"DeleteMeasuresMessage" = "Do you want to delete the measure?\nIf you delete the measure, all the related information will be deleted from the note. Once deleted, the measure cannot be restored.";
 
 
 // MARK: - MeasuresViewController
