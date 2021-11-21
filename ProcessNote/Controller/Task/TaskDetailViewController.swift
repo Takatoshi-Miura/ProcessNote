@@ -143,6 +143,14 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
         return sectionTitle[section]
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if (indexPath.section == Section.measures.rawValue) && !task.getIsCompleted() {
+            return true // 対策セルのみ編集可能
+        } else {
+            return false
+        }
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // 左スワイプで対策を削除
         if editingStyle == UITableViewCell.EditingStyle.delete {
