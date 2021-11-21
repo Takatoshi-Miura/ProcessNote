@@ -136,10 +136,14 @@ class TaskViewController: UIViewController {
         let addGroupAction = UIAlertAction(title: NSLocalizedString("Group", comment: ""), style: .default) { _ in
             self.delegate?.taskVCAddGroupDidTap(self)
         }
-        let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
-            self.delegate?.taskVCAddTaskDidTap(self)
+        if !realmGroupArray.isEmpty {
+            let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
+                self.delegate?.taskVCAddTaskDidTap(self)
+            }
+            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+        } else {
+            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
         }
-        showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
     }
     
     /**
