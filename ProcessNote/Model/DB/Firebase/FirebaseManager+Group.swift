@@ -46,6 +46,31 @@ func saveGroup(group: Group, completion: @escaping () -> ()) {
 
 // MARK: - Update
 
+/**
+ グループを更新
+ - Parameters:
+    - group: グループデータ
+ */
+func updateGroup(_ group: Group) {
+    let db = Firestore.firestore()
+    let userID = UserDefaults.standard.object(forKey: "userID") as! String
+    let database = db.collection("Group").document("\(userID)_\(group.getGroupID())")
+    database.updateData([
+        "color"         : group.getColor(),
+        "title"         : group.getTitle(),
+        "order"         : group.getOrder(),
+        "updated_at"    : group.getUpdated_at(),
+        "completed_at"  : group.getCompleted_at(),
+        "isCompleted"   : group.getIsCompleted(),
+        "isDeleted"     : group.getIsDeleted()
+    ]) { err in
+        if let err = err {
+            print("Error updating document: \(err)")
+        } else {
+        }
+    }
+}
+
 
 // MARK: - Select
 

@@ -9,6 +9,8 @@ import UIKit
 
 
 protocol TaskViewControllerDelegate: AnyObject {
+    // セクションヘッダータップ時の処理
+    func taskVCHeaderDidTap(group: Group)
     // 課題セルタップ時の処理
     func taskVCTaskCellDidTap(task: Task)
     // グループ追加タップ時の処理
@@ -239,6 +241,7 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: GroupHeaderView.self))
         if let headerView = view as? GroupHeaderView {
+            headerView.delegate = self
             headerView.setProperty(group: realmGroupArray[section])
             if tableView.isEditing {
                 // セクション削除ボタンの設定
@@ -348,4 +351,14 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
             delegate?.taskVCTaskCellDidTap(task: task)
         }
     }
+}
+
+
+extension TaskViewController: GroupHeaderViewDelegate {
+    
+    // セクションヘッダータップ時の処理
+    func headerDidTap(view: GroupHeaderView) {
+        delegate?.taskVCHeaderDidTap(group: view.group)
+    }
+    
 }

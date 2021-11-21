@@ -38,6 +38,10 @@
 "CompletedTask" = "CompletedTask";
 
 
+// MARK: - GroupViewController
+"GroupTitle" = "Group details";
+
+
 // MARK: - CompletedTaskViewController
 "InComplete" = "InComplete";
 

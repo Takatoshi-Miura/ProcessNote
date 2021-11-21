@@ -38,6 +38,10 @@
 "CompletedTask" = "完了した課題";
 
 
+// MARK: - GroupViewController
+"GroupTitle" = "グループの詳細";
+
+
 // MARK: - CompletedTaskViewController
 "InComplete" = "未完了";
 

@@ -1,35 +1,29 @@
 //
-//  AddGroupViewController.swift
+//  GroupViewController.swift
 //  ProcessNote
 //
-//  Created by Takatoshi Miura on 2021/10/10.
+//  Created by Takatoshi Miura on 2021/11/21.
 //
 
 import UIKit
 
-class AddGroupViewController: UIViewController {
 
+class GroupViewController: UIViewController {
+    
     // MARK: UI,Variable
-    
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var naviItem: UINavigationItem!
-    
+    var group = Group()
+    var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
-    var cellTitle: [[String]] = [[]]
-    
+    enum Section: Int {
+        case title = 0
+        case color
+    }
     var pickerView = UIView()
     let colorPicker = UIPickerView()
     var pickerIndex: Int = 0
-    
-    enum Section: Int {
-        case title
-        case color
-        case addition
-    }
-    
-    
+
     // MARK: LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationBar()
@@ -37,35 +31,28 @@ class AddGroupViewController: UIViewController {
         initColorPicker()
     }
     
-    /**
-     NavigationBarの初期設定
-     */
     func initNavigationBar() {
-        naviItem.title = NSLocalizedString("AddGroupTitle", comment: "")
+        self.title = NSLocalizedString("GroupTitle", comment: "")
     }
     
-    /**
-     tableViewの初期設定
-     */
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""), NSLocalizedString("Color", comment: ""), ""]
-        cellTitle = [[""], [""], [""]]
+        sectionTitle = [NSLocalizedString("Title", comment: ""),
+                        NSLocalizedString("Color", comment: "")]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
-        tableView.register(UINib(nibName: "SaveButtonCell", bundle: nil), forCellReuseIdentifier: "SaveButtonCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
     }
     
-    /**
-     ColorPickerの初期化
-     */
     func initColorPicker() {
         colorPicker.delegate = self
         colorPicker.dataSource = self
         colorPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: colorPicker.bounds.size.height + 44)
         colorPicker.backgroundColor = UIColor.systemGray5
+        pickerIndex = group.getColor()
+        colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
         pickerView = UIView(frame: colorPicker.bounds)
         pickerView.addSubview(colorPicker)
         pickerView.addSubview(createToolBar(#selector(doneAction), #selector(cancelAction)))
@@ -75,6 +62,7 @@ class AddGroupViewController: UIViewController {
         // 選択したIndexを取得して閉じる
         pickerIndex = colorPicker.selectedRow(inComponent: 0)
         closePicker(pickerView)
+        updateGroupColorRealm(ID: group.getGroupID(), colorNumber: colorNumber[colorTitle[pickerIndex]]!)
         tableView.reloadData()
     }
     
@@ -83,11 +71,20 @@ class AddGroupViewController: UIViewController {
         colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
         closePicker(pickerView)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // Firebaseに送信
+        if Network.isOnline() {
+            updateGroup(group)
+        }
+    }
+
 }
 
 
-extension AddGroupViewController: UITableViewDelegate, UITableViewDataSource {
-
+extension GroupViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
@@ -101,17 +98,25 @@ extension AddGroupViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellTitle[section].count
+        switch Section(rawValue: section) {
+        case .title:
+            return 1
+        case .color:
+            return 1
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch Section(rawValue: indexPath.section) {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
+            cell.setTitle(group.getTitle())
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.accessibilityIdentifier = "AddGroupViewCell"
             return cell
         case .color:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
@@ -120,13 +125,6 @@ extension AddGroupViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setColor(colorNum)
             cell.setTitle(Array(colorNumber.filter {$0.value == colorNum}.keys).first!)
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.accessibilityIdentifier = "AddGroupViewCell"
-            return cell
-        case .addition:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SaveButtonCell", for: indexPath) as! SaveButtonCell
-            cell.delegate = self
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.accessibilityIdentifier = "AddGroupViewCell"
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -139,9 +137,9 @@ extension AddGroupViewController: UITableViewDelegate, UITableViewDataSource {
         self.view.endEditing(true)
     }
 }
-    
-    
-extension AddGroupViewController: UITextFieldDelegate {
+
+
+extension GroupViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -150,21 +148,36 @@ extension AddGroupViewController: UITextFieldDelegate {
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        // 差分がなければ何もしない
+        if textField.text! == group.getTitle() {
+            return true
+        }
+        
+        // 入力チェック
+        if textField.text!.isEmpty {
+            showErrorAlert(message: "EmptyTitle")
+            textField.text = group.getTitle()
+            return false
+        }
+        
+        // グループを更新
+        updateGroupTitleRealm(ID: group.getGroupID(), title: textField.text!)
         return true
     }
+    
 }
 
 
-extension AddGroupViewController: ColorCellDelegate {
+extension GroupViewController: ColorCellDelegate {
     
     func tapColorButton() {
         openPicker(pickerView)
     }
     
 }
- 
 
-extension AddGroupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+extension GroupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1    // 列数
@@ -177,56 +190,5 @@ extension AddGroupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return colorTitle[row]   // 文字列
     }
-}
- 
-
-extension AddGroupViewController: SaveButtonCellDelegate {
     
-    func tapSaveButton() {
-        // 入力チェック
-        let cell = tableView.cellForRow(at: [0, 0]) as! TitleCell
-        if cell.textField.text!.isEmpty {
-            showErrorAlert(message: "EmptyTitle")
-            return
-        }
-        
-        // グループデータを作成＆保存
-        let group = Group()
-        group.setFixedProperty()
-        group.setColor(colorNumber[colorTitle[pickerIndex]]!)
-        group.setTitle(cell.textField.text!)
-        group.setOrder(getGroupArrayForTaskView().count)
-        print(group.getOrder())
-        group.setUpdated_at(group.getCreated_at())
-        if !createRealm(object: group) {
-            showErrorAlert(message: "GroupCreateError")
-            return
-        }
-        
-        // Firebaseに送信
-        if Network.isOnline() {
-            showIndicator(message: "ServerCommunication")
-            saveGroup(group: group, completion: {
-                self.dismissIndicator()
-                self.dismissWithReload(group: group)
-            })
-        } else {
-            self.dismissWithReload(group: group)
-        }
-    }
-    
-    /**
-     課題画面をリロードしてモーダルを閉じる
-     */
-    func dismissWithReload(group: Group) {
-        let tabBar = self.presentingViewController as! UITabBarController
-        let navigation = tabBar.selectedViewController as! UINavigationController
-        let taskView = navigation.viewControllers.first as! TaskViewController
-        taskView.insertGroup(group: group)
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func tapCancelButton() {
-        self.dismiss(animated: true, completion: nil)
-    }
 }

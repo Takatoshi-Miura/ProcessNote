@@ -23,6 +23,9 @@
 		8D09E76D2749CDC80005F809 /* SyncManager+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E76C2749CDC80005F809 /* SyncManager+Task.swift */; };
 		8D09E76F2749CE390005F809 /* SyncManager+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E76E2749CE390005F809 /* SyncManager+Group.swift */; };
 		8D09E7712749CE7C0005F809 /* SyncManager+Measures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7702749CE7C0005F809 /* SyncManager+Measures.swift */; };
+		8D09E7742749DA230005F809 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7722749DA230005F809 /* GroupViewController.swift */; };
+		8D09E7752749DA230005F809 /* GroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E7732749DA230005F809 /* GroupViewController.xib */; };
+		8D09E7772749E0D90005F809 /* GroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7762749E0D90005F809 /* GroupCoordinator.swift */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -118,6 +121,9 @@
 		8D09E76C2749CDC80005F809 /* SyncManager+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Task.swift"; sourceTree = "<group>"; };
 		8D09E76E2749CE390005F809 /* SyncManager+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Group.swift"; sourceTree = "<group>"; };
 		8D09E7702749CE7C0005F809 /* SyncManager+Measures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Measures.swift"; sourceTree = "<group>"; };
+		8D09E7722749DA230005F809 /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
+		8D09E7732749DA230005F809 /* GroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupViewController.xib; sourceTree = "<group>"; };
+		8D09E7762749E0D90005F809 /* GroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoordinator.swift; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -313,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24E4273651F40078F4B5 /* TaskCoordinator.swift */,
+				8D09E7762749E0D90005F809 /* GroupCoordinator.swift */,
 				8D2B24E62736532E0078F4B5 /* TaskDetailCoordinator.swift */,
 				8D09E7582749BB5C0005F809 /* MeasuresCoordinator.swift */,
 				8D09E74E274897F40005F809 /* CompletedTaskCoordinator.swift */,
@@ -340,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */,
+				8D09E7732749DA230005F809 /* GroupViewController.xib */,
 				8D2B24DC273649750078F4B5 /* TaskDetailViewController.xib */,
 				8D09E7552749AF8F0005F809 /* MeasuresViewController.xib */,
 				8D2B24DE27364A7D0078F4B5 /* AddGroupViewController.xib */,
@@ -519,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86CF270C7D6B004E2A7D /* TaskViewController.swift */,
+				8D09E7722749DA230005F809 /* GroupViewController.swift */,
 				8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */,
 				8D09E7542749AF8F0005F809 /* MeasuresViewController.swift */,
 				8D0F86EF2712C7BD004E2A7D /* AddGroupViewController.swift */,
@@ -668,6 +677,7 @@
 				8D0F8705271A9414004E2A7D /* ColorCell.xib in Resources */,
 				8D09E74D27488FC10005F809 /* CompletedTaskViewController.xib in Resources */,
 				8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */,
+				8D09E7752749DA230005F809 /* GroupViewController.xib in Resources */,
 				8D2B24DF27364A7D0078F4B5 /* AddGroupViewController.xib in Resources */,
 				8D2B24DD273649750078F4B5 /* TaskDetailViewController.xib in Resources */,
 				8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */,
@@ -780,6 +790,7 @@
 				8D7E41AD2723F5EC00D87DD0 /* SyncManager.swift in Sources */,
 				8D09E7712749CE7C0005F809 /* SyncManager+Measures.swift in Sources */,
 				8D0F86E427127FF8004E2A7D /* Group.swift in Sources */,
+				8D09E7742749DA230005F809 /* GroupViewController.swift in Sources */,
 				8D2B24E927365A260078F4B5 /* TabCoordinator.swift in Sources */,
 				8D2B24DB273644190078F4B5 /* AppCoordinator.swift in Sources */,
 				8D0F86D2270C7DA7004E2A7D /* SettingViewController.swift in Sources */,
@@ -820,6 +831,7 @@
 				8D7E41AF272439F900D87DD0 /* TaskDetailViewController.swift in Sources */,
 				8D0F86E627128ECE004E2A7D /* Task.swift in Sources */,
 				8D7E41A72723CC4800D87DD0 /* Network.swift in Sources */,
+				8D09E7772749E0D90005F809 /* GroupCoordinator.swift in Sources */,
 				8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */,
 				8D0F8707271A9D54004E2A7D /* UIViewController+PickerView.swift in Sources */,
 				8D0F86DF271191AA004E2A7D /* UIViewController+Alert.swift in Sources */,
