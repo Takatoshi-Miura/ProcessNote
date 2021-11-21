@@ -295,7 +295,7 @@ func selectAllMeasuresRealm() -> [Measures] {
 func getMeasuresInTask(ID taskID: String) -> [Measures] {
     var measuresArray: [Measures] = []
     let realm = try! Realm()
-    let results = realm.objects(Measures.self).filter("taskID == '\(taskID)'")
+    let results = realm.objects(Measures.self).filter("taskID == '\(taskID)' && (isDeleted == false)")
     for measures in results {
         measuresArray.append(measures)
     }

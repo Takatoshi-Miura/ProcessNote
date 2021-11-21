@@ -171,6 +171,11 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
         measuresArray.remove(at: index.row)
         tableView.deleteRows(at: [index], with: UITableView.RowAnimation.left)
         selectedIndex = nil
+        
+        // Firebaseに送信
+        if Network.isOnline() {
+            updateMeasures(measures)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
