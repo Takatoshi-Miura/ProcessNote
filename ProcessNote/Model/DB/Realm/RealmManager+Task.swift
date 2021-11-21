@@ -1,49 +1,14 @@
 //
-//  RealmManager.swift
+//  RealmManager+Task.swift
 //  ProcessNote
 //
-//  Created by Takatoshi Miura on 2021/10/17.
+//  Created by Takatoshi Miura on 2021/11/21.
 //
 
 import RealmSwift
 
-// MARK: - Create
-
-/**
- Realmにデータを作成
- - Parameters:
-    - object: Realmオブジェクト
- - Returns: 成功失敗
- */
-func createRealm(object: Object) -> Bool {
-    do {
-        let realm = try Realm()
-        try realm.write {
-            realm.add(object)
-        }
-    }
-    catch {
-        return false
-    }
-    return true
-}
-
 
 // MARK: - Update
-
-/**
- グループの削除フラグを更新
- - Parameters:
-    - group: グループ
- */
-func updateGroupIsDeleted(group: Group) {
-    let realm = try! Realm()
-    let result = realm.objects(Group.self).filter("groupID == '\(group.getGroupID())'").first
-    try! realm.write {
-        result?.setIsDeleted(true)
-        result?.setUpdated_at(getCurrentTime())
-    }
-}
 
 /**
  課題のタイトルを更新
@@ -144,51 +109,8 @@ func updateTaskIsDeleted(task: Task) {
     }
 }
 
-/**
- 対策のタイトルを更新
- - Parameters:
-    - ID: 更新したい対策のID
-    - title: 新しいタイトル文字列
- */
-func updateMeasuresTitleRealm(ID measuresID: String, title: String) {
-    let realm = try! Realm()
-    let result = realm.objects(Measures.self).filter("measuresID == '\(measuresID)'").first
-    try! realm.write {
-        result?.setTitle(title)
-        result?.setUpdated_at(getCurrentTime())
-    }
-}
-
-/**
- 対策の削除フラグを更新
- - Parameters:
-    - measures: 対策
- */
-func updateMeasuresIsDeleted(measures: Measures) {
-    let realm = try! Realm()
-    let result = realm.objects(Measures.self).filter("measuresID == '\(measures.getMeasuresID())'").first
-    try! realm.write {
-        result?.setIsDeleted(true)
-        result?.setUpdated_at(getCurrentTime())
-    }
-}
-
 
 // MARK: - Select
-
-/**
- Realmのグループデータを全取得
- - Returns: 全グループデータ
- */
-func selectAllGroupRealm() -> [Group] {
-    var realmGroupArray: [Group] = []
-    let realm = try! Realm()
-    let realmArray = realm.objects(Group.self)
-    for group in realmArray {
-        realmGroupArray.append(group)
-    }
-    return realmGroupArray
-}
 
 /**
  TaskViewController用Group配列を取得
@@ -272,51 +194,3 @@ func getTaskArrayForTaskView() -> [[Task]] {
     return taskArray
 }
 
-/**
- Realmの対策データを全取得
- - Returns: 全対策データ
- */
-func selectAllMeasuresRealm() -> [Measures] {
-    var realmMeasuresArray: [Measures] = []
-    let realm = try! Realm()
-    let realmArray = realm.objects(Measures.self)
-    for task in realmArray {
-        realmMeasuresArray.append(task)
-    }
-    return realmMeasuresArray
-}
-
-/**
- 課題に含まれる対策を取得
- - Parameters:
-    - taskID: 課題ID
- - Returns: 課題に含まれる対策
- */
-func getMeasuresInTask(ID taskID: String) -> [Measures] {
-    var measuresArray: [Measures] = []
-    let realm = try! Realm()
-    let results = realm.objects(Measures.self).filter("taskID == '\(taskID)' && (isDeleted == false)")
-    for measures in results {
-        measuresArray.append(measures)
-    }
-    return measuresArray
-}
-
-/**
- 課題に含まれる最優先の対策名を取得
- - Parameters:
-    - taskID: 課題ID
- - Returns: 対策名
- */
-func getMeasuresTitleInTask(ID taskID: String) -> String {
-    var measuresArray: [Measures] = []
-    let realm = try! Realm()
-    let results = realm.objects(Measures.self).filter("taskID == '\(taskID)'")
-    for measures in results {
-        measuresArray.append(measures)
-    }
-    return measuresArray.first?.getTitle() ?? ""
-}
-
-
-// MARK: - Delete

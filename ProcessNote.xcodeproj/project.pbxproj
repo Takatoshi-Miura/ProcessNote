@@ -14,6 +14,15 @@
 		8D09E7562749AF8F0005F809 /* MeasuresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7542749AF8F0005F809 /* MeasuresViewController.swift */; };
 		8D09E7572749AF8F0005F809 /* MeasuresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E7552749AF8F0005F809 /* MeasuresViewController.xib */; };
 		8D09E7592749BB5C0005F809 /* MeasuresCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7582749BB5C0005F809 /* MeasuresCoordinator.swift */; };
+		8D09E75E2749C82A0005F809 /* RealmManager+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E75D2749C82A0005F809 /* RealmManager+Task.swift */; };
+		8D09E7602749C8F30005F809 /* RealmManager+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E75F2749C8F30005F809 /* RealmManager+Group.swift */; };
+		8D09E7622749C95D0005F809 /* RealmManager+Measures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7612749C95D0005F809 /* RealmManager+Measures.swift */; };
+		8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7652749CACB0005F809 /* FirebaseManager+Task.swift */; };
+		8D09E7682749CB860005F809 /* FirebaseManager+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7672749CB860005F809 /* FirebaseManager+Group.swift */; };
+		8D09E76A2749CCBC0005F809 /* FirebaseManager+Measures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7692749CCBC0005F809 /* FirebaseManager+Measures.swift */; };
+		8D09E76D2749CDC80005F809 /* SyncManager+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E76C2749CDC80005F809 /* SyncManager+Task.swift */; };
+		8D09E76F2749CE390005F809 /* SyncManager+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E76E2749CE390005F809 /* SyncManager+Group.swift */; };
+		8D09E7712749CE7C0005F809 /* SyncManager+Measures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7702749CE7C0005F809 /* SyncManager+Measures.swift */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -100,6 +109,15 @@
 		8D09E7542749AF8F0005F809 /* MeasuresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuresViewController.swift; sourceTree = "<group>"; };
 		8D09E7552749AF8F0005F809 /* MeasuresViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeasuresViewController.xib; sourceTree = "<group>"; };
 		8D09E7582749BB5C0005F809 /* MeasuresCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuresCoordinator.swift; sourceTree = "<group>"; };
+		8D09E75D2749C82A0005F809 /* RealmManager+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmManager+Task.swift"; sourceTree = "<group>"; };
+		8D09E75F2749C8F30005F809 /* RealmManager+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmManager+Group.swift"; sourceTree = "<group>"; };
+		8D09E7612749C95D0005F809 /* RealmManager+Measures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmManager+Measures.swift"; sourceTree = "<group>"; };
+		8D09E7652749CACB0005F809 /* FirebaseManager+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseManager+Task.swift"; sourceTree = "<group>"; };
+		8D09E7672749CB860005F809 /* FirebaseManager+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseManager+Group.swift"; sourceTree = "<group>"; };
+		8D09E7692749CCBC0005F809 /* FirebaseManager+Measures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseManager+Measures.swift"; sourceTree = "<group>"; };
+		8D09E76C2749CDC80005F809 /* SyncManager+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Task.swift"; sourceTree = "<group>"; };
+		8D09E76E2749CE390005F809 /* SyncManager+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Group.swift"; sourceTree = "<group>"; };
+		8D09E7702749CE7C0005F809 /* SyncManager+Measures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Measures.swift"; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -246,9 +264,9 @@
 		8D09E74527488CC40005F809 /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				8D7E41AC2723F5EC00D87DD0 /* SyncManager.swift */,
-				8D0F870C271BD1A2004E2A7D /* RealmManager.swift */,
-				8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */,
+				8D09E76B2749CD980005F809 /* SyncManager */,
+				8D09E7632749C9AC0005F809 /* Realm */,
+				8D09E7642749C9C30005F809 /* Firebase */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -345,6 +363,39 @@
 				8D2B24D8273639B50078F4B5 /* SettingViewController.xib */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		8D09E7632749C9AC0005F809 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F870C271BD1A2004E2A7D /* RealmManager.swift */,
+				8D09E75D2749C82A0005F809 /* RealmManager+Task.swift */,
+				8D09E75F2749C8F30005F809 /* RealmManager+Group.swift */,
+				8D09E7612749C95D0005F809 /* RealmManager+Measures.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		8D09E7642749C9C30005F809 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */,
+				8D09E7652749CACB0005F809 /* FirebaseManager+Task.swift */,
+				8D09E7672749CB860005F809 /* FirebaseManager+Group.swift */,
+				8D09E7692749CCBC0005F809 /* FirebaseManager+Measures.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		8D09E76B2749CD980005F809 /* SyncManager */ = {
+			isa = PBXGroup;
+			children = (
+				8D7E41AC2723F5EC00D87DD0 /* SyncManager.swift */,
+				8D09E76C2749CDC80005F809 /* SyncManager+Task.swift */,
+				8D09E76E2749CE390005F809 /* SyncManager+Group.swift */,
+				8D09E7702749CE7C0005F809 /* SyncManager+Measures.swift */,
+			);
+			path = SyncManager;
 			sourceTree = "<group>";
 		};
 		8D0F8690270C776F004E2A7D = {
@@ -727,20 +778,24 @@
 			files = (
 				8D2B24E72736532E0078F4B5 /* TaskDetailCoordinator.swift in Sources */,
 				8D7E41AD2723F5EC00D87DD0 /* SyncManager.swift in Sources */,
+				8D09E7712749CE7C0005F809 /* SyncManager+Measures.swift in Sources */,
 				8D0F86E427127FF8004E2A7D /* Group.swift in Sources */,
 				8D2B24E927365A260078F4B5 /* TabCoordinator.swift in Sources */,
 				8D2B24DB273644190078F4B5 /* AppCoordinator.swift in Sources */,
 				8D0F86D2270C7DA7004E2A7D /* SettingViewController.swift in Sources */,
 				8D0F86E82712965C004E2A7D /* Measures.swift in Sources */,
 				8D0F86EC2712A8F1004E2A7D /* Memo.swift in Sources */,
+				8D09E7682749CB860005F809 /* FirebaseManager+Group.swift in Sources */,
 				8DB579A1271C3CBD005F8625 /* UIViewController+TextField.swift in Sources */,
 				8D0F8713271BDF07004E2A7D /* GroupHeaderView.swift in Sources */,
 				8D0F86F6271A65CE004E2A7D /* AddTaskViewController.swift in Sources */,
+				8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */,
 				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
 				8D0F870D271BD1A2004E2A7D /* RealmManager.swift in Sources */,
 				8D0F86EE2712AC1F004E2A7D /* Setting.swift in Sources */,
 				8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */,
 				8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */,
+				8D09E76F2749CE390005F809 /* SyncManager+Group.swift in Sources */,
 				8D0F86CE270C7AB2004E2A7D /* NoteViewController.swift in Sources */,
 				8D0F86D0270C7D6B004E2A7D /* TaskViewController.swift in Sources */,
 				8D0F86F02712C7BD004E2A7D /* AddGroupViewController.swift in Sources */,
@@ -748,15 +803,18 @@
 				8D7E41AA2723E32400D87DD0 /* TextViewCell.swift in Sources */,
 				8D0F8700271A85AE004E2A7D /* SaveButtonCell.swift in Sources */,
 				8D09E7562749AF8F0005F809 /* MeasuresViewController.swift in Sources */,
+				8D09E75E2749C82A0005F809 /* RealmManager+Task.swift in Sources */,
 				8D0F8704271A9414004E2A7D /* ColorCell.swift in Sources */,
 				8D2B24EB273D328E0078F4B5 /* NoteCoordinator.swift in Sources */,
 				8D2B24ED273D32EA0078F4B5 /* SettingCoordinator.swift in Sources */,
+				8D09E76A2749CCBC0005F809 /* FirebaseManager+Measures.swift in Sources */,
 				8D0F870B271AA938004E2A7D /* Definition.swift in Sources */,
 				8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */,
 				8D0F86EA27129F88004E2A7D /* Note.swift in Sources */,
 				8D09E7592749BB5C0005F809 /* MeasuresCoordinator.swift in Sources */,
 				8D0F86FB271A8142004E2A7D /* TitleCell.swift in Sources */,
 				8D24BA92272041D2004367F6 /* SettingCell.swift in Sources */,
+				8D09E7602749C8F30005F809 /* RealmManager+Group.swift in Sources */,
 				8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */,
 				8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */,
 				8D7E41AF272439F900D87DD0 /* TaskDetailViewController.swift in Sources */,
@@ -765,6 +823,8 @@
 				8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */,
 				8D0F8707271A9D54004E2A7D /* UIViewController+PickerView.swift in Sources */,
 				8D0F86DF271191AA004E2A7D /* UIViewController+Alert.swift in Sources */,
+				8D09E7622749C95D0005F809 /* RealmManager+Measures.swift in Sources */,
+				8D09E76D2749CDC80005F809 /* SyncManager+Task.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
