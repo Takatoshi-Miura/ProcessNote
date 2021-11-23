@@ -41,6 +41,24 @@ func updateGroupColorRealm(ID groupID: String, colorNumber: Int) {
 }
 
 /**
+ グループの並び順を更新
+ - Parameters:
+    - groupArray: グループ配列
+ */
+func updateGroupOrderRealm(groupArray: [Group]) {
+    let realm = try! Realm()
+    var index = 0
+    for group in groupArray {
+        let result = realm.objects(Group.self).filter("groupID == '\(group.getGroupID())'").first
+        try! realm.write {
+            result?.setOrder(index)
+            result?.setUpdated_at(getCurrentTime())
+        }
+        index += 1
+    }
+}
+
+/**
  グループの削除フラグを更新
  - Parameters:
     - group: グループ
@@ -69,4 +87,15 @@ func selectAllGroupRealm() -> [Group] {
         realmGroupArray.append(group)
     }
     return realmGroupArray
+}
+
+/**
+ Realmのグループデータを取得(ID指定)
+ - Parameters:
+    - ID: 取得したいグループのID
+ - Returns: グループデータ
+ */
+func selectGroupRealm(ID groupID: String) -> Group {
+    let realm = try! Realm()
+    return realm.objects(Group.self).filter("groupID == '\(groupID)'").first!
 }

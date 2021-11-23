@@ -38,6 +38,7 @@
 
 // MARK: - GroupViewController
 "GroupTitle" = "グループの詳細";
+"GroupOrder" = "表示順";
 
 
 // MARK: - CompletedTaskViewController

@@ -18,7 +18,9 @@ class GroupViewController: UIViewController {
     enum Section: Int {
         case title = 0
         case color
+        case order
     }
+    var groupArray: [Group] = [Group]()
     var pickerView = UIView()
     let colorPicker = UIPickerView()
     var pickerIndex: Int = 0
@@ -29,6 +31,7 @@ class GroupViewController: UIViewController {
         initNavigationBar()
         initTableView()
         initColorPicker()
+        groupArray = getGroupArrayForTaskView()
     }
     
     func initNavigationBar() {
@@ -37,10 +40,12 @@ class GroupViewController: UIViewController {
     
     func initTableView() {
         sectionTitle = [NSLocalizedString("Title", comment: ""),
-                        NSLocalizedString("Color", comment: "")]
+                        NSLocalizedString("Color", comment: ""),
+                        NSLocalizedString("GroupOrder", comment: "")]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.isEditing = true
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -103,13 +108,49 @@ extension GroupViewController: UITableViewDelegate, UITableViewDataSource {
             return 1
         case .color:
             return 1
+        case .order:
+            if groupArray.isEmpty {
+                return 0
+            } else {
+                return groupArray.count
+            }
         default:
             return 0
         }
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none    // 削除アイコンを非表示
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false    // 削除アイコンのスペースを詰める
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == Section.order.rawValue {
+            return true // 表示順のみ並び替え許可
+        } else {
+            return false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // 並び順を保存
+        let group = groupArray[sourceIndexPath.row]
+        groupArray.remove(at: sourceIndexPath.row)
+        groupArray.insert(group, at: destinationIndexPath.row)
+        updateGroupOrderRealm(groupArray: groupArray)
+    }
+    
+    func tableView(_ tableView:UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if (proposedDestinationIndexPath.section != sourceIndexPath.section) {
+            return sourceIndexPath  // セクションを超えた並び替え禁止
+        }
+        return proposedDestinationIndexPath;
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch Section(rawValue: indexPath.section) {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
@@ -125,6 +166,10 @@ extension GroupViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setColor(colorNum)
             cell.setTitle(Array(colorNumber.filter {$0.value == colorNum}.keys).first!)
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            return cell
+        case .order:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = groupArray[indexPath.row].getTitle()
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)

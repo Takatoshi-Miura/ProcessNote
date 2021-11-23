@@ -111,6 +111,11 @@ class TaskViewController: UIViewController {
             }
             tableView.reloadRows(at: [selectedIndex!], with: .none)
             selectedIndex = nil
+        } else {
+            // グループから戻る場合はリロード
+            realmGroupArray = getGroupArrayForTaskView()
+            realmTaskArray = getTaskArrayForTaskView()
+            tableView.reloadData()
         }
     }
     
