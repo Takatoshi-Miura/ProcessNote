@@ -250,6 +250,9 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
+            if task.getIsCompleted() {
+                cell.textField.isEnabled = false
+            }
             return cell
         case .cause:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell", for: indexPath) as! TextViewCell
@@ -258,6 +261,10 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textView.inputAccessoryView = createToolBar(#selector(completeAction))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
+            if task.getIsCompleted() {
+                cell.textView.isEditable = false
+                cell.textView.isSelectable = false
+            }
             return cell
         case .measures:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
