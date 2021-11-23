@@ -37,33 +37,9 @@ class CompletedTaskViewController: UIViewController {
     
     func initTableView() {
         tableView.tableFooterView = UIView()
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action: #selector(syncData), for: .valueChanged)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.register(UINib(nibName: String(describing: GroupHeaderView.self), bundle: nil),
-                           forHeaderFooterViewReuseIdentifier: String(describing: GroupHeaderView.self))
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
-        }
-    }
-    
-    /// データの同期処理
-    @objc func syncData() {
-        if tableView.isEditing {
-            tableView.refreshControl?.endRefreshing()
-            return
-        }
-        if Network.isOnline() {
-            showIndicator(message: "ServerCommunication")
-            syncDatabase(completion: {
-                self.taskArray = getTasksInGroup(ID: self.groupID!, isCompleted: true)
-                self.tableView.refreshControl?.endRefreshing()
-                self.tableView.reloadData()
-                self.dismissIndicator()
-            })
-        } else {
-            taskArray = getTasksInGroup(ID: groupID!, isCompleted: true)
-            tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -90,10 +66,6 @@ extension CompletedTaskViewController: UITableViewDelegate, UITableViewDataSourc
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true // 編集許可
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
