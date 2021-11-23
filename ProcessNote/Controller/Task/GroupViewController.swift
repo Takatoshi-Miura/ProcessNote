@@ -8,11 +8,18 @@
 import UIKit
 
 
+protocol GroupViewControllerDelegate: AnyObject {
+    // グループ削除時の処理
+    func groupVCDeleteGroup()
+}
+
+
 class GroupViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     var group = Group()
+    var delegate: GroupViewControllerDelegate?
     var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
     enum Section: Int {
@@ -36,6 +43,16 @@ class GroupViewController: UIViewController {
     
     func initNavigationBar() {
         self.title = NSLocalizedString("GroupTitle", comment: "")
+        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteGroup))
+        navigationItem.rightBarButtonItems = [deleteButton]
+    }
+    
+    /// グループを削除
+    @objc func deleteGroup() {
+        showDeleteAlert(title: "DeleteGroupTitle", message: "DeleteGroupMessage", OKAction: {
+            updateGroupIsDeleted(group: self.group)
+            self.delegate?.groupVCDeleteGroup()
+        })
     }
     
     func initTableView() {

@@ -120,24 +120,6 @@ class TaskViewController: UIViewController {
     }
     
     /**
-     グループを削除
-     */
-    @objc func deleteGroup(sender: UIButton) {
-        if !tableView.isEditing { return }
-        showDeleteAlert(title: "DeleteGroupTitle", message: "DeleteGroupMessage", OKAction: {
-            let group = self.realmGroupArray[sender.tag]
-            updateGroupIsDeleted(group: group)
-            self.realmGroupArray.remove(at: sender.tag)
-            self.realmTaskArray.remove(at: sender.tag)
-            self.tableView.deleteSections(IndexSet(integer: sender.tag), with: UITableView.RowAnimation.left)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.setEditing(false, animated: false)
-            }
-            self.selectedIndex = nil
-        })
-    }
-    
-    /**
      グループを挿入
      - Parameters:
         - group: 挿入するグループ
