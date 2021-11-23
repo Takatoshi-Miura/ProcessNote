@@ -29,8 +29,6 @@
 "AddGroupTaskTitle" = "グループ・課題の追加";
 "AddGroupTaskMessage" = "何を追加しますか？";
 "Group" = "グループ";
-"DeleteTaskTitle" = "課題の削除";
-"DeleteTaskMessage" = "課題を削除しますか？\n課題を削除すると復元できません。";
 "DeleteGroupTitle" = "グループの削除";
 "DeleteGroupMessage" = "グループを削除しますか？\nグループを削除するとグループに含まれる課題も全て削除されます。一度削除したグループと課題は復元できません。";
 "Delete" = "削除";
@@ -65,6 +63,11 @@
 
 // MARK: - TaskDetailViewController
 "TaskDetailTitle" = "課題の詳細";
+"DeleteTaskTitle" = "課題の削除";
+"DeleteTaskMessage" = "課題を削除しますか？\n課題を削除すると復元できません。";
+"CompleteTaskTitle" = "課題の進捗";
+"CompleteTaskMessage" = "課題を完了にしますか？";
+"InCompleteTaskMessage" = "課題を未完了にしますか？";
 "AddMeasuresTitle" = "対策の追加";
 "AddMeasuresMessage" = "対策を入力して下さい。";
 "Add" = "追加";

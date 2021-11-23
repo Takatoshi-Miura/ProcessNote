@@ -29,8 +29,6 @@
 "AddGroupTaskTitle" = "Add group and task";
 "AddGroupTaskMessage" = "What do you want to add?";
 "Group" = "Group";
-"DeleteTaskTitle" = "Delete task";
-"DeleteTaskMessage" = "Do you want to delete the task?\nIf you delete an task, you cannot restore it.";
 "DeleteGroupTitle" = "Delete group";
 "DeleteGroupMessage" = "Do you want to delete the group?\nDeleting a group also deletes all tasks contained in the group. Once deleted, groups and tasks cannot be restored.";
 "Delete" = "Delete";
@@ -65,6 +63,11 @@
 
 // MARK: - TaskDetailViewController
 "TaskDetailTitle" = "Task details";
+"DeleteTaskTitle" = "Delete task";
+"DeleteTaskMessage" = "Do you want to delete the task?\nIf you delete an task, you cannot restore it.";
+"CompleteTaskTitle" = "Progress of the task";
+"CompleteTaskMessage" = "Do you want to complete the task?";
+"InCompleteTaskMessage" = "Do you want to keep the task in progress?";
 "AddMeasuresTitle" = "Add Measures";
 "AddMeasuresMessage" = "Please enter the measures.";
 "Add" = "Add";

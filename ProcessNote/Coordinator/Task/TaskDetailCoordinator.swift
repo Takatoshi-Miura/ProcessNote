@@ -33,6 +33,21 @@ class TaskDetailCoordinator: Coordinator {
 
 extension TaskDetailCoordinator: TaskDetailViewControllerDelegate {
     
+    // TaskVC ← TaskDetailVC
+    func taskDetailVCCompleteTask(task: Task) {
+        navigationController?.popToRootViewController(animated: true)
+        let taskVC = navigationController?.topViewController as! TaskViewController
+        if !task.getIsCompleted() {
+            taskVC.insertTask(task: task)
+        }
+    }
+    
+    // TaskVC ← TaskDetailVC
+    // CompleteTaskVC ← TaskDetailVC
+    func taskDetailVCDeleteTask(task: Task) {
+        navigationController?.popViewController(animated: true)
+    }
+    
     // TaskDetailVC → MeasuresVC
     func taskDetailVCMeasuresCellDidTap(measures: Measures) {
         measuresCoordinator.startFrow(in: navigationController!, withMeasures: measures)

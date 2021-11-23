@@ -71,6 +71,16 @@ class CompletedTaskViewController: UIViewController {
         super.viewDidAppear(animated)
         if (selectedIndex != nil) {
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+            // 課題が未完了or削除されていれば取り除く
+            let task = taskArray[selectedIndex!.row]
+            if !task.getIsCompleted() || task.getIsDeleted() {
+                taskArray.remove(at: selectedIndex!.row)
+                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                selectedIndex = nil
+                return
+            }
+            tableView.reloadRows(at: [selectedIndex!], with: .none)
+            selectedIndex = nil
         }
     }
 }
@@ -84,52 +94,6 @@ extension CompletedTaskViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true // 編集許可
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        // 左スワイプで課題を削除
-        if editingStyle == UITableViewCell.EditingStyle.delete {
-            showDeleteAlert(title: "DeleteTaskTitle", message: "DeleteTaskMessage", OKAction: {
-                self.deleteTask(index: indexPath)
-            })
-        }
-    }
-    
-    /**
-     課題を削除
-     - Parameters:
-        - index: IndexPath
-     */
-    func deleteTask(index: IndexPath) {
-        let task = taskArray[index.row]
-        updateTaskIsDeleted(task: task)
-        taskArray.remove(at: index.row)
-        tableView.deleteRows(at: [index], with: UITableView.RowAnimation.left)
-        selectedIndex = nil
-    }
-    
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // 右スワイプで未完了
-        let completeAction = UIContextualAction(style: .normal, title: NSLocalizedString("InComplete", comment: ""),
-                                               handler: { (action: UIContextualAction, view: UIView, completion: (Bool) -> Void) in
-            self.completeTask(index: indexPath)
-            completion(true)
-        })
-        completeAction.backgroundColor = UIColor.systemBlue
-        return UISwipeActionsConfiguration(actions: [completeAction])
-    }
-    
-    /**
-     課題を未完了にする
-     - Parameters:
-        - index: IndexPath
-     */
-    func completeTask(index: IndexPath) {
-        let task = taskArray[index.row]
-        updateTaskIsCompleted(task: task, isCompleted: false)
-        taskArray.remove(at: index.row)
-        tableView.deleteRows(at: [index], with: UITableView.RowAnimation.right)
-        selectedIndex = nil
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

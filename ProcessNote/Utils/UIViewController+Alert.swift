@@ -35,6 +35,19 @@ public extension UIViewController {
     }
     
     /**
+     OK,Cancelアラートを表示
+     - Parameters:
+       - title: タイトル
+       - message: 説明文
+       - OKAction: OKをタップした時の処理
+     */
+    func showOKCancelAlert(title: String, message: String, OKAction: @escaping () -> ()) {
+        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction) in OKAction()})
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
+        showAlert(title: title, message: message, actions: [cancelAction, OKAction])
+    }
+    
+    /**
      エラーアラートを表示
      - Parameters:
        - message: 説明文

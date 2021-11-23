@@ -42,17 +42,35 @@ class TaskViewController: UIViewController {
     
     func initNavigationController() {
         self.title = NSLocalizedString("Task", comment: "")
-        setNavigationBarButtonDefault()
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask(_:)))
+        navigationItem.rightBarButtonItems = [addButton]
+    }
+    
+    /// 課題・グループを追加
+    @objc func addTask(_ sender: UIBarButtonItem) {
+        // アクションシートを表示
+        let addGroupAction = UIAlertAction(title: NSLocalizedString("Group", comment: ""), style: .default) { _ in
+            self.delegate?.taskVCAddGroupDidTap(self)
+        }
+        if !realmGroupArray.isEmpty {
+            let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
+                self.delegate?.taskVCAddTaskDidTap(self)
+            }
+            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+        } else {
+            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
+        }
     }
     
     func initTableView() {
         tableView.tableFooterView = UIView()
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(syncData), for: .valueChanged)
-        tableView.allowsMultipleSelectionDuringEditing = true   // セル複数選択可能
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(UINib(nibName: String(describing: GroupHeaderView.self), bundle: nil),
                            forHeaderFooterViewReuseIdentifier: String(describing: GroupHeaderView.self))
+        tableView.isEditing = true  // セルの常時並び替え許可
+        tableView.allowsSelectionDuringEditing = true
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -60,10 +78,6 @@ class TaskViewController: UIViewController {
     
     /// データの同期処理
     @objc func syncData() {
-        if tableView.isEditing {
-            tableView.refreshControl?.endRefreshing()
-            return
-        }
         if Network.isOnline() {
             showIndicator(message: "ServerCommunication")
             syncDatabase(completion: {
@@ -84,109 +98,20 @@ class TaskViewController: UIViewController {
         super.viewDidAppear(animated)
         if (selectedIndex != nil) {
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+            // 未完了の課題から戻る場合
+            if selectedIndex!.row < realmTaskArray[selectedIndex!.section].count {
+                // 課題が完了or削除されていれば取り除く
+                let task = realmTaskArray[selectedIndex!.section][selectedIndex!.row]
+                if task.getIsCompleted() || task.getIsDeleted() {
+                    realmTaskArray[selectedIndex!.section].remove(at: selectedIndex!.row)
+                    tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                    selectedIndex = nil
+                    return
+                }
+            }
             tableView.reloadRows(at: [selectedIndex!], with: .none)
+            selectedIndex = nil
         }
-    }
-    
-    
-    // MARK: - NavigationBarAction
-    
-    // 編集ボタンの処理
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        if editing {
-            setNavigationBarButtonIsEditing()
-        } else {
-            setNavigationBarButtonDefault()
-        }
-        tableView.isEditing = editing
-        tableView.reloadData()
-    }
-    
-    /**
-     通常時のNavigationBar設定
-     */
-    func setNavigationBarButtonDefault() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask(_:)))
-        setNavigationBarButton(left: [editButtonItem], right: [addButton])
-    }
-    
-    /**
-     編集時のNavigationBar設定
-     */
-    func setNavigationBarButtonIsEditing() {
-        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteTasks(_:)))
-        setNavigationBarButton(left: [editButtonItem], right: [deleteButton])
-    }
-    
-    /**
-     NavigationBarにボタンをセット
-      - Parameters:
-        - left: 左側に表示するUIBarButtonItem
-        - right: 右側に表示するUIBarButtonItem
-     */
-    func setNavigationBarButton(left leftBarItems: [UIBarButtonItem], right rightBarItems: [UIBarButtonItem]) {
-        navigationItem.leftBarButtonItems = leftBarItems
-        navigationItem.rightBarButtonItems = rightBarItems
-    }
-    
-    /**
-     課題を追加
-     */
-    @objc func addTask(_ sender: UIBarButtonItem) {
-        // アクションシートを表示
-        let addGroupAction = UIAlertAction(title: NSLocalizedString("Group", comment: ""), style: .default) { _ in
-            self.delegate?.taskVCAddGroupDidTap(self)
-        }
-        if !realmGroupArray.isEmpty {
-            let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
-                self.delegate?.taskVCAddTaskDidTap(self)
-            }
-            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
-        } else {
-            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
-        }
-    }
-    
-    /**
-     課題を複数削除
-     */
-    @objc func deleteTasks(_ sender: UIBarButtonItem) {
-        if tableView.indexPathsForSelectedRows == nil { return }
-        showDeleteAlert(title: "DeleteTaskTitle", message: "DeleteTaskMessage", OKAction: {
-            // 配列の要素削除でindexの矛盾を防ぐため、降順にソートしてから削除
-            guard let selectedIndexPaths = self.tableView.indexPathsForSelectedRows else { return }
-            let sortedIndexPaths =  selectedIndexPaths.sorted { $0.row > $1.row }
-            for indexPath in sortedIndexPaths {
-                self.deleteTask(index: indexPath)
-            }
-        })
-    }
-    
-    /**
-     課題を削除
-     - Parameters:
-        - index: IndexPath
-     */
-    func deleteTask(index: IndexPath) {
-        let task = realmTaskArray[index.section][index.row]
-        updateTaskIsDeleted(task: task)
-        realmTaskArray[index.section].remove(at: index.row)
-        tableView.deleteRows(at: [index], with: UITableView.RowAnimation.left)
-        selectedIndex = nil
-    }
-    
-    /**
-     課題を完了にする
-     - Parameters:
-        - index: IndexPath
-     */
-    func completeTask(index: IndexPath) {
-        let task = realmTaskArray[index.section][index.row]
-        updateTaskIsCompleted(task: task, isCompleted: true)
-        realmTaskArray[index.section].remove(at: index.row)
-        tableView.deleteRows(at: [index], with: UITableView.RowAnimation.right)
-        selectedIndex = nil
     }
     
     /**
@@ -244,15 +169,6 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
         if let headerView = view as? GroupHeaderView {
             headerView.delegate = self
             headerView.setProperty(group: realmGroupArray[section])
-            if tableView.isEditing {
-                // セクション削除ボタンの設定
-                let button = UIButton(frame: CGRect(x: self.view.frame.maxX - 50, y: 0, width: 50, height: headerView.bounds.height))
-                button.backgroundColor = UIColor.systemRed
-                button.setTitle(NSLocalizedString("Delete", comment: ""), for: .normal)
-                button.tag = section
-                button.addTarget(self, action: #selector(deleteGroup(sender:)), for: .touchUpInside)
-                headerView.addSubview(button)
-            }
             return headerView
         }
         return nil
@@ -278,6 +194,14 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none    // 削除アイコンを非表示
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false    // 削除アイコンのスペースを詰める
+    }
+    
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true // 並び替え許可
     }
@@ -294,26 +218,6 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
             let groupId = realmGroupArray[destinationIndexPath.section].getGroupID()
             updateTaskGroupIdRealm(task: task, ID: groupId)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        // 左スワイプで課題を削除
-        if editingStyle == UITableViewCell.EditingStyle.delete {
-            showDeleteAlert(title: "DeleteTaskTitle", message: "DeleteTaskMessage", OKAction: {
-                self.deleteTask(index: indexPath)
-            })
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // 右スワイプで完了
-        let completeAction = UIContextualAction(style: .normal, title: NSLocalizedString("Complete", comment: ""),
-                                               handler: { (action: UIContextualAction, view: UIView, completion: (Bool) -> Void) in
-            self.completeTask(index: indexPath)
-            completion(true)
-        })
-        completeAction.backgroundColor = UIColor.systemBlue
-        return UISwipeActionsConfiguration(actions: [completeAction])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -347,10 +251,8 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         // 課題セル
-        if !tableView.isEditing {
-            let task = realmTaskArray[selectedIndex!.section][selectedIndex!.row]
-            delegate?.taskVCTaskCellDidTap(task: task)
-        }
+        let task = realmTaskArray[selectedIndex!.section][selectedIndex!.row]
+        delegate?.taskVCTaskCellDidTap(task: task)
     }
 }
 

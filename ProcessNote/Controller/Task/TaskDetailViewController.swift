@@ -9,6 +9,10 @@ import UIKit
 
 
 protocol TaskDetailViewControllerDelegate: AnyObject {
+    // 課題の完了(未完了)時の処理
+    func taskDetailVCCompleteTask(task: Task)
+    // 課題削除時の処理
+    func taskDetailVCDeleteTask(task: Task)
     // 対策セルタップ時の処理
     func taskDetailVCMeasuresCellDidTap(measures: Measures)
 }
@@ -39,10 +43,35 @@ class TaskDetailViewController: UIViewController {
     
     func initNavigationBar() {
         self.title = NSLocalizedString("TaskDetailTitle", comment: "")
+        
+        var navigationItems: [UIBarButtonItem] = []
+        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteTask))
+        let completeButton = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(completeTask))
+        navigationItems.append(deleteButton)
+        navigationItems.append(completeButton)
         if !task.getIsCompleted() {
             let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMeasures(_:)))
-            navigationItem.rightBarButtonItems = [addButton]
+            navigationItems.append(addButton)
         }
+        navigationItem.rightBarButtonItems = navigationItems
+    }
+    
+    /// 課題を削除
+    @objc func deleteTask() {
+        showDeleteAlert(title: "DeleteTaskTitle", message: "DeleteTaskMessage", OKAction: {
+            updateTaskIsDeleted(task: self.task)
+            self.delegate?.taskDetailVCDeleteTask(task: self.task)
+        })
+    }
+    
+    /// 課題を完了(未完了)にする
+    @objc func completeTask() {
+        let isCompleted = task.getIsCompleted()
+        let message = isCompleted ? "InCompleteTaskMessage" : "CompleteTaskMessage"
+        showOKCancelAlert(title: "CompleteTaskTitle", message: message, OKAction: {
+            updateTaskIsCompleted(task: self.task, isCompleted: !isCompleted)
+            self.delegate?.taskDetailVCCompleteTask(task: self.task)
+        })
     }
     
     /// 対策を追加
