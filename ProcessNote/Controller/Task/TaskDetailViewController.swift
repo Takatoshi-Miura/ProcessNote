@@ -106,6 +106,8 @@ class TaskDetailViewController: UIViewController {
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.isEditing = true  // 対策セルの常時並び替え許可
+        tableView.allowsSelectionDuringEditing = true
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -115,6 +117,14 @@ class TaskDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         if (selectedIndex != nil) {
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+            // 対策が削除されていれば取り除く
+            let measures = measuresArray[selectedIndex!.row]
+            if measures.getIsDeleted() {
+                measuresArray.remove(at: selectedIndex!.row)
+                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                selectedIndex = nil
+                return
+            }
             tableView.reloadRows(at: [selectedIndex!], with: .none)
         }
     }
@@ -124,6 +134,9 @@ class TaskDetailViewController: UIViewController {
         // Firebaseに送信
         if Network.isOnline() {
             updateTask(task)
+            for measures in measuresArray {
+                updateMeasures(measures)
+            }
         }
     }
 }
@@ -151,31 +164,35 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        // 左スワイプで対策を削除
-        if editingStyle == UITableViewCell.EditingStyle.delete {
-            showDeleteAlert(title: "DeleteMeasuresTitle", message: "DeleteMeasuresMessage", OKAction: {
-                self.deleteMeasures(index: indexPath)
-            })
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none    // 削除アイコンを非表示
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false    // 削除アイコンのスペースを詰める
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if (indexPath.section == Section.measures.rawValue) {
+            return true // 対策セルのみ並び替え可能
+        } else {
+            return false
         }
     }
     
-    /**
-     対策を削除
-     - Parameters:
-        - index: IndexPath
-     */
-    func deleteMeasures(index: IndexPath) {
-        let measures = measuresArray[index.row]
-        updateMeasuresIsDeleted(measures: measures)
-        measuresArray.remove(at: index.row)
-        tableView.deleteRows(at: [index], with: UITableView.RowAnimation.left)
-        selectedIndex = nil
-        
-        // Firebaseに送信
-        if Network.isOnline() {
-            updateMeasures(measures)
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // 対策の並び順を保存
+        let measures = measuresArray[sourceIndexPath.row]
+        measuresArray.remove(at: sourceIndexPath.row)
+        measuresArray.insert(measures, at: destinationIndexPath.row)
+        updateMeasuresOrderRealm(measuresArray: measuresArray)
+    }
+    
+    func tableView(_ tableView:UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if (proposedDestinationIndexPath.section != sourceIndexPath.section) {
+            return sourceIndexPath  // セクションを超えた並び替え禁止
         }
+        return proposedDestinationIndexPath;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -196,7 +213,6 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch Section(rawValue: indexPath.section) {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell

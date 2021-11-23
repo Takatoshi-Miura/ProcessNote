@@ -26,6 +26,24 @@ func updateMeasuresTitleRealm(ID measuresID: String, title: String) {
 }
 
 /**
+ 対策の並び順を更新
+ - Parameters:
+ - measuresArray: 対策配列
+ */
+func updateMeasuresOrderRealm(measuresArray: [Measures]) {
+    let realm = try! Realm()
+    var index = 0
+    for measures in measuresArray {
+        let result = realm.objects(Measures.self).filter("measuresID == '\(measures.getMeasuresID())'").first
+        try! realm.write {
+            result?.setOrder(index)
+            result?.setUpdated_at(getCurrentTime())
+        }
+        index += 1
+    }
+}
+
+/**
  対策の削除フラグを更新
  - Parameters:
     - measures: 対策
@@ -65,7 +83,12 @@ func selectAllMeasuresRealm() -> [Measures] {
 func getMeasuresInTask(ID taskID: String) -> [Measures] {
     var measuresArray: [Measures] = []
     let realm = try! Realm()
-    let results = realm.objects(Measures.self).filter("taskID == '\(taskID)' && (isDeleted == false)")
+    let sortProperties = [
+        SortDescriptor(keyPath: "order", ascending: true),
+    ]
+    let results = realm.objects(Measures.self)
+                        .filter("taskID == '\(taskID)' && (isDeleted == false)")
+                        .sorted(by: sortProperties)
     for measures in results {
         measuresArray.append(measures)
     }
@@ -81,7 +104,12 @@ func getMeasuresInTask(ID taskID: String) -> [Measures] {
 func getMeasuresTitleInTask(ID taskID: String) -> String {
     var measuresArray: [Measures] = []
     let realm = try! Realm()
-    let results = realm.objects(Measures.self).filter("taskID == '\(taskID)'")
+    let sortProperties = [
+        SortDescriptor(keyPath: "order", ascending: true),
+    ]
+    let results = realm.objects(Measures.self)
+                        .filter("taskID == '\(taskID)' && (isDeleted == false)")
+                        .sorted(by: sortProperties)
     for measures in results {
         measuresArray.append(measures)
     }

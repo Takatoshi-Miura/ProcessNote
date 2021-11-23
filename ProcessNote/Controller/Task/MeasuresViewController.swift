@@ -8,6 +8,12 @@
 import UIKit
 
 
+protocol MeasuresViewControllerDelegate: AnyObject {
+    // 対策削除時の処理
+    func measuresVCDeleteMeasures()
+}
+
+
 class MeasuresViewController: UIViewController {
     
     // MARK: UI,Variable
@@ -15,6 +21,7 @@ class MeasuresViewController: UIViewController {
     var measures = Measures()
     var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
+    var delegate: MeasuresViewControllerDelegate?
     enum Section: Int {
         case title = 0
         case note
@@ -29,6 +36,19 @@ class MeasuresViewController: UIViewController {
     
     func initNavigationBar() {
         self.title = NSLocalizedString("MeasuresTitle", comment: "")
+        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMeasures))
+        navigationItem.rightBarButtonItems = [deleteButton]
+    }
+    
+    /// 対策を削除
+    @objc func deleteMeasures() {
+        showDeleteAlert(title: "DeleteMeasuresTitle", message: "DeleteMeasuresMessage", OKAction: {
+            updateMeasuresIsDeleted(measures: self.measures)
+            if Network.isOnline() {
+                updateMeasures(self.measures)
+            }
+            self.delegate?.measuresVCDeleteMeasures()
+        })
     }
     
     func initTableView() {

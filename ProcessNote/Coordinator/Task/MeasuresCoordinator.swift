@@ -22,8 +22,19 @@ class MeasuresCoordinator: Coordinator {
     func startFrow(in navigationController: UINavigationController, withMeasures measures: Measures) {
         self.navigationController = navigationController
         measuresViewController = MeasuresViewController()
+        measuresViewController.delegate = self
         measuresViewController.measures = measures
         navigationController.pushViewController(measuresViewController, animated: true)
+    }
+    
+}
+
+
+extension MeasuresCoordinator: MeasuresViewControllerDelegate {
+    
+    // TaskDetailVC ← MeasuresVC
+    func measuresVCDeleteMeasures() {
+        navigationController?.popViewController(animated: true)
     }
     
 }
