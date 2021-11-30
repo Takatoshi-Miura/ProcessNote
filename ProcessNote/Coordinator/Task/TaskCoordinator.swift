@@ -17,6 +17,7 @@ class TaskCoordinator: Coordinator {
     let taskDetailCoordinator = TaskDetailCoordinator()
     let completedTaskCoordinator = CompletedTaskCoordinator()
     let groupCoordinator = GroupCoordinator()
+    let settingCoordinator = SettingCoordinator()
     
     func startFlow(in window: UIWindow?) {
     }
@@ -31,6 +32,11 @@ class TaskCoordinator: Coordinator {
 
 
 extension TaskCoordinator: TaskViewControllerDelegate {
+    
+    // TaskVC → SettingVC
+    func taskVCHumburgerMenuButtonDidTap(_ viewController: UIViewController) {
+        settingCoordinator.startFlow(in: viewController)
+    }
     
     // TaskVC → GroupVC
     func taskVCHeaderDidTap(group: Group) {

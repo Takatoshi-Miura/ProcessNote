@@ -8,34 +8,29 @@
 import UIKit
 import MessageUI
 
+
+protocol SettingViewControllerDelegate: AnyObject {
+    // メニュー外をタップ時の処理
+    func settingVCOutsideMenuDidTap(_ viewController: UIViewController)
+}
+
+
 class SettingViewController: UIViewController {
     
     // MARK: UI,Variable
-    
     @IBOutlet weak var tableView: UITableView!
     var selectedIndex: IndexPath = [0, 0]
     var sectionTitle: [String] = []
     var cellTitle: [[String]] = [[]]
+    var delegate: SettingViewControllerDelegate?
     
     
     // MARK: LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initNavigationController()
         initTableView()
     }
     
-    /**
-     NavigationControllerの初期設定
-     */
-    func initNavigationController() {
-        self.title = NSLocalizedString("Setting", comment: "")
-    }
-    
-    /**
-     tableViewの初期設定
-     */
     func initTableView() {
         sectionTitle = [NSLocalizedString("Basic configuration", comment: ""),
                         NSLocalizedString("Data", comment: ""),
@@ -46,6 +41,34 @@ class SettingViewController: UIViewController {
                      [NSLocalizedString("How to use this App?", comment: ""),
                       NSLocalizedString("Inquiry", comment: "")]]
         tableView.register(UINib(nibName: "SettingCell", bundle: nil), forCellReuseIdentifier: "SettingCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        openMenuAnimation()
+    }
+    
+    /// メニュー表示アニメーション
+    func openMenuAnimation() {
+        let menuPos = self.tableView.layer.position
+        self.tableView.layer.position.x = -self.tableView.frame.width
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            self.tableView.layer.position.x = menuPos.x
+        },completion: { bool in})
+    }
+    
+    /// メニューエリア以外タップ時の処理
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        for touch in touches {
+            if touch.view?.tag == 1 {
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+                    self.tableView.layer.position.x = -self.tableView.frame.width
+                }, completion: { bool in
+                    self.delegate?.settingVCOutsideMenuDidTap(self)
+                })
+            }
+        }
     }
 }
 

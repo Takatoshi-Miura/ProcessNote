@@ -17,8 +17,22 @@ class SettingCoordinator: Coordinator {
     }
     
     func startFlow(in navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        navigationController.pushViewController(settingViewController, animated: true)
+    }
+    
+    func startFlow(in modalViewController: UIViewController) {
+        settingViewController = SettingViewController()
+        settingViewController.delegate = self
+        settingViewController.modalPresentationStyle = .overCurrentContext
+        modalViewController.present(settingViewController, animated: false)
     }
 }
 
+
+extension SettingCoordinator: SettingViewControllerDelegate {
+    
+    // SettingVC → TaskVC or NoteVC
+    func settingVCOutsideMenuDidTap(_ viewController: UIViewController) {
+        viewController.dismiss(animated: false, completion: nil)
+    }
+    
+}

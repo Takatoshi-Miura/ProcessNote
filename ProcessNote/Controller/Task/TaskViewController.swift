@@ -9,6 +9,8 @@ import UIKit
 
 
 protocol TaskViewControllerDelegate: AnyObject {
+    // ハンバーガーメニューボタンタップ時の処理
+    func taskVCHumburgerMenuButtonDidTap(_ viewController: UIViewController)
     // セクションヘッダータップ時の処理
     func taskVCHeaderDidTap(group: Group)
     // 課題セルタップ時の処理
@@ -43,7 +45,14 @@ class TaskViewController: UIViewController {
     func initNavigationController() {
         self.title = NSLocalizedString("Task", comment: "")
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask(_:)))
+        let humburgerMenuButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(openHumburgerMenu(_:)))
+        navigationItem.leftBarButtonItems = [humburgerMenuButton]
         navigationItem.rightBarButtonItems = [addButton]
+    }
+    
+    /// ハンバーガーメニューを表示
+    @objc func openHumburgerMenu(_ sender: UIBarButtonItem) {
+        self.delegate?.taskVCHumburgerMenuButtonDidTap(self)
     }
     
     /// 課題・グループを追加
