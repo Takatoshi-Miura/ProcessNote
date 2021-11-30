@@ -39,6 +39,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         initNavigationController()
         initTableView()
+        addRightSwipeGesture()
         syncData()
     }
     
@@ -83,6 +84,14 @@ class TaskViewController: UIViewController {
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
+    }
+    
+    /// 右スワイプでハンバーガーメニューを閉じる
+    func addRightSwipeGesture() {
+        let rightSwipe = UISwipeGestureRecognizer(target: self,
+                                                 action: #selector(openHumburgerMenu(_:)))
+        rightSwipe.direction = .right
+        self.view.addGestureRecognizer(rightSwipe)
     }
     
     /// データの同期処理
