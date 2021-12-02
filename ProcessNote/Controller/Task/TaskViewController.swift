@@ -46,8 +46,21 @@ class TaskViewController: UIViewController {
     func initNavigationController() {
         self.title = NSLocalizedString("Task", comment: "")
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask(_:)))
-        let humburgerMenuButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(openHumburgerMenu(_:)))
-        navigationItem.leftBarButtonItems = [humburgerMenuButton]
+        
+        var menuButton: UIBarButtonItem
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            menuButton = UIBarButtonItem(image: UIImage(named: "humburger_menu_white")!.withRenderingMode(.alwaysOriginal),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(openHumburgerMenu(_:)))
+        } else {
+            menuButton = UIBarButtonItem(image: UIImage(named: "humburger_menu_black")!.withRenderingMode(.alwaysOriginal),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(openHumburgerMenu(_:)))
+        }
+         
+        navigationItem.leftBarButtonItems = [menuButton]
         navigationItem.rightBarButtonItems = [addButton]
     }
     
