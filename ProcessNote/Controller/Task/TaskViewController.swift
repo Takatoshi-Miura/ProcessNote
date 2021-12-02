@@ -28,6 +28,7 @@ class TaskViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addButton: UIButton!
     var selectedIndex: IndexPath?
     var realmGroupArray: [Group] = [Group]()
     var realmTaskArray: [[Task]] = [[Task]]()
@@ -45,7 +46,6 @@ class TaskViewController: UIViewController {
     
     func initNavigationController() {
         self.title = NSLocalizedString("Task", comment: "")
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTask(_:)))
         
         var menuButton: UIBarButtonItem
         if UITraitCollection.current.userInterfaceStyle == .dark {
@@ -61,7 +61,6 @@ class TaskViewController: UIViewController {
         }
          
         navigationItem.leftBarButtonItems = [menuButton]
-        navigationItem.rightBarButtonItems = [addButton]
     }
     
     /// ハンバーガーメニューを表示
@@ -70,7 +69,7 @@ class TaskViewController: UIViewController {
     }
     
     /// 課題・グループを追加
-    @objc func addTask(_ sender: UIBarButtonItem) {
+    @IBAction func addButtonTap(_ sender: Any) {
         // アクションシートを表示
         let addGroupAction = UIAlertAction(title: NSLocalizedString("Group", comment: ""), style: .default) { _ in
             self.delegate?.taskVCAddGroupDidTap(self)
