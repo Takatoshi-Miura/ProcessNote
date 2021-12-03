@@ -48,18 +48,11 @@ class TaskViewController: UIViewController {
         self.title = NSLocalizedString("Task", comment: "")
         
         var menuButton: UIBarButtonItem
-        if UITraitCollection.current.userInterfaceStyle == .dark {
-            menuButton = UIBarButtonItem(image: UIImage(named: "humburger_menu_white")!.withRenderingMode(.alwaysOriginal),
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(openHumburgerMenu(_:)))
-        } else {
-            menuButton = UIBarButtonItem(image: UIImage(named: "humburger_menu_black")!.withRenderingMode(.alwaysOriginal),
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(openHumburgerMenu(_:)))
-        }
-         
+        let image = UITraitCollection.current.userInterfaceStyle == .dark ? UIImage(named: "humburger_menu_white")! : UIImage(named: "humburger_menu_black")!
+        menuButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(openHumburgerMenu(_:)))
         navigationItem.leftBarButtonItems = [menuButton]
     }
     
@@ -99,7 +92,7 @@ class TaskViewController: UIViewController {
         }
     }
     
-    /// 右スワイプでハンバーガーメニューを閉じる
+    /// 右スワイプでハンバーガーメニューを開く
     func addRightSwipeGesture() {
         let rightSwipe = UISwipeGestureRecognizer(target: self,
                                                  action: #selector(openHumburgerMenu(_:)))
