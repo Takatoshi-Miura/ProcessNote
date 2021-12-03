@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TaskDetailViewController" customModule="ProcessNote" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="cLV-bU-3mq" id="pkS-Ls-hnY"/>
                 <outlet property="tableView" destination="xVb-SD-pjv" id="3tl-oz-g7h"/>
                 <outlet property="view" destination="iN0-l3-epB" id="gE4-Qi-S5A"/>
             </connections>
@@ -29,13 +30,26 @@
                         <outlet property="delegate" destination="-1" id="Zad-YV-CSP"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLV-bU-3mq">
+                    <rect key="frame" x="244.5" y="492.5" width="55.5" height="55.5"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="Plus_Button"/>
+                    <connections>
+                        <action selector="addButtonTap:" destination="-1" eventType="touchUpInside" id="CiV-SB-bfK"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="cLV-bU-3mq" secondAttribute="trailing" constant="20" id="IOd-Wa-Zjt"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="cLV-bU-3mq" secondAttribute="bottom" constant="20" id="UiY-C1-VKW"/>
+            </constraints>
             <point key="canvasLocation" x="138.75" y="152.11267605633802"/>
         </view>
     </objects>
     <resources>
+        <image name="Plus_Button" width="55.5" height="55.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

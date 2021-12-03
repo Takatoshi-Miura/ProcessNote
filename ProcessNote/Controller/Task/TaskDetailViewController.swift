@@ -22,6 +22,7 @@ class TaskDetailViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addButton: UIButton!
     var task = Task()
     var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
@@ -38,6 +39,7 @@ class TaskDetailViewController: UIViewController {
         super.viewDidLoad()
         initNavigationBar()
         initTableView()
+        addButton.isHidden = task.getIsCompleted() ? true : false
         measuresArray = getMeasuresInTask(ID: task.getTaskID())
     }
     
@@ -46,13 +48,11 @@ class TaskDetailViewController: UIViewController {
         
         var navigationItems: [UIBarButtonItem] = []
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteTask))
-        let completeButton = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(completeTask))
+        
+        let image = task.getIsCompleted() ? UIImage(systemName: "exclamationmark.circle") : UIImage(systemName: "checkmark.circle")
+        let completeButton = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(completeTask))
         navigationItems.append(deleteButton)
         navigationItems.append(completeButton)
-        if !task.getIsCompleted() {
-            let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMeasures(_:)))
-            navigationItems.append(addButton)
-        }
         navigationItem.rightBarButtonItems = navigationItems
     }
     
@@ -74,8 +74,8 @@ class TaskDetailViewController: UIViewController {
         })
     }
     
-    /// 対策を追加
-    @objc func addMeasures(_ sender: UIBarButtonItem) {
+    @IBAction func addButtonTap(_ sender: Any) {
+        // 対策を追加
         let alert = UIAlertController(title: NSLocalizedString("AddMeasuresTitle", comment: ""),
                                       message: NSLocalizedString("AddMeasuresMessage", comment: ""),
                                       preferredStyle: .alert)
@@ -137,6 +137,7 @@ class TaskDetailViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.isEditing = true  // 対策セルの常時並び替え許可
         tableView.allowsSelectionDuringEditing = true
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }

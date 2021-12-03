@@ -93,6 +93,7 @@ class TaskViewController: UIViewController {
                            forHeaderFooterViewReuseIdentifier: String(describing: GroupHeaderView.self))
         tableView.isEditing = true  // セルの常時並び替え許可
         tableView.allowsSelectionDuringEditing = true
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }

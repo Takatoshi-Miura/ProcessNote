@@ -37,14 +37,17 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
      */
     func initNavigationController() {
         self.title = NSLocalizedString("Note", comment: "")
-        setNavigationBarButtonDefault()
     }
     
-    /**
-     tableViewの初期設定
-     */
+    /// tableViewの初期設定
     func initTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.isEditing = true  // 対策セルの常時並び替え許可
+        tableView.allowsSelectionDuringEditing = true
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,60 +56,9 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.deselectRow(at: selectedIndex as IndexPath, animated: true)
     }
     
-    
-    // MARK: - NavigationBarAction
-    
-    // 編集ボタンの処理
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        if editing {
-            setNavigationBarButtonIsEditing()
-        } else {
-            setNavigationBarButtonDefault()
-        }
-        tableView.isEditing = editing
-        tableView.reloadData()
-    }
-    
-    /**
-     通常時のNavigationBar設定
-     */
-    func setNavigationBarButtonDefault() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote(_:)))
-        setNavigationBarButton(left: [editButtonItem], right: [addButton])
-    }
-    
-    /**
-     編集時のNavigationBar設定
-     */
-    func setNavigationBarButtonIsEditing() {
-        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteNotes(_:)))
-        setNavigationBarButton(left: [editButtonItem], right: [deleteButton])
-    }
-    
-    /**
-     NavigationBarにボタンをセット
-      - Parameters:
-        - left: 左側に表示するUIBarButtonItem
-        - right: 右側に表示するUIBarButtonItem
-     */
-    func setNavigationBarButton(left leftBarItems: [UIBarButtonItem], right rightBarItems: [UIBarButtonItem]) {
-        navigationItem.leftBarButtonItems = leftBarItems
-        navigationItem.rightBarButtonItems = rightBarItems
-    }
-    
-    /**
-     ノートを追加
-     */
-    @objc func addNote(_ sender: UIBarButtonItem) {
+    /// ノート追加
+    @IBAction func addButtonTap(_ sender: Any) {
         // TODO: ノート追加画面への遷移処理
-    }
-    
-    /**
-     ノートを複数削除
-     */
-    @objc func deleteNotes(_ sender: UIBarButtonItem) {
-        // TODO: ノートの複数削除処理
     }
     
     
