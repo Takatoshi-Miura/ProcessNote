@@ -124,7 +124,8 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
         case .note:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.numberOfLines = 0 // 全文表示
-            cell.textLabel?.text = memoArray[indexPath.row].getDetail()
+            let memo = memoArray[indexPath.row]
+            cell.textLabel?.text = "\(changeDateString(dateString: memo.getCreated_at(), format: "yyyy-MM-dd HH:mm:ss"))\n\(memo.getDetail())"
             cell.backgroundColor = UIColor.systemGray6
             return cell
         default:
