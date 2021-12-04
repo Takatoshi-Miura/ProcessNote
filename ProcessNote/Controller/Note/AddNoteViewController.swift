@@ -19,6 +19,7 @@ class AddNoteViewController: UIViewController {
     var pickerView = UIView()
     let colorPicker = UIPickerView()
     var pickerIndex: Int = 0
+    var viewOffset: CGPoint?
     
     enum Section: Int {
         case group = 0
@@ -34,6 +35,8 @@ class AddNoteViewController: UIViewController {
         initColorPicker()
         groupArray = getGroupArrayForTaskView()
         taskArray = getTasksInGroup(ID: groupArray[pickerIndex].getGroupID(), isCompleted: false)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func initNavigationBar() {
@@ -72,6 +75,22 @@ class AddNoteViewController: UIViewController {
         // Indexを元に戻して閉じる
         colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
         closePicker(pickerView)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        viewOffset = tableView.contentOffset
+        if let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            if let unwrappedOffset = self.viewOffset {
+                self.tableView.contentOffset = unwrappedOffset
+            }
+            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        })
     }
     
 }
