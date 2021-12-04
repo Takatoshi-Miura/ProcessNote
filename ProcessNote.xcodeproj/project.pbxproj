@@ -28,6 +28,8 @@
 		8D09E7772749E0D90005F809 /* GroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7762749E0D90005F809 /* GroupCoordinator.swift */; };
 		8D09E77C275AE6C00005F809 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */; };
 		8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */; };
+		8D09E780275AF3020005F809 /* NoteTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E77E275AF3020005F809 /* NoteTextViewCell.swift */; };
+		8D09E781275AF3020005F809 /* NoteTextViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E77F275AF3020005F809 /* NoteTextViewCell.xib */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -128,6 +130,8 @@
 		8D09E7762749E0D90005F809 /* GroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoordinator.swift; sourceTree = "<group>"; };
 		8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
 		8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNoteViewController.xib; sourceTree = "<group>"; };
+		8D09E77E275AF3020005F809 /* NoteTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTextViewCell.swift; sourceTree = "<group>"; };
+		8D09E77F275AF3020005F809 /* NoteTextViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTextViewCell.xib; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -511,6 +515,8 @@
 				8D0F86FF271A85AE004E2A7D /* SaveButtonCell.xib */,
 				8D24BA90272041D2004367F6 /* SettingCell.swift */,
 				8D24BA91272041D2004367F6 /* SettingCell.xib */,
+				8D09E77E275AF3020005F809 /* NoteTextViewCell.swift */,
+				8D09E77F275AF3020005F809 /* NoteTextViewCell.xib */,
 			);
 			path = CustomCell;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D09E781275AF3020005F809 /* NoteTextViewCell.xib in Resources */,
 				8D0F86A9270C7771004E2A7D /* LaunchScreen.storyboard in Resources */,
 				8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */,
 				8D0F86DA270C8580004E2A7D /* Localizable.strings in Resources */,
@@ -810,6 +817,7 @@
 				8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */,
 				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
 				8D0F870D271BD1A2004E2A7D /* RealmManager.swift in Sources */,
+				8D09E780275AF3020005F809 /* NoteTextViewCell.swift in Sources */,
 				8D0F86EE2712AC1F004E2A7D /* Setting.swift in Sources */,
 				8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */,
 				8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */,
