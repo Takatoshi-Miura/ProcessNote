@@ -36,6 +36,9 @@ extension NoteCoordinator: NoteViewControllerDelegate {
     // NoteVC → AddNoteVC
     func noteVCAddButtonDidTap(_ viewController: NoteViewController) {
         addNoteViewController = AddNoteViewController()
+        if #available(iOS 13.0, *) {
+            addNoteViewController.isModalInPresentation = true
+        }
         viewController.present(addNoteViewController, animated: true)
     }
     

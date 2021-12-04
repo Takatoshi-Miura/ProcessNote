@@ -51,12 +51,18 @@ extension TaskCoordinator: TaskViewControllerDelegate {
     // TaskVC → AddGroupVC
     func taskVCAddGroupDidTap(_ viewController: UIViewController) {
         addGroupViewController = AddGroupViewController()
+        if #available(iOS 13.0, *) {
+            addGroupViewController.isModalInPresentation = true
+        }
         viewController.present(addGroupViewController, animated: true)
     }
     
     // TaskVC → AddTaskVC
     func taskVCAddTaskDidTap(_ viewController: UIViewController) {
         addTaskViewController = AddTaskViewController()
+        if #available(iOS 13.0, *) {
+            addTaskViewController.isModalInPresentation = true
+        }
         viewController.present(addTaskViewController, animated: true)
     }
     
