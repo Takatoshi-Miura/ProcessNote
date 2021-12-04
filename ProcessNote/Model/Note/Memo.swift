@@ -5,30 +5,36 @@
 //  Created by Takatoshi Miura on 2021/10/10.
 //
 
-class Memo {
+import RealmSwift
+
+class Memo: Object {
     
     // MARK: - Variable
     
     // 不変
-    private var userID: String      // ユーザーID
-    private var memoID: Int         // メモID
-    private var noteID: Int         // 所属するノートID
-    private var measuresID: Int     // 所属する対策ID
-    private var created_at: String  // 作成日
+    @objc dynamic private var userID: String      // ユーザーID
+    @objc dynamic private var memoID: String      // メモID
+    @objc dynamic private var noteID: String      // 所属するノートID
+    @objc dynamic private var measuresID: String  // 所属する対策ID
+    @objc dynamic private var created_at: String  // 作成日
     // 可変
-    private var detail: String      // メモの内容
-    private var updated_at: String  // 更新日
-    private var isDeleted: Bool     // 削除フラグ
+    @objc dynamic private var detail: String      // メモの内容
+    @objc dynamic private var updated_at: String  // 更新日
+    @objc dynamic private var isDeleted: Bool     // 削除フラグ
+    // 主キー
+    override static func primaryKey() -> String? {
+        return "memoID"
+    }
     
     
     // MARK: - Initializer
     
-    init() {
-        self.userID = ""
-        self.memoID = 0
-        self.noteID = 0
-        self.measuresID = 0
-        self.created_at = ""
+    override init() {
+        self.userID = UserDefaults.standard.object(forKey: "userID") as! String
+        self.memoID = NSUUID().uuidString
+        self.noteID = ""
+        self.measuresID = ""
+        self.created_at = getCurrentTime()
         self.detail = ""
         self.updated_at = ""
         self.isDeleted = false
@@ -41,15 +47,15 @@ class Memo {
         self.userID = userID
     }
     
-    func setMemoID(_ memoID: Int) {
+    func setMemoID(_ memoID: String) {
         self.memoID = memoID
     }
     
-    func setNoteID(_ noteID: Int) {
+    func setNoteID(_ noteID: String) {
         self.noteID = noteID
     }
     
-    func setMeasuresID(_ measuresID: Int) {
+    func setMeasuresID(_ measuresID: String) {
         self.measuresID = measuresID
     }
     
@@ -76,15 +82,15 @@ class Memo {
         return self.userID
     }
     
-    func getMemoID() -> Int {
+    func getMemoID() -> String {
         return self.memoID
     }
     
-    func getNoteID() -> Int {
+    func getNoteID() -> String {
         return self.noteID
     }
     
-    func getMeasuresID() -> Int {
+    func getMeasuresID() -> String {
         return self.measuresID
     }
     

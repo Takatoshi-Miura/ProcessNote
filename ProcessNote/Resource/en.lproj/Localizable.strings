@@ -82,6 +82,8 @@
 
 // MARK: - AddNoteViewController
 "AddNoteTitle" = "Add note";
+"NoteCreateError" = "Failed to create a note.";
+"EmptyNote" = "Please input a note.";
 
 
 // MARK: - SettingViewController

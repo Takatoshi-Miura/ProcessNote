@@ -14,7 +14,11 @@ func syncDatabase(completion: @escaping () -> ()) {
     syncGroup(completion: {
         syncTask(completion: {
             syncMeasures(completion: {
-                completion()
+                syncNote(completion: {
+                    syncMemo(completion: {
+                        completion()
+                    })
+                })
             })
         })
     })

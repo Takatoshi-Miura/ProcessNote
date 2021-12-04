@@ -206,10 +206,82 @@ extension AddNoteViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 extension AddNoteViewController: SaveButtonCellDelegate {
     
     func tapSaveButton() {
-        // 入力チェック
+        // メモ作成
+        var memoArray = [Memo]()
+        for i in stride(from: 0, to: taskArray.count, by: 1) {
+            // 入力がある場合のみ作成
+            let textCell = tableView.cellForRow(at: [1, i]) as! NoteTextViewCell
+            if textCell.memo.text.isEmpty { continue }
+            let memo = Memo()
+            let measure = getMeasuresInTask(ID: taskArray[i].getTaskID()).first!
+            memo.setMeasuresID(measure.getMeasuresID())
+            memo.setDetail(textCell.memo.text)
+            memo.setUpdated_at(getCurrentTime())
+            memoArray.append(memo)
+        }
         
-        // 課題データを作成＆保存
+        // 何も入力していなければアラート
+        if memoArray.isEmpty {
+            showErrorAlert(message: "EmptyNote")
+            return
+        }
         
+        // ノート作成(今日のノートが存在すれば作成しない)
+        let note = Note()
+        if let todayNote = selectTodayNote() {
+            for memo in memoArray {
+                memo.setNoteID(todayNote.getNoteID())
+            }
+            updateNoteUpdatedAtRealm(ID: todayNote.getNoteID())
+            // Firebaseに送信
+            if Network.isOnline() {
+                updateNote(todayNote)
+            }
+        } else {
+            note.setUpdated_at(getCurrentTime())
+            for memo in memoArray {
+                memo.setNoteID(note.getNoteID())
+            }
+            if !createRealm(object: note) {
+                showErrorAlert(message: "NoteCreateError")
+                return
+            }
+            // Firebaseに送信
+            if Network.isOnline() {
+                saveNote(note: note, completion: {})
+            }
+        }
+        
+        // メモ保存
+        for memo in memoArray {
+            if !createRealm(object: memo) {
+                showErrorAlert(message: "NoteCreateError")
+                return
+            }
+        }
+        
+        // Firebaseに送信
+        if Network.isOnline() {
+            for memo in memoArray {
+                saveMemo(memo: memo, completion: {})
+            }
+        }
+        
+        // モーダルを閉じる
+        if selectTodayNote() != nil {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.dismissWithInsertNote(note: note)
+        }
+    }
+    
+    /// ノート画面にノートを追加してモーダルを閉じる
+    func dismissWithInsertNote(note: Note) {
+        let tabBar = self.presentingViewController as! UITabBarController
+        let navigation = tabBar.selectedViewController as! UINavigationController
+        let noteView = navigation.viewControllers.first as! NoteViewController
+        noteView.insertNote(note: note)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func tapCancelButton() {

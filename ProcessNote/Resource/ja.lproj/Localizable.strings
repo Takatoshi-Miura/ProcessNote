@@ -82,6 +82,8 @@
 
 // MARK: - AddNoteViewController
 "AddNoteTitle" = "ノートの追加";
+"NoteCreateError" = "ノートの作成に失敗しました。";
+"EmptyNote" = "ノートを入力して下さい。";
 
 
 // MARK: - SettingViewController

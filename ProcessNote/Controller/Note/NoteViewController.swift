@@ -16,24 +16,23 @@ protocol NoteViewControllerDelegate: AnyObject {
 }
 
 
-class NoteViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NoteViewController: UIViewController {
     
     // MARK: - UI,Variable
-    
     @IBOutlet weak var tableView: UITableView!
-    var selectedIndex: IndexPath = [0, 0]
-    var sectionTitle: [String] = []
+    var selectedIndex: IndexPath?
+    var sectionTitle: [String] = [""]
     var cellTitle: [[String]] = [[]]
     var delegate: NoteViewControllerDelegate?
-    
+    var noteArray = [Note]()
     
     // MARK: - LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationController()
         initTableView()
         addRightSwipeGesture()
+        noteArray = getNoteArrayForNoteView()
     }
     
     /// NavigationControllerの初期設定
@@ -64,19 +63,37 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /// tableViewの初期設定
     func initTableView() {
+        tableView.tableFooterView = UIView()
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(syncData), for: .valueChanged)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.isEditing = true  // 対策セルの常時並び替え許可
-        tableView.allowsSelectionDuringEditing = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
     }
     
+    /// データの同期処理
+    @objc func syncData() {
+        if Network.isOnline() {
+            showIndicator(message: "ServerCommunication")
+            syncDatabase(completion: {
+                self.noteArray = getNoteArrayForNoteView()
+                self.tableView.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
+                self.dismissIndicator()
+            })
+        } else {
+            noteArray = getNoteArrayForNoteView()
+            tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // タップしたときの選択色を消去
-        tableView.deselectRow(at: selectedIndex as IndexPath, animated: true)
+        if (selectedIndex != nil) {
+            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+        }
     }
     
     /// ノート追加
@@ -84,8 +101,21 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.delegate?.noteVCAddButtonDidTap(self)
     }
     
+    /**
+     ノートを挿入
+     - Parameters:
+        - note: 挿入するノート
+     */
+    func insertNote(note: Note) {
+        let index: IndexPath = [0, 0]
+        noteArray.append(note)
+        tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
+    }
     
-    // MARK: - 【Delegate】TableViewController
+}
+    
+
+extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
@@ -100,12 +130,15 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellTitle[section].count
+        if noteArray.isEmpty {
+            return 0
+        }
+        return noteArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = cellTitle[indexPath.section][indexPath.row]
+        cell.textLabel?.text = noteArray[indexPath.row].getCreated_at()
         cell.accessoryType = .disclosureIndicator // > 表示
         cell.accessibilityIdentifier = "NoteViewCell"
         return cell
@@ -114,7 +147,5 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath
     }
-    
-    
 
 }

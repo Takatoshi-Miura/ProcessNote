@@ -5,25 +5,31 @@
 //  Created by Takatoshi Miura on 2021/10/10.
 //
 
-class Note {
+import RealmSwift
+
+class Note: Object {
     
     // MARK: - Variable
     
     // 不変
-    private var userID: String      // ユーザーID
-    private var noteID: Int         // ノートID
-    private var created_at: String  // 作成日
+    @objc dynamic private var userID: String      // ユーザーID
+    @objc dynamic private var noteID: String      // ノートID
+    @objc dynamic private var created_at: String  // 作成日
     // 可変
-    private var updated_at: String  // 更新日
-    private var isDeleted: Bool     // 削除フラグ
+    @objc dynamic private var updated_at: String  // 更新日
+    @objc dynamic private var isDeleted: Bool     // 削除フラグ
+    // 主キー
+    override static func primaryKey() -> String? {
+        return "noteID"
+    }
     
     
     // MARK: - Initializer
     
-    init() {
-        self.userID = ""
-        self.noteID = 0
-        self.created_at = ""
+    override init() {
+        self.userID = UserDefaults.standard.object(forKey: "userID") as! String
+        self.noteID = NSUUID().uuidString
+        self.created_at = getCurrentDate()
         self.updated_at = ""
         self.isDeleted = false
     }
@@ -35,7 +41,7 @@ class Note {
         self.userID = userID
     }
     
-    func setNoteID(_ noteID: Int) {
+    func setNoteID(_ noteID: String) {
         self.noteID = noteID
     }
     
@@ -58,7 +64,7 @@ class Note {
         return self.userID
     }
     
-    func getNoteID() -> Int {
+    func getNoteID() -> String {
         return self.noteID
     }
     

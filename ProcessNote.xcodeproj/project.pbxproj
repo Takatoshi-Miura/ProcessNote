@@ -30,6 +30,12 @@
 		8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */; };
 		8D09E780275AF3020005F809 /* NoteTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E77E275AF3020005F809 /* NoteTextViewCell.swift */; };
 		8D09E781275AF3020005F809 /* NoteTextViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E77F275AF3020005F809 /* NoteTextViewCell.xib */; };
+		8D09E785275B0B870005F809 /* RealmManager+Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E784275B0B870005F809 /* RealmManager+Note.swift */; };
+		8D09E787275B110A0005F809 /* FirebaseManager+Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E786275B110A0005F809 /* FirebaseManager+Note.swift */; };
+		8D09E789275B12940005F809 /* FirebaseManager+Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E788275B12940005F809 /* FirebaseManager+Memo.swift */; };
+		8D09E78B275B27A60005F809 /* SyncManager+Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E78A275B27A60005F809 /* SyncManager+Note.swift */; };
+		8D09E78D275B2D160005F809 /* SyncManager+Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E78C275B2D150005F809 /* SyncManager+Memo.swift */; };
+		8D09E78F275B2D630005F809 /* RealmManager+Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E78E275B2D630005F809 /* RealmManager+Memo.swift */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -132,6 +138,12 @@
 		8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNoteViewController.xib; sourceTree = "<group>"; };
 		8D09E77E275AF3020005F809 /* NoteTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTextViewCell.swift; sourceTree = "<group>"; };
 		8D09E77F275AF3020005F809 /* NoteTextViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTextViewCell.xib; sourceTree = "<group>"; };
+		8D09E784275B0B870005F809 /* RealmManager+Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmManager+Note.swift"; sourceTree = "<group>"; };
+		8D09E786275B110A0005F809 /* FirebaseManager+Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseManager+Note.swift"; sourceTree = "<group>"; };
+		8D09E788275B12940005F809 /* FirebaseManager+Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseManager+Memo.swift"; sourceTree = "<group>"; };
+		8D09E78A275B27A60005F809 /* SyncManager+Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Note.swift"; sourceTree = "<group>"; };
+		8D09E78C275B2D150005F809 /* SyncManager+Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Memo.swift"; sourceTree = "<group>"; };
+		8D09E78E275B2D630005F809 /* RealmManager+Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmManager+Memo.swift"; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -389,6 +401,8 @@
 				8D09E75D2749C82A0005F809 /* RealmManager+Task.swift */,
 				8D09E75F2749C8F30005F809 /* RealmManager+Group.swift */,
 				8D09E7612749C95D0005F809 /* RealmManager+Measures.swift */,
+				8D09E784275B0B870005F809 /* RealmManager+Note.swift */,
+				8D09E78E275B2D630005F809 /* RealmManager+Memo.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -400,6 +414,8 @@
 				8D09E7652749CACB0005F809 /* FirebaseManager+Task.swift */,
 				8D09E7672749CB860005F809 /* FirebaseManager+Group.swift */,
 				8D09E7692749CCBC0005F809 /* FirebaseManager+Measures.swift */,
+				8D09E786275B110A0005F809 /* FirebaseManager+Note.swift */,
+				8D09E788275B12940005F809 /* FirebaseManager+Memo.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -411,6 +427,8 @@
 				8D09E76C2749CDC80005F809 /* SyncManager+Task.swift */,
 				8D09E76E2749CE390005F809 /* SyncManager+Group.swift */,
 				8D09E7702749CE7C0005F809 /* SyncManager+Measures.swift */,
+				8D09E78A275B27A60005F809 /* SyncManager+Note.swift */,
+				8D09E78C275B2D150005F809 /* SyncManager+Memo.swift */,
 			);
 			path = SyncManager;
 			sourceTree = "<group>";
@@ -802,6 +820,8 @@
 			files = (
 				8D2B24E72736532E0078F4B5 /* TaskDetailCoordinator.swift in Sources */,
 				8D7E41AD2723F5EC00D87DD0 /* SyncManager.swift in Sources */,
+				8D09E78F275B2D630005F809 /* RealmManager+Memo.swift in Sources */,
+				8D09E787275B110A0005F809 /* FirebaseManager+Note.swift in Sources */,
 				8D09E7712749CE7C0005F809 /* SyncManager+Measures.swift in Sources */,
 				8D0F86E427127FF8004E2A7D /* Group.swift in Sources */,
 				8D09E7742749DA230005F809 /* GroupViewController.swift in Sources */,
@@ -813,14 +833,18 @@
 				8D09E7682749CB860005F809 /* FirebaseManager+Group.swift in Sources */,
 				8DB579A1271C3CBD005F8625 /* UIViewController+TextField.swift in Sources */,
 				8D0F8713271BDF07004E2A7D /* GroupHeaderView.swift in Sources */,
+				8D09E785275B0B870005F809 /* RealmManager+Note.swift in Sources */,
 				8D0F86F6271A65CE004E2A7D /* AddTaskViewController.swift in Sources */,
 				8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */,
 				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
+				8D09E789275B12940005F809 /* FirebaseManager+Memo.swift in Sources */,
 				8D0F870D271BD1A2004E2A7D /* RealmManager.swift in Sources */,
 				8D09E780275AF3020005F809 /* NoteTextViewCell.swift in Sources */,
 				8D0F86EE2712AC1F004E2A7D /* Setting.swift in Sources */,
 				8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */,
 				8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */,
+				8D09E78D275B2D160005F809 /* SyncManager+Memo.swift in Sources */,
+				8D09E78B275B27A60005F809 /* SyncManager+Note.swift in Sources */,
 				8D09E76F2749CE390005F809 /* SyncManager+Group.swift in Sources */,
 				8D0F86CE270C7AB2004E2A7D /* NoteViewController.swift in Sources */,
 				8D0F86D0270C7D6B004E2A7D /* TaskViewController.swift in Sources */,

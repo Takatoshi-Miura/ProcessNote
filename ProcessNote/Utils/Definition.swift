@@ -42,13 +42,25 @@ let color: [Int : UIColor] = [0 : UIColor.systemRed,
 
 /**
  現在時刻を取得
- - Returns: 現在時刻（yyyy-MM-dd HH:mm）
+ - Returns: 現在時刻（yyyy-MM-dd HH:mm:ss）
  */
 func getCurrentTime() -> String {
     let now = Date()
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "ja_JP")
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    return dateFormatter.string(from: now)
+}
+
+/**
+ 現在の日付を取得
+ - Returns: 日付（yyyy-MM-dd）
+ */
+func getCurrentDate() -> String {
+    let now = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "ja_JP")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     return dateFormatter.string(from: now)
 }
 
