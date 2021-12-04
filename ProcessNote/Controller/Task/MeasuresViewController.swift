@@ -21,6 +21,7 @@ class MeasuresViewController: UIViewController {
     var measures = Measures()
     var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
+    var memoArray = [Memo]()
     var delegate: MeasuresViewControllerDelegate?
     enum Section: Int {
         case title = 0
@@ -32,6 +33,7 @@ class MeasuresViewController: UIViewController {
         super.viewDidLoad()
         initNavigationBar()
         initTableView()
+        memoArray = getMemo(measuresID: measures.getMeasuresID())
     }
     
     func initNavigationBar() {
@@ -52,8 +54,7 @@ class MeasuresViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""),
-                        NSLocalizedString("Note", comment: "")]
+        sectionTitle = [NSLocalizedString("Title", comment: ""), NSLocalizedString("Note", comment: "")]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         if #available(iOS 15.0, *) {
@@ -91,8 +92,10 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
         case .title:
             return 1
         case .note:
-            // TODO: 対策が持つメモの個数を返却
-            return 0
+            if memoArray.isEmpty {
+                return 0
+            }
+            return memoArray.count
         default:
             return 0
         }
@@ -114,13 +117,10 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
             }
             return cell
         case .note:
-            // TODO: メモの内容をセルに表示
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//            cell.textLabel?.text = measuresArray[indexPath.row].getTitle()
-//            cell.backgroundColor = UIColor.systemGray6
-//            let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.5))
-//            separatorView.backgroundColor = UIColor.gray
-//            cell.addSubview(separatorView)
+            cell.textLabel?.numberOfLines = 0 // 全文表示
+            cell.textLabel?.text = memoArray[indexPath.row].getDetail()
+            cell.backgroundColor = UIColor.systemGray6
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)

@@ -271,9 +271,6 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             cell.textLabel?.text = measuresArray[indexPath.row].getTitle()
             cell.backgroundColor = UIColor.systemGray6
-            let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.5))
-            separatorView.backgroundColor = UIColor.gray
-            cell.addSubview(separatorView)
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)

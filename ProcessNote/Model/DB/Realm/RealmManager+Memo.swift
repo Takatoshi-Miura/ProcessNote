@@ -38,3 +38,25 @@ func selectAllMemoRealm() -> [Memo] {
     }
     return realmMemoArray
 }
+
+/**
+ 対策に含まれるメモを取得
+ - Parameters:
+    - measuresID: 対策ID
+ - Returns: 対策に含まれるメモ
+ */
+func getMemo(measuresID: String) -> [Memo] {
+    var memoArray: [Memo] = []
+    let realm = try! Realm()
+    let sortProperties = [
+        SortDescriptor(keyPath: "memoID", ascending: true),
+    ]
+    let results = realm.objects(Memo.self)
+                        .filter("(measuresID == '\(measuresID)') && (isDeleted == false)")
+                        .sorted(by: sortProperties)
+    for memo in results {
+        memoArray.append(memo)
+    }
+    return memoArray
+}
+
