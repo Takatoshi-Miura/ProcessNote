@@ -42,12 +42,18 @@ class MeasuresViewController: UIViewController {
         navigationItem.rightBarButtonItems = [deleteButton]
     }
     
-    /// 対策を削除
+    /// 対策とそれに含まれるメモを削除
     @objc func deleteMeasures() {
         showDeleteAlert(title: "DeleteMeasuresTitle", message: "DeleteMeasuresMessage", OKAction: {
             updateMeasuresIsDeleted(measures: self.measures)
+            for memo in self.memoArray {
+                updateMemoIsDeleted(memo: memo)
+            }
             if Network.isOnline() {
                 updateMeasures(self.measures)
+                for memo in self.memoArray {
+                    updateMemo(memo)
+                }
             }
             self.delegate?.measuresVCDeleteMeasures()
         })
@@ -102,7 +108,6 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch Section(rawValue: indexPath.section) {
         case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
