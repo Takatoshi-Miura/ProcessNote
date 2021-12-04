@@ -11,6 +11,8 @@ import UIKit
 protocol NoteViewControllerDelegate: AnyObject {
     // ハンバーガーメニューボタンタップ時の処理
     func noteVCHumburgerMenuButtonDidTap(_ viewController: NoteViewController)
+    // ノート追加ボタンタップ時の処理
+    func noteVCAddButtonDidTap(_ viewController: NoteViewController)
 }
 
 
@@ -79,7 +81,7 @@ class NoteViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /// ノート追加
     @IBAction func addButtonTap(_ sender: Any) {
-        // TODO: ノート追加画面への遷移処理
+        self.delegate?.noteVCAddButtonDidTap(self)
     }
     
     

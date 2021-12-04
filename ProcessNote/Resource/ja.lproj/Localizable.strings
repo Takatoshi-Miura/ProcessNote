@@ -80,6 +80,10 @@
 "MeasuresTitle" = "対策の詳細";
 
 
+// MARK: - AddNoteViewController
+"AddNoteTitle" = "ノートの追加";
+
+
 // MARK: - SettingViewController
 "Basic configuration" = "基本設定";
 "Data" = "データ";

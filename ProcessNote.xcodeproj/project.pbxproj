@@ -26,6 +26,8 @@
 		8D09E7742749DA230005F809 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7722749DA230005F809 /* GroupViewController.swift */; };
 		8D09E7752749DA230005F809 /* GroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E7732749DA230005F809 /* GroupViewController.xib */; };
 		8D09E7772749E0D90005F809 /* GroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E7762749E0D90005F809 /* GroupCoordinator.swift */; };
+		8D09E77C275AE6C00005F809 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */; };
+		8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -124,6 +126,8 @@
 		8D09E7722749DA230005F809 /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		8D09E7732749DA230005F809 /* GroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupViewController.xib; sourceTree = "<group>"; };
 		8D09E7762749E0D90005F809 /* GroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoordinator.swift; sourceTree = "<group>"; };
+		8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
+		8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNoteViewController.xib; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -361,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24D6273639150078F4B5 /* NoteViewController.xib */,
+				8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -541,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86CD270C7AB2004E2A7D /* NoteViewController.swift */,
+				8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -670,6 +676,7 @@
 				8D2B24E127364CED0078F4B5 /* AddTaskViewController.xib in Resources */,
 				8D2B24D7273639150078F4B5 /* NoteViewController.xib in Resources */,
 				8D09E7572749AF8F0005F809 /* MeasuresViewController.xib in Resources */,
+				8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */,
 				8D7E41AB2723E32400D87DD0 /* TextViewCell.xib in Resources */,
 				8D0F8701271A85AE004E2A7D /* SaveButtonCell.xib in Resources */,
 				8D0F86E12711BDEF004E2A7D /* GoogleService-Info.plist in Resources */,
@@ -834,6 +841,7 @@
 				8D09E7772749E0D90005F809 /* GroupCoordinator.swift in Sources */,
 				8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */,
 				8D0F8707271A9D54004E2A7D /* UIViewController+PickerView.swift in Sources */,
+				8D09E77C275AE6C00005F809 /* AddNoteViewController.swift in Sources */,
 				8D0F86DF271191AA004E2A7D /* UIViewController+Alert.swift in Sources */,
 				8D09E7622749C95D0005F809 /* RealmManager+Measures.swift in Sources */,
 				8D09E76D2749CDC80005F809 /* SyncManager+Task.swift in Sources */,

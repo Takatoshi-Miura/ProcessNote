@@ -80,6 +80,10 @@
 "MeasuresTitle" = "Measures details";
 
 
+// MARK: - AddNoteViewController
+"AddNoteTitle" = "Add note";
+
+
 // MARK: - SettingViewController
 "Basic configuration" = "Basic Configuration";
 "Data" = "Data";

@@ -13,6 +13,7 @@ class NoteCoordinator: Coordinator {
     var navigationController: UINavigationController?
     var noteViewController = NoteViewController()
     let settingCoordinator = SettingCoordinator()
+    var addNoteViewController = AddNoteViewController()
     
     func startFlow(in window: UIWindow?) {
     }
@@ -30,6 +31,12 @@ extension NoteCoordinator: NoteViewControllerDelegate {
     // NoteVC → SettingVC
     func noteVCHumburgerMenuButtonDidTap(_ viewController: NoteViewController) {
         settingCoordinator.startFlow(in: viewController)
+    }
+    
+    // NoteVC → AddNoteVC
+    func noteVCAddButtonDidTap(_ viewController: NoteViewController) {
+        addNoteViewController = AddNoteViewController()
+        viewController.present(addNoteViewController, animated: true)
     }
     
 }
