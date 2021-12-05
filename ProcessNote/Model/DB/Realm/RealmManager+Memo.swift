@@ -37,13 +37,14 @@ func updateMemoIsDeleted(memo: Memo) {
     }
 }
 
+
 // MARK: - Select
 
 /**
  Realmのメモデータを全取得
  - Returns: 全メモデータ
  */
-func selectAllMemoRealm() -> [Memo] {
+func getAllMemoRealm() -> [Memo] {
     var realmMemoArray: [Memo] = []
     let realm = try! Realm()
     let realmArray = realm.objects(Memo.self)
@@ -67,6 +68,27 @@ func getMemo(measuresID: String) -> [Memo] {
     ]
     let results = realm.objects(Memo.self)
                         .filter("(measuresID == '\(measuresID)') && (isDeleted == false)")
+                        .sorted(by: sortProperties)
+    for memo in results {
+        memoArray.append(memo)
+    }
+    return memoArray
+}
+
+/**
+ ノートに含まれるメモを取得
+ - Parameters:
+    - noteID: ノートID
+ - Returns: ノートに含まれるメモ
+ */
+func getMemo(noteID: String) -> [Memo] {
+    var memoArray: [Memo] = []
+    let realm = try! Realm()
+    let sortProperties = [
+        SortDescriptor(keyPath: "memoID", ascending: true),
+    ]
+    let results = realm.objects(Memo.self)
+                        .filter("(noteID == '\(noteID)') && (isDeleted == false)")
                         .sorted(by: sortProperties)
     for memo in results {
         memoArray.append(memo)

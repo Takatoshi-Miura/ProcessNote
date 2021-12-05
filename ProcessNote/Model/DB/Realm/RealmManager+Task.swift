@@ -135,7 +135,7 @@ func getGroupArrayForTaskView() -> [Group] {
  Realmの課題データを全取得
  - Returns: 全課題データ
  */
-func selectAllTaskRealm() -> [Task] {
+func getAllTaskRealm() -> [Task] {
     var realmTaskArray: [Task] = []
     let realm = try! Realm()
     let realmArray = realm.objects(Task.self)
@@ -151,7 +151,7 @@ func selectAllTaskRealm() -> [Task] {
     - ID: 取得したい課題のID
  - Returns: 課題データ
  */
-func selectTaskRealm(ID taskID: String) -> Task {
+func getTask(taskID: String) -> Task {
     let realm = try! Realm()
     return realm.objects(Task.self).filter("taskID == '\(taskID)'").first!
 }

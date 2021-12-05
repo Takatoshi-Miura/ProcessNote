@@ -13,7 +13,7 @@
  */
 func syncTask(completion: @escaping () -> ()) {
     // Realmの課題を全取得
-    let realmTaskArray: [Task] = selectAllTaskRealm()
+    let realmTaskArray: [Task] = getAllTaskRealm()
     
     // Firebaseの課題を全取得
     getAllTask(completion: {

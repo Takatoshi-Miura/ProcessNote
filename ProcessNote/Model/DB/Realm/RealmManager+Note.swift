@@ -23,6 +23,20 @@ func updateNoteUpdatedAtRealm(ID noteID: String) {
     }
 }
 
+/**
+ ノートの削除フラグを更新
+ - Parameters:
+    - note: ノート
+ */
+func updateNoteIsDeleted(note: Note) {
+    let realm = try! Realm()
+    let result = realm.objects(Note.self).filter("noteID == '\(note.getNoteID())'").first
+    try! realm.write {
+        result?.setIsDeleted(true)
+        result?.setUpdated_at(getCurrentTime())
+    }
+}
+
 // MARK: - Select
 
 /**
@@ -48,7 +62,7 @@ func getNoteArrayForNoteView() -> [Note] {
     
     let realm = try! Realm()
     let sortProperties = [
-        SortDescriptor(keyPath: "created_at", ascending: true),
+        SortDescriptor(keyPath: "created_at", ascending: false),
     ]
     let results = realm.objects(Note.self)
                         .filter("(isDeleted == false)")

@@ -13,7 +13,7 @@
  */
 func syncMeasures(completion: @escaping () -> ()) {
     // Realmの対策を全取得
-    let realmMeasuresArray: [Measures] = selectAllMeasuresRealm()
+    let realmMeasuresArray: [Measures] = getAllMeasuresRealm()
     
     // Firebaseの対策を全取得
     getAllMeasures(completion: {

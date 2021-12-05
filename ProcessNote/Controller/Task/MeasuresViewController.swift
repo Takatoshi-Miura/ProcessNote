@@ -116,7 +116,7 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "MeasuresViewCell"
-            let task = selectTaskRealm(ID: measures.getTaskID())
+            let task = getTask(taskID: measures.getTaskID())
             if task.getIsCompleted() {
                 cell.textField.isEnabled = false
             }

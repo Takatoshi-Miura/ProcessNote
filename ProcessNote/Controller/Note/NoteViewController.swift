@@ -13,6 +13,8 @@ protocol NoteViewControllerDelegate: AnyObject {
     func noteVCHumburgerMenuButtonDidTap(_ viewController: NoteViewController)
     // ノート追加ボタンタップ時の処理
     func noteVCAddButtonDidTap(_ viewController: NoteViewController)
+    // ノートタップ時の処理
+    func noteVCNoteDidTap(note: Note)
 }
 
 
@@ -92,7 +94,17 @@ class NoteViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (selectedIndex != nil) {
+            // 削除されている場合は一覧から取り除く
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+            let note = noteArray[selectedIndex!.row]
+            if note.getIsDeleted() {
+                noteArray.remove(at: selectedIndex!.row)
+                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                selectedIndex = nil
+                return
+            }
+            tableView.reloadRows(at: [selectedIndex!], with: .none)
+            selectedIndex = nil
         }
     }
     
@@ -146,6 +158,8 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath
+        let note = noteArray[indexPath.row]
+        delegate?.noteVCNoteDidTap(note: note)
     }
 
 }

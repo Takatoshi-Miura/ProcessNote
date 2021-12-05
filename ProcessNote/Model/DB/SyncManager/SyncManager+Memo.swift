@@ -13,7 +13,7 @@
  */
 func syncMemo(completion: @escaping () -> ()) {
     // Realmのメモを全取得
-    let realmMemoArray: [Memo] = selectAllMemoRealm()
+    let realmMemoArray: [Memo] = getAllMemoRealm()
     
     // Firebaseのノートを全取得
     getAllMemo(completion: {

@@ -36,6 +36,9 @@
 		8D09E78B275B27A60005F809 /* SyncManager+Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E78A275B27A60005F809 /* SyncManager+Note.swift */; };
 		8D09E78D275B2D160005F809 /* SyncManager+Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E78C275B2D150005F809 /* SyncManager+Memo.swift */; };
 		8D09E78F275B2D630005F809 /* RealmManager+Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E78E275B2D630005F809 /* RealmManager+Memo.swift */; };
+		8D09E792275C39F20005F809 /* NoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E790275C39F20005F809 /* NoteDetailViewController.swift */; };
+		8D09E793275C39F20005F809 /* NoteDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D09E791275C39F20005F809 /* NoteDetailViewController.xib */; };
+		8D09E795275C40D80005F809 /* NoteDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D09E794275C40D80005F809 /* NoteDetailCoordinator.swift */; };
 		8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869C270C776F004E2A7D /* AppDelegate.swift */; };
 		8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F869E270C776F004E2A7D /* SceneDelegate.swift */; };
 		8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F86A5270C7771004E2A7D /* Assets.xcassets */; };
@@ -144,6 +147,9 @@
 		8D09E78A275B27A60005F809 /* SyncManager+Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Note.swift"; sourceTree = "<group>"; };
 		8D09E78C275B2D150005F809 /* SyncManager+Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncManager+Memo.swift"; sourceTree = "<group>"; };
 		8D09E78E275B2D630005F809 /* RealmManager+Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmManager+Memo.swift"; sourceTree = "<group>"; };
+		8D09E790275C39F20005F809 /* NoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewController.swift; sourceTree = "<group>"; };
+		8D09E791275C39F20005F809 /* NoteDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewController.xib; sourceTree = "<group>"; };
+		8D09E794275C40D80005F809 /* NoteDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailCoordinator.swift; sourceTree = "<group>"; };
 		8D0F8699270C776F004E2A7D /* ProcessNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProcessNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0F869C270C776F004E2A7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D0F869E270C776F004E2A7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -351,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24EA273D328E0078F4B5 /* NoteCoordinator.swift */,
+				8D09E794275C40D80005F809 /* NoteDetailCoordinator.swift */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -381,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24D6273639150078F4B5 /* NoteViewController.xib */,
+				8D09E791275C39F20005F809 /* NoteDetailViewController.xib */,
 				8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */,
 			);
 			path = Note;
@@ -570,6 +578,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86CD270C7AB2004E2A7D /* NoteViewController.swift */,
+				8D09E790275C39F20005F809 /* NoteDetailViewController.swift */,
 				8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */,
 			);
 			path = Note;
@@ -703,6 +712,7 @@
 				8D09E7572749AF8F0005F809 /* MeasuresViewController.xib in Resources */,
 				8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */,
 				8D7E41AB2723E32400D87DD0 /* TextViewCell.xib in Resources */,
+				8D09E793275C39F20005F809 /* NoteDetailViewController.xib in Resources */,
 				8D0F8701271A85AE004E2A7D /* SaveButtonCell.xib in Resources */,
 				8D0F86E12711BDEF004E2A7D /* GoogleService-Info.plist in Resources */,
 				8D24BA93272041D2004367F6 /* SettingCell.xib in Resources */,
@@ -818,6 +828,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D09E795275C40D80005F809 /* NoteDetailCoordinator.swift in Sources */,
 				8D2B24E72736532E0078F4B5 /* TaskDetailCoordinator.swift in Sources */,
 				8D7E41AD2723F5EC00D87DD0 /* SyncManager.swift in Sources */,
 				8D09E78F275B2D630005F809 /* RealmManager+Memo.swift in Sources */,
@@ -835,6 +846,7 @@
 				8D0F8713271BDF07004E2A7D /* GroupHeaderView.swift in Sources */,
 				8D09E785275B0B870005F809 /* RealmManager+Note.swift in Sources */,
 				8D0F86F6271A65CE004E2A7D /* AddTaskViewController.swift in Sources */,
+				8D09E792275C39F20005F809 /* NoteDetailViewController.swift in Sources */,
 				8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */,
 				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
 				8D09E789275B12940005F809 /* FirebaseManager+Memo.swift in Sources */,

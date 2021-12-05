@@ -64,7 +64,7 @@ func updateMeasuresIsDeleted(measures: Measures) {
  Realmの対策データを全取得
  - Returns: 全対策データ
  */
-func selectAllMeasuresRealm() -> [Measures] {
+func getAllMeasuresRealm() -> [Measures] {
     var realmMeasuresArray: [Measures] = []
     let realm = try! Realm()
     let realmArray = realm.objects(Measures.self)
@@ -93,6 +93,19 @@ func getMeasuresInTask(ID taskID: String) -> [Measures] {
         measuresArray.append(measures)
     }
     return measuresArray
+}
+
+/**
+ 対策を取得
+ - Parameters:
+    - measuresID: 対策ID
+ - Returns: 対策
+ */
+func getMeasures(measuresID: String) -> Measures {
+    let realm = try! Realm()
+    return realm.objects(Measures.self)
+            .filter("measuresID == '\(measuresID)' && (isDeleted == false)")
+            .first!
 }
 
 /**

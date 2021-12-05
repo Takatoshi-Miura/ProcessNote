@@ -39,4 +39,15 @@ class NoteTextViewCell: UITableViewCell, UITextViewDelegate {
         measures.text = "\(NSLocalizedString("Measures", comment: ""))：\(measure.getTitle())"
     }
     
+    /**
+     ラベルに文字列をセット(ノート閲覧用)
+     - Parameters:
+        - task: 課題
+        - measure: 対策
+     */
+    func setLabelText(task: Task, measure: Measures, detail: Memo) {
+        title.text = task.getTitle()
+        measures.text = "\(NSLocalizedString("Measures", comment: ""))：\(measure.getTitle())"
+        memo.text = detail.getDetail()
+    }
 }

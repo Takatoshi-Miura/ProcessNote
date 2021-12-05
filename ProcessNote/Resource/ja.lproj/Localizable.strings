@@ -86,6 +86,11 @@
 "EmptyNote" = "ノートを入力して下さい。";
 
 
+// MARK: - NoteDetailViewController
+"DeleteNoteTitle" = "ノートの削除";
+"DeleteNoteMessage" = "ノートを削除しますか？\nノートを削除すると復元できません。";
+
+
 // MARK: - SettingViewController
 "Basic configuration" = "基本設定";
 "Data" = "データ";
