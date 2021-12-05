@@ -75,6 +75,23 @@ func getAllMeasuresRealm() -> [Measures] {
 }
 
 /**
+ Realmの対策データを全取得
+ - Parameters:
+    - isDeleted: 対策の削除状況
+ - Returns: 全対策データ
+ */
+func getAllMeasures(isDeleted: Bool) -> [Measures] {
+    var realmMeasuresArray: [Measures] = []
+    let realm = try! Realm()
+    let realmArray = realm.objects(Measures.self)
+                            .filter("isDeleted == \(isDeleted)")
+    for measures in realmArray {
+        realmMeasuresArray.append(measures)
+    }
+    return realmMeasuresArray
+}
+
+/**
  課題に含まれる対策を取得
  - Parameters:
     - taskID: 課題ID

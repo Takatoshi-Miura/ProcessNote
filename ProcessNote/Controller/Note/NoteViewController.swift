@@ -110,6 +110,10 @@ class NoteViewController: UIViewController {
     
     /// ノート追加
     @IBAction func addButtonTap(_ sender: Any) {
+        if getAllMeasures(isDeleted: false).isEmpty {
+            showErrorAlert(message: "EmptyMeasures")
+            return
+        }
         self.delegate?.noteVCAddButtonDidTap(self)
     }
     

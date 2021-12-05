@@ -80,6 +80,10 @@
 "MeasuresTitle" = "Measures details";
 
 
+// MARK: - NoteViewController
+"EmptyMeasures" = "No measures have been created. Create an task and set one or more measures.";
+
+
 // MARK: - AddNoteViewController
 "AddNoteTitle" = "Add note";
 "NoteCreateError" = "Failed to create a note.";
