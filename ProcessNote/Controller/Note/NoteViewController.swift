@@ -9,8 +9,6 @@ import UIKit
 
 
 protocol NoteViewControllerDelegate: AnyObject {
-    // ハンバーガーメニューボタンタップ時の処理
-    func noteVCHumburgerMenuButtonDidTap(_ viewController: NoteViewController)
     // ノート追加ボタンタップ時の処理
     func noteVCAddButtonDidTap(_ viewController: NoteViewController)
     // ノートタップ時の処理
@@ -33,33 +31,11 @@ class NoteViewController: UIViewController {
         super.viewDidLoad()
         initNavigationController()
         initTableView()
-        addRightSwipeGesture()
         noteArray = getNoteArrayForNoteView()
     }
     
     func initNavigationController() {
         self.title = NSLocalizedString("Note", comment: "")
-        
-        var menuButton: UIBarButtonItem
-        let image = UITraitCollection.current.userInterfaceStyle == .dark ? UIImage(named: "humburger_menu_white")! : UIImage(named: "humburger_menu_black")!
-        menuButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal),
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(openHumburgerMenu(_:)))
-        navigationItem.leftBarButtonItems = [menuButton]
-    }
-    
-    /// ハンバーガーメニューを表示
-    @objc func openHumburgerMenu(_ sender: UIBarButtonItem) {
-        self.delegate?.noteVCHumburgerMenuButtonDidTap(self)
-    }
-    
-    /// 右スワイプでハンバーガーメニューを開く
-    func addRightSwipeGesture() {
-        let rightSwipe = UISwipeGestureRecognizer(target: self,
-                                                 action: #selector(openHumburgerMenu(_:)))
-        rightSwipe.direction = .right
-        self.view.addGestureRecognizer(rightSwipe)
     }
     
     func initTableView() {
