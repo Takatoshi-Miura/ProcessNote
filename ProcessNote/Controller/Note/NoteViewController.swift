@@ -37,7 +37,6 @@ class NoteViewController: UIViewController {
         noteArray = getNoteArrayForNoteView()
     }
     
-    /// NavigationControllerの初期設定
     func initNavigationController() {
         self.title = NSLocalizedString("Note", comment: "")
         
@@ -63,7 +62,6 @@ class NoteViewController: UIViewController {
         self.view.addGestureRecognizer(rightSwipe)
     }
     
-    /// tableViewの初期設定
     func initTableView() {
         tableView.tableFooterView = UIView()
         tableView.refreshControl = UIRefreshControl()

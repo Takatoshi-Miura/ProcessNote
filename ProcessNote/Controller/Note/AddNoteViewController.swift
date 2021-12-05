@@ -139,6 +139,9 @@ extension AddNoteViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setLabelText(taskArray[indexPath.row])
             cell.memo.inputAccessoryView = createToolBar(#selector(completeAction))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.3))
+            separatorView.backgroundColor = UIColor.gray
+            cell.addSubview(separatorView)
             cell.accessibilityIdentifier = "AddNoteViewCell"
             return cell
         case .save:
