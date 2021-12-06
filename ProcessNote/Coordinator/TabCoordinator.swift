@@ -79,7 +79,7 @@ class TabCoordinator: NSObject, Coordinator {
     
     var tabBarController: UITabBarController
     let taskCoordinator = TaskCoordinator()
-    let noteCoordinator = NoteCoordinator()
+    let notePageCoordinator = NotePageCoordinator()
     
     required override init() {
         self.tabBarController = .init()
@@ -114,7 +114,7 @@ class TabCoordinator: NSObject, Coordinator {
         case .task:
             taskCoordinator.startFlow(in: navController)
         case .note:
-            noteCoordinator.startFlow(in: navController)
+            notePageCoordinator.startFlow(in: navController)
         }
         
         return navController

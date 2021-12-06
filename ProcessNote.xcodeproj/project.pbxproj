@@ -90,6 +90,9 @@
 		8D7E41AF272439F900D87DD0 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */; };
 		8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */; };
 		8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */; };
+		8DB3FBD9275D6E110092F5FA /* NotePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB3FBD7275D6E110092F5FA /* NotePageViewController.swift */; };
+		8DB3FBDA275D6E110092F5FA /* NotePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB3FBD8275D6E110092F5FA /* NotePageViewController.xib */; };
+		8DB3FBDC275D70810092F5FA /* NotePageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB3FBDB275D70810092F5FA /* NotePageCoordinator.swift */; };
 		8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */; };
 		8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */; };
 		8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */; };
@@ -207,6 +210,9 @@
 		8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
+		8DB3FBD7275D6E110092F5FA /* NotePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePageViewController.swift; sourceTree = "<group>"; };
+		8DB3FBD8275D6E110092F5FA /* NotePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotePageViewController.xib; sourceTree = "<group>"; };
+		8DB3FBDB275D70810092F5FA /* NotePageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePageCoordinator.swift; sourceTree = "<group>"; };
 		8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeaderView.xib; sourceTree = "<group>"; };
 		8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Indicator.swift"; sourceTree = "<group>"; };
@@ -357,6 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24EA273D328E0078F4B5 /* NoteCoordinator.swift */,
+				8DB3FBDB275D70810092F5FA /* NotePageCoordinator.swift */,
 				8D09E794275C40D80005F809 /* NoteDetailCoordinator.swift */,
 			);
 			path = Note;
@@ -388,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24D6273639150078F4B5 /* NoteViewController.xib */,
+				8DB3FBD8275D6E110092F5FA /* NotePageViewController.xib */,
 				8D09E791275C39F20005F809 /* NoteDetailViewController.xib */,
 				8D09E77B275AE6C00005F809 /* AddNoteViewController.xib */,
 			);
@@ -578,6 +586,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86CD270C7AB2004E2A7D /* NoteViewController.swift */,
+				8DB3FBD7275D6E110092F5FA /* NotePageViewController.swift */,
 				8D09E790275C39F20005F809 /* NoteDetailViewController.swift */,
 				8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */,
 			);
@@ -712,6 +721,7 @@
 				8D09E7572749AF8F0005F809 /* MeasuresViewController.xib in Resources */,
 				8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */,
 				8D7E41AB2723E32400D87DD0 /* TextViewCell.xib in Resources */,
+				8DB3FBDA275D6E110092F5FA /* NotePageViewController.xib in Resources */,
 				8D09E793275C39F20005F809 /* NoteDetailViewController.xib in Resources */,
 				8D0F8701271A85AE004E2A7D /* SaveButtonCell.xib in Resources */,
 				8D0F86E12711BDEF004E2A7D /* GoogleService-Info.plist in Resources */,
@@ -846,6 +856,7 @@
 				8D0F8713271BDF07004E2A7D /* GroupHeaderView.swift in Sources */,
 				8D09E785275B0B870005F809 /* RealmManager+Note.swift in Sources */,
 				8D0F86F6271A65CE004E2A7D /* AddTaskViewController.swift in Sources */,
+				8DB3FBDC275D70810092F5FA /* NotePageCoordinator.swift in Sources */,
 				8D09E792275C39F20005F809 /* NoteDetailViewController.swift in Sources */,
 				8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */,
 				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
@@ -855,6 +866,7 @@
 				8D0F86EE2712AC1F004E2A7D /* Setting.swift in Sources */,
 				8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */,
 				8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */,
+				8DB3FBD9275D6E110092F5FA /* NotePageViewController.swift in Sources */,
 				8D09E78D275B2D160005F809 /* SyncManager+Memo.swift in Sources */,
 				8D09E78B275B27A60005F809 /* SyncManager+Note.swift in Sources */,
 				8D09E76F2749CE390005F809 /* SyncManager+Group.swift in Sources */,
