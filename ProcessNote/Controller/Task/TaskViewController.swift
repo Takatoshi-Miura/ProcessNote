@@ -214,21 +214,33 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true // 並び替え許可
+        if indexPath.row >= taskArray[indexPath.section].count {
+            return false    // 完了課題セルは並び替え不可
+        } else {
+            return true
+        }
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // 完了課題セルの下に入れようとした場合は課題の最下端に並び替え
+        var destinationIndex = destinationIndexPath
+        let count = taskArray[destinationIndex.section].count
+        if destinationIndex.row >= count {
+            destinationIndex.row = count - 1
+        }
+        
         // 並び順を保存
         let task = taskArray[sourceIndexPath.section][sourceIndexPath.row]
         taskArray[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        taskArray[destinationIndexPath.section].insert(task, at: destinationIndexPath.row)
+        taskArray[destinationIndex.section].insert(task, at: destinationIndex.row)
         updateTaskOrderRealm(taskArray: taskArray)
         
         // グループが変わる場合はグループも更新
-        if sourceIndexPath.section != destinationIndexPath.section {
-            let groupId = groupArray[destinationIndexPath.section].getGroupID()
+        if sourceIndexPath.section != destinationIndex.section {
+            let groupId = groupArray[destinationIndex.section].getGroupID()
             updateTaskGroupIdRealm(task: task, ID: groupId)
         }
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
