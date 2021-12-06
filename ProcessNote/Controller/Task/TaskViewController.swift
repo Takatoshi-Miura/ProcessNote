@@ -29,9 +29,9 @@ class TaskViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
-    var selectedIndex: IndexPath?
-    var realmGroupArray: [Group] = [Group]()
-    var realmTaskArray: [[Task]] = [[Task]]()
+    private var selectedIndex: IndexPath?
+    private var groupArray: [Group] = [Group]()
+    private var taskArray: [[Task]] = [[Task]]()
     var delegate: TaskViewControllerDelegate?
     
     
@@ -67,7 +67,7 @@ class TaskViewController: UIViewController {
         let addGroupAction = UIAlertAction(title: NSLocalizedString("Group", comment: ""), style: .default) { _ in
             self.delegate?.taskVCAddGroupDidTap(self)
         }
-        if !realmGroupArray.isEmpty {
+        if !groupArray.isEmpty {
             let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
                 self.delegate?.taskVCAddTaskDidTap(self)
             }
@@ -105,15 +105,15 @@ class TaskViewController: UIViewController {
         if Network.isOnline() {
             showIndicator(message: "ServerCommunication")
             syncDatabase(completion: {
-                self.realmGroupArray = getGroupArrayForTaskView()
-                self.realmTaskArray = getTaskArrayForTaskView()
+                self.groupArray = getGroupArrayForTaskView()
+                self.taskArray = getTaskArrayForTaskView()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
                 self.dismissIndicator()
             })
         } else {
-            realmGroupArray = getGroupArrayForTaskView()
-            realmTaskArray = getTaskArrayForTaskView()
+            groupArray = getGroupArrayForTaskView()
+            taskArray = getTaskArrayForTaskView()
             tableView.refreshControl?.endRefreshing()
         }
     }
@@ -123,11 +123,11 @@ class TaskViewController: UIViewController {
         if (selectedIndex != nil) {
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
             // 未完了の課題から戻る場合
-            if selectedIndex!.row < realmTaskArray[selectedIndex!.section].count {
+            if selectedIndex!.row < taskArray[selectedIndex!.section].count {
                 // 課題が完了or削除されていれば取り除く
-                let task = realmTaskArray[selectedIndex!.section][selectedIndex!.row]
+                let task = taskArray[selectedIndex!.section][selectedIndex!.row]
                 if task.getIsCompleted() || task.getIsDeleted() {
-                    realmTaskArray[selectedIndex!.section].remove(at: selectedIndex!.row)
+                    taskArray[selectedIndex!.section].remove(at: selectedIndex!.row)
                     tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
                     selectedIndex = nil
                     return
@@ -137,8 +137,8 @@ class TaskViewController: UIViewController {
             selectedIndex = nil
         } else {
             // グループから戻る場合はリロード
-            realmGroupArray = getGroupArrayForTaskView()
-            realmTaskArray = getTaskArrayForTaskView()
+            groupArray = getGroupArrayForTaskView()
+            taskArray = getTaskArrayForTaskView()
             tableView.reloadData()
         }
     }
@@ -150,8 +150,8 @@ class TaskViewController: UIViewController {
      */
     func insertGroup(group: Group) {
         let index: IndexPath = [group.getOrder(), 0]
-        realmGroupArray.append(group)
-        realmTaskArray.append([])
+        groupArray.append(group)
+        taskArray.append([])
         tableView.insertSections(IndexSet(integer: index.section), with: UITableView.RowAnimation.right)
     }
     
@@ -162,9 +162,9 @@ class TaskViewController: UIViewController {
      */
     func insertTask(task: Task) {
         var index: IndexPath = [0, task.getOrder()]
-        for group in realmGroupArray {
+        for group in groupArray {
             if task.getGroupID() == group.getGroupID() {
-                realmTaskArray[index.section].append(task)
+                taskArray[index.section].append(task)
                 tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
             }
             index = [index.section + 1, task.getOrder()]
@@ -179,7 +179,7 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: GroupHeaderView.self))
         if let headerView = view as? GroupHeaderView {
             headerView.delegate = self
-            headerView.setProperty(group: realmGroupArray[section])
+            headerView.setProperty(group: groupArray[section])
             return headerView
         }
         return nil
@@ -194,11 +194,11 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return realmGroupArray.count
+        return groupArray.count
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row >= realmTaskArray[indexPath.section].count {
+        if indexPath.row >= taskArray[indexPath.section].count {
             return false    // 解決済みの課題セルは編集不可
         } else {
             return true
@@ -219,31 +219,31 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // 並び順を保存
-        let task = realmTaskArray[sourceIndexPath.section][sourceIndexPath.row]
-        realmTaskArray[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        realmTaskArray[destinationIndexPath.section].insert(task, at: destinationIndexPath.row)
-        updateTaskOrderRealm(taskArray: realmTaskArray)
+        let task = taskArray[sourceIndexPath.section][sourceIndexPath.row]
+        taskArray[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        taskArray[destinationIndexPath.section].insert(task, at: destinationIndexPath.row)
+        updateTaskOrderRealm(taskArray: taskArray)
         
         // グループが変わる場合はグループも更新
         if sourceIndexPath.section != destinationIndexPath.section {
-            let groupId = realmGroupArray[destinationIndexPath.section].getGroupID()
+            let groupId = groupArray[destinationIndexPath.section].getGroupID()
             updateTaskGroupIdRealm(task: task, ID: groupId)
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return realmTaskArray[section].count + 1
+        return taskArray[section].count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        if indexPath.row >= realmTaskArray[indexPath.section].count {
+        if indexPath.row >= taskArray[indexPath.section].count {
             // 完了済み課題セル
             cell.textLabel?.text = NSLocalizedString("CompletedTask", comment: "")
             cell.textLabel?.textColor = UIColor.systemBlue
         } else {
             // 課題セル
-            let task = realmTaskArray[indexPath.section][indexPath.row]
+            let task = taskArray[indexPath.section][indexPath.row]
             cell.textLabel?.text = task.getTitle()
             cell.detailTextLabel?.text = "\(NSLocalizedString("Measures", comment: ""))：\(getMeasuresTitleInTask(ID: task.getTaskID()))"
             cell.detailTextLabel?.textColor = UIColor.lightGray
@@ -256,13 +256,13 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath
         // 完了済み課題セル
-        if indexPath.row >= realmTaskArray[indexPath.section].count {
-            let groupID = realmGroupArray[indexPath.section].getGroupID()
+        if indexPath.row >= taskArray[indexPath.section].count {
+            let groupID = groupArray[indexPath.section].getGroupID()
             delegate?.taskVCCompletedTaskCellDidTap(groupID: groupID)
             return
         }
         // 課題セル
-        let task = realmTaskArray[selectedIndex!.section][selectedIndex!.row]
+        let task = taskArray[selectedIndex!.section][selectedIndex!.row]
         delegate?.taskVCTaskCellDidTap(task: task)
     }
 }
@@ -272,6 +272,11 @@ extension TaskViewController: GroupHeaderViewDelegate {
     
     // セクションヘッダータップ時の処理
     func headerDidTap(view: GroupHeaderView) {
+        delegate?.taskVCHeaderDidTap(group: view.group)
+    }
+    
+    // セクションヘッダーのinfoボタンタップ時の処理
+    func infoButtonDidTap(view: GroupHeaderView) {
         delegate?.taskVCHeaderDidTap(group: view.group)
     }
     

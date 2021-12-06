@@ -9,7 +9,10 @@ import UIKit
 
 
 protocol GroupHeaderViewDelegate: AnyObject {
+    // ヘッダーをタップ時の処理
     func headerDidTap(view: GroupHeaderView)
+    // infoボタンをタップ時の処理
+    func infoButtonDidTap(view: GroupHeaderView)
 }
 
 
@@ -17,17 +20,14 @@ class GroupHeaderView: UITableViewHeaderFooterView {
     
     // MARK: UI,Variable
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var infoButton: UIButton!
     var group = Group()
     var delegate: GroupHeaderViewDelegate?
     
     // MARK: LifeCycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        // 枠線を追加
-        imageView.layer.borderWidth = 0.5
-        imageView.layer.borderColor = UIColor.black.cgColor
         // タップジェスチャーを追加
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerViewDidTap(sender:))))
     }
@@ -35,14 +35,11 @@ class GroupHeaderView: UITableViewHeaderFooterView {
     func setProperty(group: Group) {
         self.group = group
         imageView.backgroundColor = color[group.getColor()]
-        
         titleLabel.text = group.getTitle()
-        
-        if group.getIsCompleted() {
-            dateLabel.text = "\(group.getCreated_at())〜\(group.getCompleted_at())"
-        } else {
-            dateLabel.text = "\(group.getCreated_at())〜"
-        }
+    }
+    
+    @IBAction func infoButtonDidTap(_ sender: Any) {
+        self.delegate?.infoButtonDidTap(view: self)
     }
     
     @objc func headerViewDidTap(sender: UITapGestureRecognizer) {

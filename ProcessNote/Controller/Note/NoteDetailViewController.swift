@@ -32,6 +32,7 @@ class NoteDetailViewController: UIViewController {
     }
     
     func initNavigationBar() {
+        self.title = note.getCreated_at()
         var navigationItems: [UIBarButtonItem] = []
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteNote))
         navigationItems.append(deleteButton)
