@@ -64,7 +64,7 @@ func getMemo(measuresID: String) -> [Memo] {
     var memoArray: [Memo] = []
     let realm = try! Realm()
     let sortProperties = [
-        SortDescriptor(keyPath: "memoID", ascending: true),
+        SortDescriptor(keyPath: "created_at", ascending: false),
     ]
     let results = realm.objects(Memo.self)
                         .filter("(measuresID == '\(measuresID)') && (isDeleted == false)")
@@ -85,7 +85,7 @@ func getMemo(noteID: String) -> [Memo] {
     var memoArray: [Memo] = []
     let realm = try! Realm()
     let sortProperties = [
-        SortDescriptor(keyPath: "memoID", ascending: true),
+        SortDescriptor(keyPath: "created_at", ascending: false),
     ]
     let results = realm.objects(Memo.self)
                         .filter("(noteID == '\(noteID)') && (isDeleted == false)")
