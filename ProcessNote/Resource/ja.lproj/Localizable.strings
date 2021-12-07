@@ -48,7 +48,7 @@
 // MARK: - AddGroupViewController
 "Cancel" = "キャンセル";
 "AddGroupTitle" = "グループの追加";
-"Title" = "タイトル";
+"Title" = "タイトル (必須)";
 "Color" = "色";
 "Addition" = "追加";
 "EmptyTitle" = "タイトルを入力して下さい。";
