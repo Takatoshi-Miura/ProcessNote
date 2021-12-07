@@ -30,6 +30,7 @@ class TaskViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
     private var selectedIndex: IndexPath?
+    private var sectionExtended: [Bool] = []
     private var groupArray: [Group] = [Group]()
     private var taskArray: [[Task]] = [[Task]]()
     var delegate: TaskViewControllerDelegate?
@@ -107,6 +108,7 @@ class TaskViewController: UIViewController {
             syncDatabase(completion: {
                 self.groupArray = getGroupArrayForTaskView()
                 self.taskArray = getTaskArrayForTaskView()
+                self.initSectionExtended()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
                 self.dismissIndicator()
@@ -114,7 +116,16 @@ class TaskViewController: UIViewController {
         } else {
             groupArray = getGroupArrayForTaskView()
             taskArray = getTaskArrayForTaskView()
+            initSectionExtended()
             tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    /// セクション開閉状態の初期化
+    func initSectionExtended() {
+        sectionExtended = []
+        for _ in groupArray {
+            sectionExtended.append(true)
         }
     }
     
@@ -151,6 +162,7 @@ class TaskViewController: UIViewController {
     func insertGroup(group: Group) {
         let index: IndexPath = [group.getOrder(), 0]
         groupArray.append(group)
+        sectionExtended.append(true)
         taskArray.append([])
         tableView.insertSections(IndexSet(integer: index.section), with: UITableView.RowAnimation.right)
     }
@@ -244,7 +256,10 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskArray[section].count + 1
+        if sectionExtended.isEmpty {
+            return 0
+        }
+        return sectionExtended[section] ? taskArray[section].count + 1 : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -284,7 +299,10 @@ extension TaskViewController: GroupHeaderViewDelegate {
     
     // セクションヘッダータップ時の処理
     func headerDidTap(view: GroupHeaderView) {
-        delegate?.taskVCHeaderDidTap(group: view.group)
+        if let firstIndex = groupArray.firstIndex(of: view.group) {
+            sectionExtended[firstIndex].toggle()
+            tableView.reloadSections(NSIndexSet(index: firstIndex) as IndexSet, with: .none)
+        }
     }
     
     // セクションヘッダーのinfoボタンタップ時の処理
