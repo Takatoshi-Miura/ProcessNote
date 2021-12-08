@@ -65,18 +65,19 @@ func getCurrentDate() -> String {
 }
 
 /**
- 日付をyyyy/MM/ddに変換
+ 日付を指定したフォーマットに変換
  - Parameters:
     - dateString: 日付文字列
-    - format: フォーマット("yyyy-MM-dd HH:mm:ss"等)
- - Returns: 日付（yyyy/MM/dd）
+    - format: 日付文字列のフォーマット("yyyy-MM-dd HH:mm:ss"等)
+    - goalFormat: 変換後のフォーマット("yyyy-MM-dd"等)
+ - Returns: 日付
  */
-func changeDateString(dateString: String, format: String) -> String {
+func changeDateString(dateString: String, format: String, goalFormat: String) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.calendar = Calendar(identifier: .gregorian)
     dateFormatter.dateFormat = format
     let date = dateFormatter.date(from: dateString)!
-    dateFormatter.dateFormat = "yyyy/MM/dd"
+    dateFormatter.dateFormat = goalFormat
     return dateFormatter.string(from: date)
 }
 

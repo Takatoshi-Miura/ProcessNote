@@ -20,7 +20,9 @@ class NoteDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var note = Note()
     var memoArray = [Memo]()
-    var sectionTitle: [String] = [""]
+    var groupArray = [Group]()
+    var taskArray = [[Task]]()
+    var sectionTitle = [""]
     var delegate: NoteDetailViewControllerDelegate?
     
     // MARK: LifeCycle
@@ -29,6 +31,8 @@ class NoteDetailViewController: UIViewController {
         initNavigationBar()
         initTableView()
         memoArray = getMemo(noteID: note.getNoteID())
+        groupArray = getGroupArrayForTaskView()
+        taskArray = getTaskArrayForTaskView()
     }
     
     func initNavigationBar() {

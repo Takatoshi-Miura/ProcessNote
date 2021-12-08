@@ -24,13 +24,14 @@ class NoteViewController: UIViewController {
     var sectionTitle: [String] = [""]
     var cellTitle: [[String]] = [[]]
     var delegate: NoteViewControllerDelegate?
-    var noteArray = [Note]()
+    var noteArray = [[Note]]()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationController()
         initTableView()
+        sectionTitle = getNoteYearAndMonth()
         noteArray = getNoteArrayForNoteView()
     }
     
@@ -54,12 +55,14 @@ class NoteViewController: UIViewController {
         if Network.isOnline() {
             showIndicator(message: "ServerCommunication")
             syncDatabase(completion: {
+                self.sectionTitle = getNoteYearAndMonth()
                 self.noteArray = getNoteArrayForNoteView()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
                 self.dismissIndicator()
             })
         } else {
+            sectionTitle = getNoteYearAndMonth()
             noteArray = getNoteArrayForNoteView()
             tableView.refreshControl?.endRefreshing()
         }
@@ -70,9 +73,9 @@ class NoteViewController: UIViewController {
         if (selectedIndex != nil) {
             // 削除されている場合は一覧から取り除く
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
-            let note = noteArray[selectedIndex!.row]
+            let note = noteArray[selectedIndex!.section][selectedIndex!.row]
             if note.getIsDeleted() {
-                noteArray.remove(at: selectedIndex!.row)
+                noteArray[selectedIndex!.section].remove(at: selectedIndex!.row)
                 tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
                 selectedIndex = nil
                 return
@@ -97,9 +100,10 @@ class NoteViewController: UIViewController {
         - note: 挿入するノート
      */
     func insertNote(note: Note) {
-        let index: IndexPath = [0, 0]
-        noteArray.append(note)
-        tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
+        // TODO: tableに追加処理
+//        let index: IndexPath = [0, 0]
+//        noteArray[].append(note)
+//        tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
     }
     
 }
@@ -123,12 +127,12 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
         if noteArray.isEmpty {
             return 0
         }
-        return noteArray.count
+        return noteArray[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = noteArray[indexPath.row].getCreated_at()
+        cell.textLabel?.text = noteArray[indexPath.section][indexPath.row].getCreated_at()
         cell.accessoryType = .disclosureIndicator // > 表示
         cell.accessibilityIdentifier = "NoteViewCell"
         return cell
@@ -136,7 +140,7 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath
-        let note = noteArray[indexPath.row]
+        let note = noteArray[indexPath.section][indexPath.row]
         delegate?.noteVCNoteDidTap(note: note)
     }
 
