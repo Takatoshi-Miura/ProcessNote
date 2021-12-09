@@ -24,6 +24,20 @@ func updateMemoUpdatedAtRealm(ID memoID: String) {
 }
 
 /**
+ メモの内容を更新
+ - Parameters:
+    - memo: メモ
+ */
+func updateMemoDetail(ID memoID: String, detail: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Memo.self).filter("memoID == '\(memoID)'").first
+    try! realm.write {
+        result?.setDetail(detail)
+        result?.setUpdated_at(getCurrentTime())
+    }
+}
+
+/**
  メモの削除フラグを更新
  - Parameters:
     - memo: メモ

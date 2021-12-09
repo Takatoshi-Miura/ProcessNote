@@ -83,9 +83,16 @@ extension MemoDetailViewController: UITableViewDelegate, UITableViewDataSource {
         let measures = getMeasures(measuresID: memo.getMeasuresID())
         let task = getTask(taskID: measures.getTaskID())
         cell.setLabelText(task: task, measure: measures, detail: memo)
+        cell.memo.delegate = self
+        cell.memo.inputAccessoryView = createToolBar(#selector(completeAction))
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.accessibilityIdentifier = "NoteDetailViewCell"
         return cell
+    }
+    
+    @objc func completeAction() {
+        // キーボードを閉じる
+        self.view.endEditing(true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -96,5 +103,19 @@ extension MemoDetailViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+}
+
+
+extension MemoDetailViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        // 差分がなければ何もしない
+        if textView.text! == memo.getDetail() {
+            return
+        }
+        
+        // メモを更新
+        updateMemoDetail(ID: memo.getMemoID(), detail: textView.text!)
+    }
 }
 

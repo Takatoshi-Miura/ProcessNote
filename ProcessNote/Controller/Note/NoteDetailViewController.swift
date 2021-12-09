@@ -129,7 +129,6 @@ extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
         let task = getTask(taskID: measures.getTaskID())
         cell.setLabelText(task: task, measure: measures, detail: memo)
         cell.memo.isEditable = false
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.accessibilityIdentifier = "NoteDetailViewCell"
         return cell
     }
