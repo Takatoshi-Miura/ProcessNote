@@ -12,6 +12,7 @@ class NoteDetailCoordinator: Coordinator {
     
     var navigationController: UINavigationController?
     var noteDetailViewController = NoteDetailViewController()
+    let memoDetailCoordinator = MemoDetailCoordinator()
     
     func startFlow(in window: UIWindow?) {
     }
@@ -28,11 +29,17 @@ class NoteDetailCoordinator: Coordinator {
     }
 }
 
+
 extension NoteDetailCoordinator: NoteDetailViewControllerDelegate {
     
     // NoteVC ← NoteDetailVC
     func noteDetailVCDeleteNote() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // NoteVC → MemoDetailVC
+    func noteDetailVCMemoCellDidTap(memo: Memo) {
+        memoDetailCoordinator.startFlow(in: navigationController!, withMemo: memo)
     }
     
 }

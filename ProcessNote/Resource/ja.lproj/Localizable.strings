@@ -95,6 +95,11 @@
 "DeleteNoteMessage" = "ノートを削除しますか？\nノートを削除すると復元できません。";
 
 
+// MARK: - MemoDetailViewController
+"DeleteMemoTitle" = "メモの削除";
+"DeleteMemoMessage" = "メモを削除しますか？\nメモを削除すると復元できません。";
+
+
 // MARK: - SettingViewController
 "Basic configuration" = "基本設定";
 "Data" = "データ";

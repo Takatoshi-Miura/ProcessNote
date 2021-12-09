@@ -11,6 +11,8 @@ import UIKit
 protocol NoteDetailViewControllerDelegate: AnyObject {
     // ノート削除時の処理
     func noteDetailVCDeleteNote()
+    // メモタップ時の処理
+    func noteDetailVCMemoCellDidTap(memo: Memo)
 }
 
 
@@ -23,6 +25,7 @@ class NoteDetailViewController: UIViewController {
     var groupArray = [Group]()
     var taskArray = [[Task]]()
     var sectionTitle = [""]
+    private var selectedIndex: IndexPath?
     var delegate: NoteDetailViewControllerDelegate?
     
     // MARK: LifeCycle
@@ -66,18 +69,18 @@ class NoteDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        if (selectedIndex != nil) {
-//            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
-//            // 対策が削除されていれば取り除く
-//            let measures = measuresArray[selectedIndex!.row]
-//            if measures.getIsDeleted() {
-//                measuresArray.remove(at: selectedIndex!.row)
-//                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
-//                selectedIndex = nil
-//                return
-//            }
-//            tableView.reloadRows(at: [selectedIndex!], with: .none)
-//        }
+        if (selectedIndex != nil) {
+            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+            // メモが削除されていれば取り除く
+            let memo = memoArray[selectedIndex!.row]
+            if memo.getIsDeleted() {
+                memoArray.remove(at: selectedIndex!.row)
+                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                selectedIndex = nil
+                return
+            }
+            tableView.reloadRows(at: [selectedIndex!], with: .none)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -136,6 +139,9 @@ extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath
+        let memo = memoArray[indexPath.row]
+        delegate?.noteDetailVCMemoCellDidTap(memo: memo)
     }
     
 }
