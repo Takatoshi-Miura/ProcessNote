@@ -96,6 +96,7 @@
 
 
 // MARK: - MemoDetailViewController
+"EditMemoTitle" = "メモの編集";
 "DeleteMemoTitle" = "メモの削除";
 "DeleteMemoMessage" = "メモを削除しますか？\nメモを削除すると復元できません。";
 

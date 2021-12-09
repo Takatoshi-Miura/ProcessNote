@@ -29,7 +29,7 @@ class MemoDetailViewController: UIViewController {
     }
     
     func initNavigationBar() {
-        self.title = changeDateString(dateString: memo.getCreated_at(), format: "yyyy-MM-dd HH:mm:ss", goalFormat: "yyyy-MM-dd")
+        self.title = NSLocalizedString("EditMemoTitle", comment: "")
         var navigationItems: [UIBarButtonItem] = []
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMemo))
         navigationItems.append(deleteButton)

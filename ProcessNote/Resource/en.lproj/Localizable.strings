@@ -96,6 +96,7 @@
 
 
 // MARK: - MemoDetailViewController
+"EditMemoTitle" = "Edit memo";
 "DeleteMemoTitle" = "Delete memo";
 "DeleteMemoMessage" = "Do you want to delete this memo?\nIf you delete an memo, you cannot restore it.";
 
