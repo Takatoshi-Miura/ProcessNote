@@ -32,11 +32,11 @@ class SettingViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Basic configuration", comment: ""),
+        sectionTitle = [//NSLocalizedString("Basic configuration", comment: ""),
                         NSLocalizedString("Data", comment: ""),
                         NSLocalizedString("Help", comment: "")]
-        cellTitle = [[NSLocalizedString("Theme", comment: ""),
-                      NSLocalizedString("Notification", comment: "")],
+        cellTitle = [//[NSLocalizedString("Theme", comment: ""),
+                      //NSLocalizedString("Notification", comment: "")],
                      [NSLocalizedString("Data transfer", comment: "")],
                      [NSLocalizedString("How to use this App?", comment: ""),
                       NSLocalizedString("Inquiry", comment: "")]]
