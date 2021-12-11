@@ -12,6 +12,8 @@ import MessageUI
 protocol SettingViewControllerDelegate: AnyObject {
     // メニュー外をタップ時の処理
     func settingVCOutsideMenuDidTap(_ viewController: UIViewController)
+    // 引継ぎをタップ時の処理
+    func settingVCDataTransferDidTap(_ viewController: UIViewController)
 }
 
 
@@ -106,11 +108,9 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             // TODO: 通知設定
             break
         case NSLocalizedString("Data transfer", comment: ""):
-            // TODO: データの引継ぎ
             cell.setIconImage(UIImage(systemName: "icloud.and.arrow.up")!)
             break
         case NSLocalizedString("How to use this App?", comment: ""):
-            // TODO: チュートリアル
             cell.setIconImage(UIImage(systemName: "questionmark.circle")!)
             break
         case NSLocalizedString("Inquiry", comment: ""):
@@ -137,10 +137,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             // TODO: 通知設定
             break
         case NSLocalizedString("Data transfer", comment: ""):
-            // TODO: データの引継ぎ
             if !Network.isOnline() {
                 showErrorAlert(message: "Internet Error")
             }
+            delegate?.settingVCDataTransferDidTap(self)
             break
         case NSLocalizedString("How to use this App?", comment: ""):
             // TODO: チュートリアル

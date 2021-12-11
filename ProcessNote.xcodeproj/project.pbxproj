@@ -95,6 +95,9 @@
 		8D9BFF70276431160086EF1D /* NoteGroupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */; };
 		8D9BFF7327643B520086EF1D /* NoteDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF7127643B520086EF1D /* NoteDetailViewCell.swift */; };
 		8D9BFF7427643B520086EF1D /* NoteDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9BFF7227643B520086EF1D /* NoteDetailViewCell.xib */; };
+		8D9BFF77276468C70086EF1D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF75276468C70086EF1D /* LoginViewController.swift */; };
+		8D9BFF78276468C70086EF1D /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9BFF76276468C70086EF1D /* LoginViewController.xib */; };
+		8D9BFF7A27646A820086EF1D /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF7927646A820086EF1D /* LoginCoordinator.swift */; };
 		8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */; };
 		8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */; };
 		8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */; };
@@ -219,6 +222,9 @@
 		8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteGroupHeaderView.swift; sourceTree = "<group>"; };
 		8D9BFF7127643B520086EF1D /* NoteDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewCell.swift; sourceTree = "<group>"; };
 		8D9BFF7227643B520086EF1D /* NoteDetailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewCell.xib; sourceTree = "<group>"; };
+		8D9BFF75276468C70086EF1D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8D9BFF76276468C70086EF1D /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		8D9BFF7927646A820086EF1D /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
 		8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeaderView.xib; sourceTree = "<group>"; };
@@ -383,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24EC273D32EA0078F4B5 /* SettingCoordinator.swift */,
+				8D9BFF7927646A820086EF1D /* LoginCoordinator.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -416,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2B24D8273639B50078F4B5 /* SettingViewController.xib */,
+				8D9BFF76276468C70086EF1D /* LoginViewController.xib */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -609,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86D1270C7DA7004E2A7D /* SettingViewController.swift */,
+				8D9BFF75276468C70086EF1D /* LoginViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -744,6 +753,7 @@
 				8D09E74D27488FC10005F809 /* CompletedTaskViewController.xib in Resources */,
 				8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */,
 				8D09E7752749DA230005F809 /* GroupViewController.xib in Resources */,
+				8D9BFF78276468C70086EF1D /* LoginViewController.xib in Resources */,
 				8D2B24DF27364A7D0078F4B5 /* AddGroupViewController.xib in Resources */,
 				8D2B24DD273649750078F4B5 /* TaskDetailViewController.xib in Resources */,
 				8D0F86A6270C7771004E2A7D /* Assets.xcassets in Resources */,
@@ -853,6 +863,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D09E795275C40D80005F809 /* NoteDetailCoordinator.swift in Sources */,
+				8D9BFF7A27646A820086EF1D /* LoginCoordinator.swift in Sources */,
 				8D2B24E72736532E0078F4B5 /* TaskDetailCoordinator.swift in Sources */,
 				8D7E41AD2723F5EC00D87DD0 /* SyncManager.swift in Sources */,
 				8D09E78F275B2D630005F809 /* RealmManager+Memo.swift in Sources */,
@@ -906,6 +917,7 @@
 				8D09E7602749C8F30005F809 /* RealmManager+Group.swift in Sources */,
 				8D0F869F270C776F004E2A7D /* SceneDelegate.swift in Sources */,
 				8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */,
+				8D9BFF77276468C70086EF1D /* LoginViewController.swift in Sources */,
 				8D7E41AF272439F900D87DD0 /* TaskDetailViewController.swift in Sources */,
 				8D0F86E627128ECE004E2A7D /* Task.swift in Sources */,
 				8D7E41A72723CC4800D87DD0 /* Network.swift in Sources */,

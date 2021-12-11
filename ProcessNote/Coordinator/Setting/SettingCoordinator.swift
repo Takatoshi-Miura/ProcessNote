@@ -12,6 +12,7 @@ class SettingCoordinator: Coordinator {
     
     var navigationController: UINavigationController?
     var settingViewController = SettingViewController()
+    let loginCoordinator = LoginCoordinator()
     
     func startFlow(in window: UIWindow?) {
     }
@@ -22,7 +23,10 @@ class SettingCoordinator: Coordinator {
     func startFlow(in modalViewController: UIViewController) {
         settingViewController = SettingViewController()
         settingViewController.delegate = self
-        settingViewController.modalPresentationStyle = .overCurrentContext
+        settingViewController.modalPresentationStyle = .overFullScreen
+        if #available(iOS 13.0, *) {
+            settingViewController.isModalInPresentation = true
+        }
         modalViewController.present(settingViewController, animated: false)
     }
 }
@@ -30,9 +34,14 @@ class SettingCoordinator: Coordinator {
 
 extension SettingCoordinator: SettingViewControllerDelegate {
     
-    // SettingVC → TaskVC or NoteVC
+    // SettingVC → TaskVC
     func settingVCOutsideMenuDidTap(_ viewController: UIViewController) {
         viewController.dismiss(animated: false, completion: nil)
+    }
+    
+    // SettingVC → LoginVC
+    func settingVCDataTransferDidTap(_ viewController: UIViewController) {
+        loginCoordinator.startFlow(in: viewController)
     }
     
 }

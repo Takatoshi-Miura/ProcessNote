@@ -118,3 +118,11 @@
 "Mail Message" = "Please fill in the content of your inquiry.";
 "Mail Send Success" = "The email was sent successfully. Please wait for the reply from the developer.";
 "Mail Send Failed" = "The email could not be sent.";
+
+
+// MARK: - LoginViewController
+"MailAddress" = "Mail";
+"Password" = "Password";
+"Login" = "Login";
+"Forgot password" = "Forgot password";
+"Create account" = "Create account";

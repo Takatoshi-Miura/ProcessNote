@@ -118,3 +118,11 @@
 "Mail Message" = "お問い合わせ内容をご記入下さい";
 "Mail Send Success" = "メールを送信しました。\n開発者からの返信をお待ち下さい。";
 "Mail Send Failed" = "メールを送信できませんでした。";
+
+
+// MARK: - LoginViewController
+"MailAddress" = "メールアドレス";
+"Password" = "パスワード";
+"Login" = "ログイン";
+"Forgot password" = "パスワードを忘れた場合";
+"Create account" = "アカウント作成";
