@@ -226,7 +226,7 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
         var destinationIndex = destinationIndexPath
         let count = taskArray[destinationIndex.section].count
         if destinationIndex.row >= count {
-            destinationIndex.row = count - 1
+            destinationIndex.row = count == 0 ? 0 : count - 1
         }
         
         // 並び順を保存
