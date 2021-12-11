@@ -93,10 +93,32 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingCell
-        cell.setText(cellTitle[indexPath.section][indexPath.row])
-        cell.setIconImage(UIImage(systemName: "questionmark.circle")!)
+        let title = cellTitle[indexPath.section][indexPath.row]
+        cell.setText(title)
         cell.accessoryType = .disclosureIndicator
         cell.accessibilityIdentifier = "SettingViewCell"
+        
+        switch title {
+        case NSLocalizedString("Theme", comment: ""):
+            // TODO: テーマ設定
+            break
+        case NSLocalizedString("Notification", comment: ""):
+            // TODO: 通知設定
+            break
+        case NSLocalizedString("Data transfer", comment: ""):
+            // TODO: データの引継ぎ
+            cell.setIconImage(UIImage(systemName: "icloud.and.arrow.up")!)
+            break
+        case NSLocalizedString("How to use this App?", comment: ""):
+            // TODO: チュートリアル
+            cell.setIconImage(UIImage(systemName: "questionmark.circle")!)
+            break
+        case NSLocalizedString("Inquiry", comment: ""):
+            cell.setIconImage(UIImage(systemName: "envelope")!)
+            break
+        default:
+            break
+        }
         return cell
     }
     
