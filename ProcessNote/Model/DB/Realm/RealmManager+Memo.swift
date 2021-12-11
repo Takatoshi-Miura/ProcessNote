@@ -110,3 +110,27 @@ func getMemo(noteID: String) -> [Memo] {
     return memoArray
 }
 
+/**
+ グループに含まれるメモを取得
+ - Parameters:
+    - noteID: ノートID
+    - groupArray: グループ配列
+ - Returns: メモ配列[[Memo]]
+ */
+func getMemo(noteID: String, groupArray: [Group]) -> [[Memo]] {
+    var memoArray: [[Memo]] = []
+    
+    let memoInNote = getMemo(noteID: noteID)
+    for group in groupArray {
+        var array: [Memo] = []
+        for memo in memoInNote {
+            let groupID = getGroup(memo: memo).getGroupID()
+            if groupID == group.getGroupID() {
+                array.append(memo)
+            }
+        }
+        memoArray.append(array)
+    }
+    
+    return memoArray
+}

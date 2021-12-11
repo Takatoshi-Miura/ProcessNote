@@ -95,7 +95,63 @@ func selectAllGroupRealm() -> [Group] {
     - ID: 取得したいグループのID
  - Returns: グループデータ
  */
-func selectGroupRealm(ID groupID: String) -> Group {
+func getGroup(ID groupID: String) -> Group {
     let realm = try! Realm()
     return realm.objects(Group.self).filter("groupID == '\(groupID)'").first!
 }
+
+/**
+ メモが所属するグループを取得
+ - Parameters:
+    - memo: メモ
+ - Returns: グループ
+ */
+func getGroup(memo: Memo) -> Group {
+    let measures = getMeasures(measuresID: memo.getMeasuresID())
+    let task = getTask(taskID: measures.getTaskID())
+    return getGroup(ID: task.getGroupID())
+}
+
+/**
+ TaskViewController用Group配列を取得
+ - Returns: Group配列
+ */
+func getGroupArrayForTaskView() -> [Group] {
+    var realmGroupArray: [Group] = []
+    let realm = try! Realm()
+    let sortProperties = [
+        SortDescriptor(keyPath: "order", ascending: true),
+    ]
+    let results = realm.objects(Group.self)
+                        .filter("(isDeleted == false)")
+                        .sorted(by: sortProperties)
+    for group in results {
+        realmGroupArray.append(group)
+    }
+    return realmGroupArray
+}
+
+/**
+ NoteDetailViewController用Group配列を取得
+ - Parameters:
+    - noteID: ノートID
+ - Returns: Group配列
+ */
+func getGroupArrayForNoteDetailView(noteID: String) -> [Group] {
+    // ノートに所属するメモを取得
+    let memoArray = getMemo(noteID: noteID)
+    
+    // メモが所属するグループを重複なく取得
+    var groupArray: [Group] = []
+    for memo in memoArray {
+        let group = getGroup(memo: memo)
+        groupArray.append(group)
+    }
+    var groups: [Group] = []
+    for group in Set(groupArray) {
+        groups.append(group)
+    }
+    return groups
+}
+
+

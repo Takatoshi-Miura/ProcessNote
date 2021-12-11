@@ -21,9 +21,8 @@ class NoteDetailViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     var note = Note()
-    var memoArray = [Memo]()
+    var memoArray = [[Memo]]()
     var groupArray = [Group]()
-    var taskArray = [[Task]]()
     var sectionTitle = [""]
     private var selectedIndex: IndexPath?
     var delegate: NoteDetailViewControllerDelegate?
@@ -33,9 +32,8 @@ class NoteDetailViewController: UIViewController {
         super.viewDidLoad()
         initNavigationBar()
         initTableView()
-        memoArray = getMemo(noteID: note.getNoteID())
-        groupArray = getGroupArrayForTaskView()
-        taskArray = getTaskArrayForTaskView()
+        groupArray = getGroupArrayForNoteDetailView(noteID: note.getNoteID())
+        memoArray = getMemo(noteID: note.getNoteID(), groupArray: groupArray)
     }
     
     func initNavigationBar() {
@@ -50,8 +48,10 @@ class NoteDetailViewController: UIViewController {
     @objc func deleteNote() {
         showDeleteAlert(title: "DeleteNoteTitle", message: "DeleteNoteMessage", OKAction: {
             updateNoteIsDeleted(note: self.note)
-            for memo in self.memoArray {
-                updateMemoIsDeleted(memo: memo)
+            for memos in self.memoArray {
+                for memo in memos {
+                    updateMemoIsDeleted(memo: memo)
+                }
             }
             self.delegate?.noteDetailVCDeleteNote()
         })
@@ -61,7 +61,6 @@ class NoteDetailViewController: UIViewController {
         sectionTitle = [""]
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "NoteTextViewCell", bundle: nil), forCellReuseIdentifier: "NoteTextViewCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -72,9 +71,9 @@ class NoteDetailViewController: UIViewController {
         if (selectedIndex != nil) {
             tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
             // メモが削除されていれば取り除く
-            let memo = memoArray[selectedIndex!.row]
+            let memo = memoArray[selectedIndex!.section][selectedIndex!.row]
             if memo.getIsDeleted() {
-                memoArray.remove(at: selectedIndex!.row)
+                memoArray[selectedIndex!.section].remove(at: selectedIndex!.row)
                 tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
                 selectedIndex = nil
                 return
@@ -88,8 +87,10 @@ class NoteDetailViewController: UIViewController {
         // Firebaseに送信
         if Network.isOnline() {
             updateNote(note)
-            for memo in memoArray {
-                updateMemo(memo)
+            for memos in memoArray {
+                for memo in memos {
+                    updateMemo(memo)
+                }
             }
         }
     }
@@ -104,27 +105,27 @@ extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return groupArray.count
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-//        return sectionTitle[section]
-//    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+        return groupArray[section].getTitle()
+    }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if memoArray.isEmpty {
+        if memoArray[section].isEmpty {
             return 0
         }
-        return memoArray.count
+        return memoArray[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoteTextViewCell", for: indexPath) as! NoteTextViewCell
-        let memo = memoArray[indexPath.row]
+        let memo = memoArray[indexPath.section][indexPath.row]
         let measures = getMeasures(measuresID: memo.getMeasuresID())
         let task = getTask(taskID: measures.getTaskID())
         cell.setLabelText(task: task, measure: measures, detail: memo)
@@ -139,7 +140,7 @@ extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath
-        let memo = memoArray[indexPath.row]
+        let memo = memoArray[indexPath.section][indexPath.row]
         delegate?.noteDetailVCMemoCellDidTap(memo: memo)
     }
     
