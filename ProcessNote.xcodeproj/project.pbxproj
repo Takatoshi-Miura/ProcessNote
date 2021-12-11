@@ -91,6 +91,8 @@
 		8D7E41AB2723E32400D87DD0 /* TextViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D7E41A92723E32400D87DD0 /* TextViewCell.xib */; };
 		8D7E41AD2723F5EC00D87DD0 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E41AC2723F5EC00D87DD0 /* SyncManager.swift */; };
 		8D7E41AF272439F900D87DD0 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */; };
+		8D9BFF6E276431070086EF1D /* NoteGroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9BFF6D276431070086EF1D /* NoteGroupHeaderView.xib */; };
+		8D9BFF70276431160086EF1D /* NoteGroupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */; };
 		8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */; };
 		8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */; };
 		8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */; };
@@ -211,6 +213,8 @@
 		8D7E41A92723E32400D87DD0 /* TextViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewCell.xib; sourceTree = "<group>"; };
 		8D7E41AC2723F5EC00D87DD0 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		8D9BFF6D276431070086EF1D /* NoteGroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteGroupHeaderView.xib; sourceTree = "<group>"; };
+		8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteGroupHeaderView.swift; sourceTree = "<group>"; };
 		8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
 		8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeaderView.xib; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 			children = (
 				8D0F8712271BDF07004E2A7D /* GroupHeaderView.swift */,
 				8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */,
+				8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */,
+				8D9BFF6D276431070086EF1D /* NoteGroupHeaderView.xib */,
 			);
 			path = CustomHeader;
 			sourceTree = "<group>";
@@ -717,6 +723,7 @@
 				8D2B24D9273639B50078F4B5 /* SettingViewController.xib in Resources */,
 				8D0F86FC271A8142004E2A7D /* TitleCell.xib in Resources */,
 				8D2B24E127364CED0078F4B5 /* AddTaskViewController.xib in Resources */,
+				8D9BFF6E276431070086EF1D /* NoteGroupHeaderView.xib in Resources */,
 				8D2B24D7273639150078F4B5 /* NoteViewController.xib in Resources */,
 				8D09E7572749AF8F0005F809 /* MeasuresViewController.xib in Resources */,
 				8D09E77D275AE6C00005F809 /* AddNoteViewController.xib in Resources */,
@@ -897,6 +904,7 @@
 				8D09E7772749E0D90005F809 /* GroupCoordinator.swift in Sources */,
 				8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */,
 				8D0F8707271A9D54004E2A7D /* UIViewController+PickerView.swift in Sources */,
+				8D9BFF70276431160086EF1D /* NoteGroupHeaderView.swift in Sources */,
 				8D09E77C275AE6C00005F809 /* AddNoteViewController.swift in Sources */,
 				8D0F86DF271191AA004E2A7D /* UIViewController+Alert.swift in Sources */,
 				8D09E7622749C95D0005F809 /* RealmManager+Measures.swift in Sources */,

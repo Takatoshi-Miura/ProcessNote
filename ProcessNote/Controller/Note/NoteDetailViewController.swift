@@ -61,6 +61,8 @@ class NoteDetailViewController: UIViewController {
         sectionTitle = [""]
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "NoteTextViewCell", bundle: nil), forCellReuseIdentifier: "NoteTextViewCell")
+        tableView.register(UINib(nibName: String(describing: NoteGroupHeaderView.self), bundle: nil),
+                           forHeaderFooterViewReuseIdentifier: String(describing: NoteGroupHeaderView.self))
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -100,16 +102,25 @@ class NoteDetailViewController: UIViewController {
 
 extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 30
-//    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return groupArray.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        return groupArray[section].getTitle()
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: NoteGroupHeaderView.self))
+        if let headerView = view as? NoteGroupHeaderView {
+            headerView.setProperty(group: groupArray[section])
+            return headerView
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: NoteGroupHeaderView.self))
+        if let headerView = view as? NoteGroupHeaderView {
+            return headerView.bounds.height
+        }
+        return tableView.sectionHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
