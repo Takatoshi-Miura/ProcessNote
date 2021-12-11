@@ -93,6 +93,8 @@
 		8D7E41AF272439F900D87DD0 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */; };
 		8D9BFF6E276431070086EF1D /* NoteGroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9BFF6D276431070086EF1D /* NoteGroupHeaderView.xib */; };
 		8D9BFF70276431160086EF1D /* NoteGroupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */; };
+		8D9BFF7327643B520086EF1D /* NoteDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF7127643B520086EF1D /* NoteDetailViewCell.swift */; };
+		8D9BFF7427643B520086EF1D /* NoteDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9BFF7227643B520086EF1D /* NoteDetailViewCell.xib */; };
 		8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */; };
 		8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */; };
 		8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */; };
@@ -215,6 +217,8 @@
 		8D7E41AE272439F900D87DD0 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		8D9BFF6D276431070086EF1D /* NoteGroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteGroupHeaderView.xib; sourceTree = "<group>"; };
 		8D9BFF6F276431160086EF1D /* NoteGroupHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteGroupHeaderView.swift; sourceTree = "<group>"; };
+		8D9BFF7127643B520086EF1D /* NoteDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailViewCell.swift; sourceTree = "<group>"; };
+		8D9BFF7227643B520086EF1D /* NoteDetailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteDetailViewCell.xib; sourceTree = "<group>"; };
 		8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
 		8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeaderView.xib; sourceTree = "<group>"; };
@@ -557,6 +561,8 @@
 				8D24BA91272041D2004367F6 /* SettingCell.xib */,
 				8D09E77E275AF3020005F809 /* NoteTextViewCell.swift */,
 				8D09E77F275AF3020005F809 /* NoteTextViewCell.xib */,
+				8D9BFF7127643B520086EF1D /* NoteDetailViewCell.swift */,
+				8D9BFF7227643B520086EF1D /* NoteDetailViewCell.xib */,
 			);
 			path = CustomCell;
 			sourceTree = "<group>";
@@ -722,6 +728,7 @@
 				8D0F86DA270C8580004E2A7D /* Localizable.strings in Resources */,
 				8D2B24D9273639B50078F4B5 /* SettingViewController.xib in Resources */,
 				8D0F86FC271A8142004E2A7D /* TitleCell.xib in Resources */,
+				8D9BFF7427643B520086EF1D /* NoteDetailViewCell.xib in Resources */,
 				8D2B24E127364CED0078F4B5 /* AddTaskViewController.xib in Resources */,
 				8D9BFF6E276431070086EF1D /* NoteGroupHeaderView.xib in Resources */,
 				8D2B24D7273639150078F4B5 /* NoteViewController.xib in Resources */,
@@ -890,6 +897,7 @@
 				8D2B24ED273D32EA0078F4B5 /* SettingCoordinator.swift in Sources */,
 				8D09E76A2749CCBC0005F809 /* FirebaseManager+Measures.swift in Sources */,
 				8D0F870B271AA938004E2A7D /* Definition.swift in Sources */,
+				8D9BFF7327643B520086EF1D /* NoteDetailViewCell.swift in Sources */,
 				8D0F869D270C776F004E2A7D /* AppDelegate.swift in Sources */,
 				8D0F86EA27129F88004E2A7D /* Note.swift in Sources */,
 				8D09E7592749BB5C0005F809 /* MeasuresCoordinator.swift in Sources */,

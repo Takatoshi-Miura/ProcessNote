@@ -60,7 +60,7 @@ class NoteDetailViewController: UIViewController {
     func initTableView() {
         sectionTitle = [""]
         tableView.tableFooterView = UIView()
-        tableView.register(UINib(nibName: "NoteTextViewCell", bundle: nil), forCellReuseIdentifier: "NoteTextViewCell")
+        tableView.register(UINib(nibName: "NoteDetailViewCell", bundle: nil), forCellReuseIdentifier: "NoteDetailViewCell")
         tableView.register(UINib(nibName: String(describing: NoteGroupHeaderView.self), bundle: nil),
                            forHeaderFooterViewReuseIdentifier: String(describing: NoteGroupHeaderView.self))
         if #available(iOS 15.0, *) {
@@ -135,18 +135,13 @@ extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteTextViewCell", for: indexPath) as! NoteTextViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteDetailViewCell", for: indexPath) as! NoteDetailViewCell
         let memo = memoArray[indexPath.section][indexPath.row]
         let measures = getMeasures(measuresID: memo.getMeasuresID())
         let task = getTask(taskID: measures.getTaskID())
         cell.setLabelText(task: task, measure: measures, detail: memo)
-        cell.memo.isEditable = false
         cell.accessibilityIdentifier = "NoteDetailViewCell"
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 158
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
