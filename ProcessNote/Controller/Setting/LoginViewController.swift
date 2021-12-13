@@ -80,10 +80,10 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 if indexPath.row == 0 {
                     cell.textField.placeholder = NSLocalizedString("MailAddress", comment: "")
-                    cell.textField.tag = TextFieldTag.mail.hashValue
+                    cell.textField.tag = TextFieldTag.mail.rawValue
                 } else {
                     cell.textField.placeholder = NSLocalizedString("Password", comment: "")
-                    cell.textField.tag = TextFieldTag.password.hashValue
+                    cell.textField.tag = TextFieldTag.password.rawValue
                 }
                 return cell
             }
@@ -93,14 +93,14 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             if indexPath.row == 2 {
                 cell.setTitle(NSLocalizedString("Login", comment: ""))
-                cell.colorButton.tag = ButtonTag.login.hashValue
+                cell.colorButton.tag = ButtonTag.login.rawValue
             } else if indexPath.row == 3 {
                 cell.setTitle(NSLocalizedString("Forgot password", comment: ""))
-                cell.colorButton.tag = ButtonTag.forgotPassword.hashValue
+                cell.colorButton.tag = ButtonTag.forgotPassword.rawValue
             } else {
                 cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
                 cell.setTitle(NSLocalizedString("Create account", comment: ""))
-                cell.colorButton.tag = ButtonTag.createAccount.hashValue
+                cell.colorButton.tag = ButtonTag.createAccount.rawValue
             }
             return cell
         case .cancel:
@@ -108,7 +108,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.colorButton.backgroundColor = UIColor.systemGray
             cell.setTitle(NSLocalizedString("Cancel", comment: ""))
-            cell.colorButton.tag = ButtonTag.cancel.hashValue
+            cell.colorButton.tag = ButtonTag.cancel.rawValue
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         default:
@@ -146,23 +146,23 @@ extension LoginViewController: ColorCellDelegate {
         let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
         let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell
         
-        switch button.tag {
-        case ButtonTag.login.hashValue:
+        switch ButtonTag(rawValue: button.tag) {
+        case .login:
             if mailCell.textField.text!.isEmpty || passwordCell.textField.text!.isEmpty {
                 showErrorAlert(message: "EmptyTextError")
             }
             // TODO: ログイン処理
-        case ButtonTag.forgotPassword.hashValue:
+        case .forgotPassword:
             if mailCell.textField.text!.isEmpty {
                 showErrorAlert(message: "EmptyTextError")
             }
             // TODO: パスワードリセット処理
-        case ButtonTag.createAccount.hashValue:
+        case .createAccount:
             if mailCell.textField.text!.isEmpty || passwordCell.textField.text!.isEmpty {
                 showErrorAlert(message: "EmptyTextError")
             }
             // TODO: アカウント作成処理
-        case ButtonTag.cancel.hashValue:
+        case .cancel:
             self.delegate?.LoginVCCancelDidTap(self)
         default:
             break
