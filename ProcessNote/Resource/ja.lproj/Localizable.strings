@@ -126,3 +126,4 @@
 "Login" = "ログイン";
 "Forgot password" = "パスワードを忘れた場合";
 "Create account" = "アカウント作成";
+"EmptyTextError" = "メールアドレスまたはパスワードが未入力です。";

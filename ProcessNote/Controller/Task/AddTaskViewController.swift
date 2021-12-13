@@ -190,7 +190,7 @@ extension AddTaskViewController: UITextViewDelegate {
 
 extension AddTaskViewController: ColorCellDelegate {
     
-    func tapColorButton() {
+    func tapColorButton(_ button: UIButton) {
         openPicker(pickerView)
     }
     

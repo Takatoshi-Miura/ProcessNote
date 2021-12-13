@@ -157,7 +157,7 @@ extension AddGroupViewController: UITextFieldDelegate {
 
 extension AddGroupViewController: ColorCellDelegate {
     
-    func tapColorButton() {
+    func tapColorButton(_ button: UIButton) {
         openPicker(pickerView)
     }
     

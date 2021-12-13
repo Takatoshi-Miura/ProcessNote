@@ -182,7 +182,7 @@ extension AddNoteViewController: UITextViewDelegate {
 
 extension AddNoteViewController: ColorCellDelegate {
     
-    func tapColorButton() {
+    func tapColorButton(_ button: UIButton) {
         openPicker(pickerView)
     }
     

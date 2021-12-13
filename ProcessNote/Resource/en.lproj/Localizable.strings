@@ -126,3 +126,4 @@
 "Login" = "Login";
 "Forgot password" = "Forgot password";
 "Create account" = "Create account";
+"EmptyTextError" = "You have not entered your email address or password.";

@@ -23,10 +23,19 @@ class LoginViewController: UIViewController {
     var delegate: LoginViewControllerDelegate?
     
     enum Section: Int {
-        case mailAddress
+        case login
+        case cancel
+    }
+    
+    enum TextFieldTag: Int {
+        case mail
         case password
-        case loginButton
-        case newUser
+    }
+    
+    enum ButtonTag: Int {
+        case login
+        case forgotPassword
+        case createAccount
         case cancel
     }
 
@@ -37,9 +46,7 @@ class LoginViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("MailAddress", comment: ""),
-                        NSLocalizedString("Password", comment: ""),
-                        "", "", ""]
+        sectionTitle = ["", ""]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
         if #available(iOS 15.0, *) {
@@ -56,54 +63,52 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
         return sectionTitle.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        return sectionTitle[section]
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if Section(rawValue: section) == .loginButton {
-            return 2
+        if Section(rawValue: section) == .login {
+            return 5
         }
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section) {
-        case .mailAddress:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
-            cell.textField.delegate = self
-            cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            return cell
-        case .password:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
-            cell.textField.delegate = self
-            cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            return cell
-        case .loginButton:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
-            cell.delegate = self
-            cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            if indexPath.row == 0 {
-                cell.setTitle(NSLocalizedString("Login", comment: ""))
-            } else if indexPath.row == 1 {
-                cell.setTitle(NSLocalizedString("Forgot password", comment: ""))
+        case .login:
+            if indexPath.row == 0 || indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
+                cell.textField.delegate = self
+                cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
+                if indexPath.row == 0 {
+                    cell.textField.placeholder = NSLocalizedString("MailAddress", comment: "")
+                    cell.textField.tag = TextFieldTag.mail.hashValue
+                } else {
+                    cell.textField.placeholder = NSLocalizedString("Password", comment: "")
+                    cell.textField.tag = TextFieldTag.password.hashValue
+                }
+                return cell
             }
-            return cell
-        case .newUser:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
             cell.delegate = self
             cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
-            cell.setTitle(NSLocalizedString("Create account", comment: ""))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            if indexPath.row == 2 {
+                cell.setTitle(NSLocalizedString("Login", comment: ""))
+                cell.colorButton.tag = ButtonTag.login.hashValue
+            } else if indexPath.row == 3 {
+                cell.setTitle(NSLocalizedString("Forgot password", comment: ""))
+                cell.colorButton.tag = ButtonTag.forgotPassword.hashValue
+            } else {
+                cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
+                cell.setTitle(NSLocalizedString("Create account", comment: ""))
+                cell.colorButton.tag = ButtonTag.createAccount.hashValue
+            }
             return cell
         case .cancel:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
             cell.delegate = self
-            cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
+            cell.colorButton.backgroundColor = UIColor.systemGray
             cell.setTitle(NSLocalizedString("Cancel", comment: ""))
+            cell.colorButton.tag = ButtonTag.cancel.hashValue
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         default:
@@ -137,8 +142,31 @@ extension LoginViewController: UITextFieldDelegate {
 
 extension LoginViewController: ColorCellDelegate {
     
-    func tapColorButton() {
-        self.delegate?.LoginVCCancelDidTap(self)
+    func tapColorButton(_ button: UIButton) {
+        let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
+        let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell
+        
+        switch button.tag {
+        case ButtonTag.login.hashValue:
+            if mailCell.textField.text!.isEmpty || passwordCell.textField.text!.isEmpty {
+                showErrorAlert(message: "EmptyTextError")
+            }
+            // TODO: ログイン処理
+        case ButtonTag.forgotPassword.hashValue:
+            if mailCell.textField.text!.isEmpty {
+                showErrorAlert(message: "EmptyTextError")
+            }
+            // TODO: パスワードリセット処理
+        case ButtonTag.createAccount.hashValue:
+            if mailCell.textField.text!.isEmpty || passwordCell.textField.text!.isEmpty {
+                showErrorAlert(message: "EmptyTextError")
+            }
+            // TODO: アカウント作成処理
+        case ButtonTag.cancel.hashValue:
+            self.delegate?.LoginVCCancelDidTap(self)
+        default:
+            break
+        }
     }
     
 }

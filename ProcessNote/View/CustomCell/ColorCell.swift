@@ -15,7 +15,7 @@ class ColorCell: UITableViewCell {
     @IBOutlet weak var colorButton: UIButton!
     
     @IBAction func tapColorButton(_ sender: Any) {
-        delegate?.tapColorButton()
+        delegate?.tapColorButton(colorButton)
     }
     
     
@@ -57,5 +57,5 @@ class ColorCell: UITableViewCell {
 // MARK: - 【Delegate】ColorCellDelegate
 
 protocol ColorCellDelegate {
-    func tapColorButton()
+    func tapColorButton(_ button: UIButton)
 }
