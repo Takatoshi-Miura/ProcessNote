@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import Firebase
+import SVProgressHUD
 
 
 protocol LoginViewControllerDelegate: AnyObject {
     // キャンセルをタップ時の処理
     func LoginVCCancelDidTap(_ viewController: UIViewController)
+    // ログイン、ログアウト、パスワードリセット時の処理
+    func LoginVCUserDidLogin(_ viewController: UIViewController)
 }
 
 
@@ -145,27 +149,170 @@ extension LoginViewController: ColorCellDelegate {
     func tapColorButton(_ button: UIButton) {
         let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
         let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell
+        let mailText = mailCell.textField.text!
+        let passwordText = passwordCell.textField.text!
         
         switch ButtonTag(rawValue: button.tag) {
         case .login:
-            if mailCell.textField.text!.isEmpty || passwordCell.textField.text!.isEmpty {
-                showErrorAlert(message: "EmptyTextError")
+            if let address = mailCell.textField.text, let password = passwordCell.textField.text {
+                if address.isEmpty || password.isEmpty {
+                    showErrorAlert(message: "EmptyTextError")
+                    return
+                }
+                // ログイン状態によってログイン、ログアウト分岐
+                if let _ = UserDefaults.standard.object(forKey: "address") as? String,
+                   let _ = UserDefaults.standard.object(forKey: "password") as? String
+                {
+                    logout()
+                } else {
+                    login(mail: address, password: password)
+                }
             }
-            // TODO: ログイン処理
         case .forgotPassword:
-            if mailCell.textField.text!.isEmpty {
-                showErrorAlert(message: "EmptyTextError")
+            if mailText.isEmpty {
+                showErrorAlert(message: "EmptyTextErrorPasswordReset")
+                return
             }
-            // TODO: パスワードリセット処理
+            showOKCancelAlert(title: "PasswordResetTitle", message: "PasswordResetMessage", OKAction: {
+                self.sendPasswordResetMail(mail: mailText)
+            })
         case .createAccount:
-            if mailCell.textField.text!.isEmpty || passwordCell.textField.text!.isEmpty {
+            if mailText.isEmpty || passwordText.isEmpty {
                 showErrorAlert(message: "EmptyTextError")
+                return
             }
-            // TODO: アカウント作成処理
+            showOKCancelAlert(title: "CreateAccountTitle", message: "CreateAccountMessage", OKAction: {
+                self.createAccount(mail: mailText, password: passwordText)
+            })
         case .cancel:
             self.delegate?.LoginVCCancelDidTap(self)
         default:
             break
+        }
+    }
+    
+    /**
+     ログイン処理
+     - Parameters:
+        - mail: メールアドレス
+        - password: パスワード
+     */
+    func login(mail address: String, password pass: String) {
+        SVProgressHUD.show(withStatus: NSLocalizedString("DuringLoginProcess", comment: ""))
+        
+        Auth.auth().signIn(withEmail: address, password: pass) { authResult, error in
+            // エラー処理
+            if error != nil {
+                if let errorCode = AuthErrorCode(rawValue: error!._code) {
+                    switch errorCode {
+                    case .invalidEmail:
+                        SVProgressHUD.showError(withStatus: NSLocalizedString("InvalidEmail", comment: ""))
+                    case .wrongPassword:
+                        SVProgressHUD.showError(withStatus: NSLocalizedString("WrongPassword", comment: ""))
+                    default:
+                        SVProgressHUD.showError(withStatus: NSLocalizedString("LoginError", comment: ""))
+                    }
+                    return
+                }
+            }
+            
+            // UserDefaultsにユーザー情報を保存
+            UserDefaultsKey.userID.set(value: Auth.auth().currentUser!.uid)
+            UserDefaultsKey.address.set(value: address)
+            UserDefaultsKey.password.set(value: pass)
+            
+            // メッセージが隠れてしまうため、遅延処理を行ってから画面遷移
+            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("LoginSuccessful", comment: ""))
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                self.delegate?.LoginVCUserDidLogin(self)
+            }
+        }
+    }
+    
+    /// ログアウト処理
+    func logout() {
+        do {
+            try Auth.auth().signOut()
+            
+            // UserDefaultsのユーザー情報を削除
+            UserDefaultsKey.userID.remove()
+            UserDefaultsKey.address.remove()
+            UserDefaultsKey.password.remove()
+            
+            // テキストフィールドをクリア
+            let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
+            let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell
+            mailCell.textField.text = ""
+            passwordCell.textField.text = ""
+            
+            // ユーザーIDを作成(初期値を登録)
+            UserDefaultsKey.userID.set(value: NSUUID().uuidString)
+            
+            // メッセージが隠れてしまうため、遅延処理を行う
+            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("LogoutSuccessful", comment: ""))
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                self.delegate?.LoginVCUserDidLogin(self)
+            }
+        } catch _ as NSError {
+            SVProgressHUD.dismiss()
+            showErrorAlert(message: NSLocalizedString("LogoutError", comment: ""))
+        }
+    }
+    
+    /**
+     パスワードリセットメールを送信
+     - Parameters:
+        - mail: メールアドレス
+     */
+    func sendPasswordResetMail(mail address: String) {
+        Auth.auth().sendPasswordReset(withEmail: address) { (error) in
+            if error != nil {
+                self.showErrorAlert(message: "MailSendError")
+                return
+            }
+            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("MailSendSuccessful", comment: ""))
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                self.delegate?.LoginVCUserDidLogin(self)
+            }
+        }
+    }
+    
+    /**
+     アカウント作成処理
+     - Parameters:
+        - mail: メールアドレス
+        - password: パスワード
+     */
+    func createAccount(mail address: String, password pass: String) {
+        showIndicator(message: "DuringCreateAccountProcess")
+        
+        // アカウント作成処理
+        Auth.auth().createUser(withEmail: address, password: pass) { authResult, error in
+            if error != nil {
+                self.dismissIndicator()
+                // エラーのハンドリング
+                if let errorCode = AuthErrorCode(rawValue: error!._code) {
+                    switch errorCode {
+                        case .invalidEmail:
+                            SVProgressHUD.showError(withStatus: NSLocalizedString("InvalidEmail", comment: ""))
+                        case .emailAlreadyInUse:
+                            SVProgressHUD.showError(withStatus: NSLocalizedString("EmailAlreadyInUse", comment: ""))
+                        case .weakPassword:
+                            SVProgressHUD.showError(withStatus: NSLocalizedString("WeakPassword", comment: ""))
+                        default:
+                            SVProgressHUD.showError(withStatus: NSLocalizedString("CreateAccountError", comment: ""))
+                    }
+                    return
+                }
+            }
+            
+            // FirebaseのユーザーIDをセット
+            UserDefaultsKey.userID.set(value: Auth.auth().currentUser!.uid)
+            UserDefaultsKey.address.set(value: address)
+            UserDefaultsKey.password.set(value: pass)
+            
+            // FirebaseアカウントのIDでデータを複製
+            // TODO: 引き継ぎ処理
         }
     }
     

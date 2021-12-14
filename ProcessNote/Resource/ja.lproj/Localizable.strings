@@ -122,8 +122,26 @@
 
 // MARK: - LoginViewController
 "MailAddress" = "メールアドレス";
-"Password" = "パスワード";
+"Password" = "パスワード(6文字以上)";
 "Login" = "ログイン";
 "Forgot password" = "パスワードを忘れた場合";
 "Create account" = "アカウント作成";
 "EmptyTextError" = "メールアドレスまたはパスワードが未入力です。";
+"EmptyTextErrorPasswordReset" = "パスワードリセットメール送信先のメールアドレスを入力してください。";
+"DuringLoginProcess" = "ログインしています";
+"LoginSuccessful" = "ログインしました";
+"InvalidEmail" = "メールアドレスが間違っています。";
+"WrongPassword" = "パスワードが間違っています。";
+"LoginError" = "ログインに失敗しました。入力内容を確認して下さい。";
+"LogoutSuccessful" = "ログアウトしました";
+"LogoutError" = "ログアウトに失敗しました。";
+"PasswordResetTitle" = "パスワードリセット";
+"PasswordResetMessage" = "入力したメールアドレス宛にパスワードリセットメールを送信します。よろしいですか？";
+"MailSendError" = "メールの送信に失敗しました。入力内容を確認して下さい。";
+"MailSendSuccessful" = "メールを送信しました。";
+"CreateAccountTitle" = "アカウント作成";
+"CreateAccountMessage" = "入力した内容でアカウントを作成します。よろしいですか？";
+"DuringCreateAccountProcess" = "アカウントを作成しています";
+"EmailAlreadyInUse" = "既にこのメールアドレスは使われています。";
+"WeakPassword" = "パスワードは6文字以上で入力してください。";
+"CreateAccountError" = "アカウントの作成に失敗しました。時間をおいて再度お試し下さい。";

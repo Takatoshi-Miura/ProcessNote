@@ -38,4 +38,9 @@ extension LoginCoordinator: LoginViewControllerDelegate {
         viewController.dismiss(animated: true)
     }
     
+    // SettingVC ← LoginVC
+    func LoginVCUserDidLogin(_ viewController: UIViewController) {
+        viewController.dismiss(animated: true)
+    }
+    
 }
