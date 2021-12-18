@@ -13,7 +13,7 @@
  */
 func syncGroup(completion: @escaping () -> ()) {
     // Realmのグループを全取得
-    let realmGroupArray: [Group] = selectAllGroupRealm()
+    let realmGroupArray: [Group] = getAllGroupRealm()
     
     // Firebaseのグループを全取得
     getAllGroup(completion: {

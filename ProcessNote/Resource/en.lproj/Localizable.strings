@@ -145,3 +145,4 @@
 "EmailAlreadyInUse" = "This email address is already in use.";
 "WeakPassword" = "Please enter the password with at least 6 characters.";
 "CreateAccountError" = "Failed to create an account. Please try again later.";
+"DataTransferSuccessful" = "Data transfer is complete.";

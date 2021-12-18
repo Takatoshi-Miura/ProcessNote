@@ -51,6 +51,21 @@ func updateMemoIsDeleted(memo: Memo) {
     }
 }
 
+/**
+ ユーザーIDを更新
+ - Parameters:
+    - userID: ユーザーID
+ */
+func updateMemoUserID(userID: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Memo.self)
+    for memo in result {
+        try! realm.write {
+            memo.setUserID(userID)
+        }
+    }
+}
+
 
 // MARK: - Select
 

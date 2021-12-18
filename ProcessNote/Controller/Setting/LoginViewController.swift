@@ -306,13 +306,24 @@ extension LoginViewController: ColorCellDelegate {
                 }
             }
             
-            // FirebaseのユーザーIDをセット
+            // FirebaseのユーザーIDとログイン情報を保存
             UserDefaultsKey.userID.set(value: Auth.auth().currentUser!.uid)
             UserDefaultsKey.address.set(value: address)
             UserDefaultsKey.password.set(value: pass)
             
-            // FirebaseアカウントのIDでデータを複製
-            // TODO: 引き継ぎ処理
+            // RealmデータのuserIDを新しいIDに更新
+            updateGroupUserID(userID: Auth.auth().currentUser!.uid)
+            updateTaskUserID(userID: Auth.auth().currentUser!.uid)
+            updateMeasuresUserID(userID: Auth.auth().currentUser!.uid)
+            updateNoteUserID(userID: Auth.auth().currentUser!.uid)
+            updateMemoUserID(userID: Auth.auth().currentUser!.uid)
+            
+            // Firebaseと同期
+            syncDatabase(completion: {
+                self.dismissIndicator()
+                self.delegate?.LoginVCUserDidLogin(self)
+                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("DataTransferSuccessful", comment: ""))
+            })
         }
     }
     

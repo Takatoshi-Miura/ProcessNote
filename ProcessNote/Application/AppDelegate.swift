@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Firebase用
         FirebaseApp.configure()
-        Auth.auth().signInAnonymously()
         
         // Realmファイルの場所
         print(Realm.Configuration.defaultConfiguration.fileURL!)
@@ -27,6 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (UserDefaults.standard.object(forKey: "userID") as? String == nil) {
             let uuid = NSUUID().uuidString
             UserDefaults.standard.set(uuid, forKey: "userID")
+        }
+        
+        // アカウント持ちならFirebaseのユーザーIDを使用
+        if let address = UserDefaults.standard.object(forKey: "address") as? String, let password = UserDefaults.standard.object(forKey: "password") as? String {
+            // ログイン処理
+            Auth.auth().signIn(withEmail: address, password: password) { authResult, error in
+                // エラー処理
+                if error != nil {
+                    if AuthErrorCode(rawValue: error!._code) != nil {
+                        return
+                    }
+                }
+                // ログイン成功ならFirebaseのユーザーIDをuserIDとして使用
+                UserDefaults.standard.set(Auth.auth().currentUser!.uid, forKey: "userID")
+            }
         }
         
         // 初期画面を表示

@@ -145,3 +145,4 @@
 "EmailAlreadyInUse" = "既にこのメールアドレスは使われています。";
 "WeakPassword" = "パスワードは6文字以上で入力してください。";
 "CreateAccountError" = "アカウントの作成に失敗しました。時間をおいて再度お試し下さい。";
+"DataTransferSuccessful" = "データの引継ぎが完了しました。";

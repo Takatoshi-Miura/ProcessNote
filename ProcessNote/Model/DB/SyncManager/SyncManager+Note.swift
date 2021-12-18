@@ -13,7 +13,7 @@
  */
 func syncNote(completion: @escaping () -> ()) {
     // Realmのノートを全取得
-    let realmNoteArray: [Note] = selectAllNoteRealm()
+    let realmNoteArray: [Note] = getAllNoteRealm()
     
     // Firebaseのノートを全取得
     getAllNote(completion: {

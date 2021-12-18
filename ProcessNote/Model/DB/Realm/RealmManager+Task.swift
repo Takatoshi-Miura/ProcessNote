@@ -109,6 +109,21 @@ func updateTaskIsDeleted(task: Task) {
     }
 }
 
+/**
+ 課題のユーザーIDを更新
+ - Parameters:
+    - userID: ユーザーID
+ */
+func updateTaskUserID(userID: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Task.self)
+    for task in result {
+        try! realm.write {
+            task.setUserID(userID)
+        }
+    }
+}
+
 
 // MARK: - Select
 

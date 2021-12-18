@@ -37,13 +37,29 @@ func updateNoteIsDeleted(note: Note) {
     }
 }
 
+/**
+ ユーザーIDを更新
+ - Parameters:
+    - userID: ユーザーID
+ */
+func updateNoteUserID(userID: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Note.self)
+    for note in result {
+        try! realm.write {
+            note.setUserID(userID)
+        }
+    }
+}
+
+
 // MARK: - Select
 
 /**
  Realmのノートデータを全取得
  - Returns: 全ノートデータ
  */
-func selectAllNoteRealm() -> [Note] {
+func getAllNoteRealm() -> [Note] {
     var realmNoteArray: [Note] = []
     let realm = try! Realm()
     let realmArray = realm.objects(Note.self)

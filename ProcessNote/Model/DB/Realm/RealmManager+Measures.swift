@@ -57,6 +57,21 @@ func updateMeasuresIsDeleted(measures: Measures) {
     }
 }
 
+/**
+ ユーザーIDを更新
+ - Parameters:
+    - userID: ユーザーID
+ */
+func updateMeasuresUserID(userID: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Measures.self)
+    for measures in result {
+        try! realm.write {
+            measures.setUserID(userID)
+        }
+    }
+}
+
 
 // MARK: - Select
 

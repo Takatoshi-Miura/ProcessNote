@@ -72,6 +72,21 @@ func updateGroupIsDeleted(group: Group) {
     }
 }
 
+/**
+ ユーザーIDを更新
+ - Parameters:
+    - userID: ユーザーID
+ */
+func updateGroupUserID(userID: String) {
+    let realm = try! Realm()
+    let result = realm.objects(Group.self)
+    for group in result {
+        try! realm.write {
+            group.setUserID(userID)
+        }
+    }
+}
+
 
 // MARK: - Select
 
@@ -79,7 +94,7 @@ func updateGroupIsDeleted(group: Group) {
  Realmのグループデータを全取得
  - Returns: 全グループデータ
  */
-func selectAllGroupRealm() -> [Group] {
+func getAllGroupRealm() -> [Group] {
     var realmGroupArray: [Group] = []
     let realm = try! Realm()
     let realmArray = realm.objects(Group.self)
