@@ -121,9 +121,11 @@
 
 
 // MARK: - LoginViewController
+"AlreadyLogin" = "Logged in with the following account";
 "MailAddress" = "Mail";
 "Password" = "Password(6 characters or more)";
 "Login" = "Login";
+"Logout" = "Logout";
 "Forgot password" = "Forgot password";
 "Create account" = "Create account";
 "EmptyTextError" = "You have not entered your email address or password.";

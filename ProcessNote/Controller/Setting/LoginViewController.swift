@@ -74,6 +74,17 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            if let _ = UserDefaults.standard.object(forKey: "address") as? String,
+               let _ = UserDefaults.standard.object(forKey: "password") as? String
+            {
+                return NSLocalizedString("AlreadyLogin", comment: "")
+            }
+        }
+        return sectionTitle[section]
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(rawValue: indexPath.section) {
         case .login:
@@ -81,22 +92,39 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
                 cell.textField.delegate = self
                 cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+                cell.textField.keyboardType = .emailAddress
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 if indexPath.row == 0 {
                     cell.textField.placeholder = NSLocalizedString("MailAddress", comment: "")
                     cell.textField.tag = TextFieldTag.mail.rawValue
+                    if let address = UserDefaults.standard.object(forKey: "address") as? String {
+                        cell.textField.text = address
+                    }
                 } else {
                     cell.textField.placeholder = NSLocalizedString("Password", comment: "")
+                    cell.textField.isSecureTextEntry = true
                     cell.textField.tag = TextFieldTag.password.rawValue
+                    if let password = UserDefaults.standard.object(forKey: "password") as? String {
+                        cell.textField.text = password
+                    }
                 }
                 return cell
             }
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
             cell.delegate = self
             cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             if indexPath.row == 2 {
-                cell.setTitle(NSLocalizedString("Login", comment: ""))
+                // ログイン状態によってログイン、ログアウト分岐
+                if let _ = UserDefaults.standard.object(forKey: "address") as? String,
+                   let _ = UserDefaults.standard.object(forKey: "password") as? String
+                {
+                    cell.setTitle(NSLocalizedString("Logout", comment: ""))
+                    cell.setColor(colorNumber[NSLocalizedString("Red", comment: "")]!)
+                } else {
+                    cell.setTitle(NSLocalizedString("Login", comment: ""))
+                }
                 cell.colorButton.tag = ButtonTag.login.rawValue
             } else if indexPath.row == 3 {
                 cell.setTitle(NSLocalizedString("Forgot password", comment: ""))

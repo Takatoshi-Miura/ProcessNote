@@ -121,9 +121,11 @@
 
 
 // MARK: - LoginViewController
+"AlreadyLogin" = "下記アカウントでログイン済み";
 "MailAddress" = "メールアドレス";
 "Password" = "パスワード(6文字以上)";
 "Login" = "ログイン";
+"Logout" = "ログアウト";
 "Forgot password" = "パスワードを忘れた場合";
 "Create account" = "アカウント作成";
 "EmptyTextError" = "メールアドレスまたはパスワードが未入力です。";
