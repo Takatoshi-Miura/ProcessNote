@@ -38,10 +38,20 @@ class TaskViewController: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNotificasion()
         initNavigationController()
         initTableView()
         addRightSwipeGesture()
         syncData()
+    }
+    
+    func setNotificasion() {
+        // ログイン、ログアウト時のリロード用
+        NotificationCenter.default.addObserver(self, selector: #selector(self.syncData), name: NSNotification.Name(rawValue: "dataUpdated"), object: nil)
+    }
+        
+    func removeNotification() {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func initNavigationController() {

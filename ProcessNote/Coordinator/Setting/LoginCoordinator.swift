@@ -40,7 +40,9 @@ extension LoginCoordinator: LoginViewControllerDelegate {
     
     // SettingVC ← LoginVC
     func LoginVCUserDidLogin(_ viewController: UIViewController) {
-        viewController.dismiss(animated: true)
+        viewController.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dataUpdated"), object: nil)
+        })
     }
     
 }
