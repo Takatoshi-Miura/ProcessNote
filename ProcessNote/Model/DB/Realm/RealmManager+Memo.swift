@@ -149,3 +149,19 @@ func getMemo(noteID: String, groupArray: [Group]) -> [[Memo]] {
     
     return memoArray
 }
+
+
+// MARK: - Delete
+
+/// Realmのデータを全削除
+func deleteAllMemoRealm() {
+    let realm = try! Realm()
+    let memos = realm.objects(Memo.self)
+    do{
+      try realm.write{
+        realm.delete(memos)
+      }
+    }catch {
+      print("Error \(error)")
+    }
+}

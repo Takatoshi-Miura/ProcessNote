@@ -267,6 +267,13 @@ extension LoginViewController: ColorCellDelegate {
             UserDefaultsKey.address.remove()
             UserDefaultsKey.password.remove()
             
+            // Realmデータを全削除
+            deleteAllTaskRealm()
+            deleteAllGroupRealm()
+            deleteAllMeasuresRealm()
+            deleteAllNoteRealm()
+            deleteAllMemoRealm()
+            
             // テキストフィールドをクリア
             let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
             let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell

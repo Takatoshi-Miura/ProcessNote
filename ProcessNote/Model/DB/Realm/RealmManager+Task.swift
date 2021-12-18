@@ -211,3 +211,18 @@ func getTaskArrayForTaskView() -> [[Task]] {
     return taskArray
 }
 
+// MARK: - Delete
+
+/// Realmのデータを全削除
+func deleteAllTaskRealm() {
+    let realm = try! Realm()
+    let tasks = realm.objects(Task.self)
+    do{
+      try realm.write{
+        realm.delete(tasks)
+      }
+    }catch {
+      print("Error \(error)")
+    }
+}
+

@@ -170,3 +170,17 @@ func getGroupArrayForNoteDetailView(noteID: String) -> [Group] {
 }
 
 
+// MARK: - Delete
+
+/// Realmのデータを全削除
+func deleteAllGroupRealm() {
+    let realm = try! Realm()
+    let groups = realm.objects(Group.self)
+    do{
+      try realm.write{
+        realm.delete(groups)
+      }
+    }catch {
+      print("Error \(error)")
+    }
+}

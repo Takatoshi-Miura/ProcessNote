@@ -167,3 +167,19 @@ func selectTodayNote() -> Note? {
                         .filter("(created_at == '\(today)') && (isDeleted == false)")
     return results.first
 }
+
+
+// MARK: - Delete
+
+/// Realmのデータを全削除
+func deleteAllNoteRealm() {
+    let realm = try! Realm()
+    let notes = realm.objects(Note.self)
+    do{
+      try realm.write{
+        realm.delete(notes)
+      }
+    }catch {
+      print("Error \(error)")
+    }
+}

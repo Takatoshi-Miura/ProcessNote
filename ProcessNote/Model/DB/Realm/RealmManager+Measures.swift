@@ -160,3 +160,19 @@ func getMeasuresTitleInTask(ID taskID: String) -> String {
     }
     return measuresArray.first?.getTitle() ?? ""
 }
+
+
+// MARK: - Delete
+
+/// Realmのデータを全削除
+func deleteAllMeasuresRealm() {
+    let realm = try! Realm()
+    let measures = realm.objects(Measures.self)
+    do{
+      try realm.write{
+        realm.delete(measures)
+      }
+    }catch {
+      print("Error \(error)")
+    }
+}
