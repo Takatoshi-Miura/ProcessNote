@@ -110,6 +110,7 @@ extension AddGroupViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            cell.textField.placeholder = NSLocalizedString("GroupExample", comment: "")
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddGroupViewCell"
             return cell

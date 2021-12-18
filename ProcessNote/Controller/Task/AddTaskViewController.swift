@@ -115,29 +115,31 @@ extension AddTaskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case Section.title.rawValue:
+        switch Section(rawValue: indexPath.section) {
+        case .title:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            cell.textField.placeholder = NSLocalizedString("TaskExample", comment: "")
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
-        case Section.cause.rawValue:
+        case .cause:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell", for: indexPath) as! TextViewCell
             cell.textView.delegate = self
             cell.textView.inputAccessoryView = createToolBar(#selector(completeAction))
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
-        case Section.measures.rawValue:
+        case .measures:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            cell.textField.placeholder = NSLocalizedString("MeasureExample", comment: "")
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
-        case Section.group.rawValue:
+        case .group:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
             cell.delegate = self
             let colorNum = realmGroupArray[pickerIndex].getColor()
@@ -146,7 +148,7 @@ extension AddTaskViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
-        case Section.addition.rawValue:
+        case .addition:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SaveButtonCell", for: indexPath) as! SaveButtonCell
             cell.delegate = self
             cell.selectionStyle = UITableViewCell.SelectionStyle.none

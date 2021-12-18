@@ -53,6 +53,7 @@
 "Addition" = "Addition";
 "EmptyTitle" = "Please input a title.";
 "GroupCreateError" = "Failed to create a group.";
+"GroupExample" = "Ex: work, health, money, uncategorized";
 
 
 // MARK: - AddTaskViewController
@@ -60,6 +61,8 @@
 "Cause" = "Cause";
 "Measures" = "Measures";
 "TaskCreateError" = "Failed to create a task.";
+"TaskExample" = "Ex: I can't save money";
+"MeasureExample" = "Ex: Start keeping a household account book";
 
 
 // MARK: - TaskDetailViewController
