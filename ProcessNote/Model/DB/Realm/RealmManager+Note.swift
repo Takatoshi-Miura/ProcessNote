@@ -143,6 +143,7 @@ func getNoteYearAndMonth() -> [String] {
     for time in Set(yearAndMonthArray) {
         noteYearAndMonth.append(time)
     }
+    noteYearAndMonth.sort { $0 > $1 }
     return noteYearAndMonth
 }
 
@@ -153,7 +154,7 @@ func getNoteYearAndMonth() -> [String] {
  - Returns: ノートの年月(yyyy-MM形式)
  */
 func getCreatedYearAndMonth(note: Note) -> String {
-    return changeDateString(dateString: note.getCreated_at(), format: "yyyy-MM-dd", goalFormat: "yyyy-MM")
+    return changeDateString(dateString: note.getCreated_at(), format: "yyyy-MM-dd", goalFormat: "yyyy / MM")
 }
 
 /**

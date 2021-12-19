@@ -153,7 +153,8 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = noteArray[indexPath.section][indexPath.row].getCreated_at()
+        let noteDate = noteArray[indexPath.section][indexPath.row].getCreated_at()
+        cell.textLabel?.text = changeDateString(dateString: noteDate, format: "yyyy-MM-dd", goalFormat: "MM / dd")
         cell.accessoryType = .disclosureIndicator // > 表示
         cell.accessibilityIdentifier = "NoteViewCell"
         return cell
