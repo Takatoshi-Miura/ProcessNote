@@ -17,6 +17,10 @@
 "Blue" = "Blue";
 "Purple" = "Purple";
 "ServerCommunication" = "During server communication...";
+"AgreeTitle" = "Agree to terms of use";
+"AgreeMessage" = "I agree to the terms of use and privacy policy of this application.";
+"Agree" = " I agree";
+"ReadTerms" = "Read the terms";
 
 
 // MARK: - TabBarController

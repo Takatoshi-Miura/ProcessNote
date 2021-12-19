@@ -17,6 +17,10 @@
 "Blue" = "青";
 "Purple" = "紫";
 "ServerCommunication" = "サーバー通信中";
+"AgreeTitle" = "利用規約の同意";
+"AgreeMessage" = "本アプリの利用規約とプライバシーポリシーに同意します。";
+"Agree" = "同意する";
+"ReadTerms" = "利用規約を読む";
 
 
 // MARK: - TabBarController

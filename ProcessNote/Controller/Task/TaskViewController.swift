@@ -43,6 +43,7 @@ class TaskViewController: UIViewController {
         initTableView()
         addRightSwipeGesture()
         syncData()
+        displayAgreement()
     }
     
     func setNotificasion() {
@@ -126,6 +127,46 @@ class TaskViewController: UIViewController {
             taskArray = getTaskArrayForTaskView()
             tableView.refreshControl?.endRefreshing()
         }
+    }
+    
+    func displayAgreement() {
+        // 初回起動判定
+        if UserDefaultsKey.firstLaunch.bool() {
+            // 2回目以降の起動では「firstLaunch」のkeyをfalseに
+            UserDefaultsKey.firstLaunch.set(value: false)
+            
+            // 利用規約を表示
+            displayAgreement({
+                UserDefaultsKey.agree.set(value: true)
+            })
+        }
+        
+        // 同意していないなら利用規約を表示
+        if !UserDefaultsKey.agree.bool() {
+            displayAgreement({
+                UserDefaultsKey.agree.set(value: true)
+            })
+        }
+    }
+    
+    /// 利用規約アラートを表示
+    func displayAgreement(_ completion: @escaping () -> ()) {
+        // 同意ボタン
+        let agreeAction = UIAlertAction(title: NSLocalizedString("Agree", comment: ""), style: UIAlertAction.Style.default) {(action: UIAlertAction) in
+            self.dismissIndicator()
+            completion()
+        }
+        // 利用規約ボタン
+        let termsAction = UIAlertAction(title: NSLocalizedString("ReadTerms", comment: ""), style: UIAlertAction.Style.default) {(action: UIAlertAction) in
+            // 規約画面に遷移
+            let url = URL(string: "https://sportnote-b2c92.firebaseapp.com/")
+            UIApplication.shared.open(url!)
+            // アラートが消えるため再度表示
+            self.displayAgreement({
+                completion()
+            })
+        }
+        showAlert(title: "AgreeTitle", message: "AgreeMessage", actions: [termsAction, agreeAction])
     }
     
     override func viewDidAppear(_ animated: Bool) {

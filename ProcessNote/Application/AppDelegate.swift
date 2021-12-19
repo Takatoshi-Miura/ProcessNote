@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Realmファイルの場所
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
+        // 初回起動判定(初期値を登録)
+        UserDefaults.standard.register(defaults: ["firstLaunch": true])
+        
         // ユーザーIDを作成(初期値を登録)
         if (UserDefaults.standard.object(forKey: "userID") as? String == nil) {
             let uuid = NSUUID().uuidString
