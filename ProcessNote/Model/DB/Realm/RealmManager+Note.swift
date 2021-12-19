@@ -150,10 +150,10 @@ func getNoteYearAndMonth() -> [String] {
  ノートの年月を取得
  - Parameters:
     - note: ノート
- - Returns: ノートの年月(yyyy/MM形式)
+ - Returns: ノートの年月(yyyy-MM形式)
  */
 func getCreatedYearAndMonth(note: Note) -> String {
-    return changeDateString(dateString: note.getCreated_at(), format: "yyyy-MM-dd", goalFormat: "yyyy/MM")
+    return changeDateString(dateString: note.getCreated_at(), format: "yyyy-MM-dd", goalFormat: "yyyy-MM")
 }
 
 /**

@@ -271,11 +271,7 @@ extension AddNoteViewController: SaveButtonCellDelegate {
         }
         
         // モーダルを閉じる
-        if selectTodayNote() != nil {
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            self.dismissWithInsertNote(note: note)
-        }
+        dismissWithInsertNote(note: note)
     }
     
     /// ノート画面にノートを追加してモーダルを閉じる

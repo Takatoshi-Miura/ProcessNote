@@ -100,10 +100,31 @@ class NoteViewController: UIViewController {
         - note: 挿入するノート
      */
     func insertNote(note: Note) {
-        // TODO: tableに追加処理
-//        let index: IndexPath = [0, 0]
-//        noteArray[].append(note)
-//        tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
+        let index: IndexPath = [0, 0]
+        
+        if !noteArray.isEmpty {
+            // 同日のノートがあるなら追加しない
+            if note.getCreated_at() == noteArray[0].first!.getCreated_at() {
+                return
+            }
+            
+            // セクション追加の必要性の判定(既存ノートと同じ年月かどうか)
+            let realmNoteYearMonth = changeDateString(dateString: noteArray[0].first!.getCreated_at(), format: "yyyy-MM-dd", goalFormat: "yyyy-MM")
+            let newNoteYearMonth = changeDateString(dateString: note.getCreated_at(), format: "yyyy-MM-dd", goalFormat: "yyyy-MM")
+            if newNoteYearMonth == realmNoteYearMonth {
+                noteArray[0].insert(note, at: 0)
+                tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
+            } else {
+                sectionTitle.insert(getCreatedYearAndMonth(note: note), at: 0)
+                noteArray.insert([note], at: 0)
+                tableView.insertSections(IndexSet(integer: index.section), with: UITableView.RowAnimation.right)
+            }
+        } else {
+            // 初めてノートを作成する場合(セクション&ノート追加)
+            sectionTitle.insert(getCreatedYearAndMonth(note: note), at: 0)
+            noteArray.insert([note], at: 0)
+            tableView.insertSections(IndexSet(integer: index.section), with: UITableView.RowAnimation.right)
+        }
     }
     
 }
