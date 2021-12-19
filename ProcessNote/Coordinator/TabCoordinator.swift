@@ -109,6 +109,14 @@ class TabCoordinator: NSObject, Coordinator {
         navController.tabBarItem = UITabBarItem.init(title: page.pageTitleValue(),
                                                      image: page.pageTabIcon(),
                                                      tag: page.pageOrderNumber())
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .systemBackground
+            appearance.backgroundEffect = UIBlurEffect(style: .light)
+            navController.navigationBar.standardAppearance = appearance
+            navController.navigationBar.scrollEdgeAppearance = appearance
+        }
         
         switch page {
         case .task:
@@ -143,6 +151,13 @@ class TabCoordinator: NSObject, Coordinator {
         tabBarController.setViewControllers(tabControllers, animated: true)
         tabBarController.selectedIndex = TabBarPage.task.pageOrderNumber()
         tabBarController.tabBar.isTranslucent = false
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .systemBackground
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
     }
 }
 

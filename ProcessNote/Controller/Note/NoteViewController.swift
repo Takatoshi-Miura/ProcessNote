@@ -137,6 +137,10 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
         return 30
     }
     
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .systemGray6
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitle.count
     }

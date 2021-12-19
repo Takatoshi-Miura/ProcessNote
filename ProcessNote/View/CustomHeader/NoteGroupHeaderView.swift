@@ -17,6 +17,7 @@ class NoteGroupHeaderView: UITableViewHeaderFooterView {
     // MARK: LifeCycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.tintColor = .systemGray6
     }
     
     func setProperty(group: Group) {

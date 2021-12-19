@@ -28,6 +28,7 @@ class GroupHeaderView: UITableViewHeaderFooterView {
     // MARK: LifeCycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.tintColor = .systemGray6
         // タップジェスチャーを追加
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerViewDidTap(sender:))))
     }
@@ -36,6 +37,7 @@ class GroupHeaderView: UITableViewHeaderFooterView {
         self.group = group
         imageView.backgroundColor = color[group.getColor()]
         titleLabel.text = group.getTitle()
+        infoButton.tintColor = .systemBlue
     }
     
     @IBAction func infoButtonDidTap(_ sender: Any) {
