@@ -143,7 +143,8 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             delegate?.settingVCDataTransferDidTap(self)
             break
         case NSLocalizedString("How to use this App?", comment: ""):
-            // TODO: チュートリアル
+            let url = URL(string: "https://youtu.be/KxLESzQHh0s")
+            UIApplication.shared.open(url!)
             break
         case NSLocalizedString("Inquiry", comment: ""):
             self.startMailer()
