@@ -65,6 +65,7 @@ class NoteViewController: UIViewController {
             sectionTitle = getNoteYearAndMonth()
             noteArray = getNoteArrayForNoteView()
             tableView.refreshControl?.endRefreshing()
+            tableView.reloadData()
         }
     }
     

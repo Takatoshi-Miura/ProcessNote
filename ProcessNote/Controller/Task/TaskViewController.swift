@@ -126,6 +126,7 @@ class TaskViewController: UIViewController {
             groupArray = getGroupArrayForTaskView()
             taskArray = getTaskArrayForTaskView()
             tableView.refreshControl?.endRefreshing()
+            tableView.reloadData()
         }
     }
     
