@@ -8,6 +8,15 @@
 import Foundation
 import UIKit
 
+// iPad判定
+func isiPad() -> Bool {
+    if UIDevice.current.userInterfaceIdiom == .pad {
+        return true
+    } else {
+        return false
+    }
+}
+
 // ColorPicker用(どこに追加してもOK)
 let colorTitle: [String] = [NSLocalizedString("Red", comment: ""),
                             NSLocalizedString("Pink", comment: ""),

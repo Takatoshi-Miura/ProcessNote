@@ -82,10 +82,30 @@ class TaskViewController: UIViewController {
             let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
                 self.delegate?.taskVCAddTaskDidTap(self)
             }
-            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+            if isiPad() {
+                showActionSheetForPad(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+            } else {
+                showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+            }
         } else {
-            showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
+            if isiPad() {
+                showActionSheetForPad(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
+            } else {
+                showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
+            }
+            
         }
+    }
+    
+    func showActionSheetForPad(title: String, message: String, actions: [UIAlertAction]) {
+        let actionSheet = UIAlertController(title: NSLocalizedString(title, comment: ""),
+                                            message: NSLocalizedString(message, comment: ""),
+                                            preferredStyle: .actionSheet)
+        actions.forEach { actionSheet.addAction($0) }
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        actionSheet.popoverPresentationController?.sourceView = self.view
+        actionSheet.popoverPresentationController?.sourceRect = addButton.frame
+        present(actionSheet, animated: true)
     }
     
     func initTableView() {
