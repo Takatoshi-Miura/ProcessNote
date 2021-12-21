@@ -79,10 +79,16 @@ public extension UIViewController {
        - actions: [UIAlertAction]
      */
     func showActionSheet(title: String, message: String, actions: [UIAlertAction]) {
-        let alert = UIAlertController(title: NSLocalizedString(title, comment: ""),
+        let actionSheet = UIAlertController(title: NSLocalizedString(title, comment: ""),
                                       message: NSLocalizedString(message, comment: ""), preferredStyle: .actionSheet)
-        actions.forEach { alert.addAction($0) }
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-        present(alert, animated: true)
+        actions.forEach { actionSheet.addAction($0) }
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        
+        if isiPad() {
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            let screenSize = UIScreen.main.bounds
+            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width / 2, y: screenSize.size.height, width: 0, height: 0)
+        }
+        present(actionSheet, animated: true)
     }
 }
