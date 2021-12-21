@@ -54,6 +54,9 @@ extension TaskCoordinator: TaskViewControllerDelegate {
         if #available(iOS 13.0, *) {
             addGroupViewController.isModalInPresentation = true
         }
+        if isiPad() {
+            addGroupViewController.modalPresentationStyle = .fullScreen
+        }
         viewController.present(addGroupViewController, animated: true)
     }
     
@@ -62,6 +65,9 @@ extension TaskCoordinator: TaskViewControllerDelegate {
         addTaskViewController = AddTaskViewController()
         if #available(iOS 13.0, *) {
             addTaskViewController.isModalInPresentation = true
+        }
+        if isiPad() {
+            addTaskViewController.modalPresentationStyle = .fullScreen
         }
         viewController.present(addTaskViewController, animated: true)
     }
