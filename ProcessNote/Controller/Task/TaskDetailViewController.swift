@@ -24,7 +24,6 @@ class TaskDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
     var task = Task()
-    var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
     var measuresArray: [Measures] = []
     var delegate: TaskDetailViewControllerDelegate?
@@ -145,17 +144,15 @@ class TaskDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (selectedIndex != nil) {
-            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+        if (tableView.indexPathForSelectedRow != nil) {
             // 対策が削除されていれば取り除く
-            let measures = measuresArray[selectedIndex!.row]
+            let measures = measuresArray[tableView.indexPathForSelectedRow!.row]
             if measures.getIsDeleted() {
-                measuresArray.remove(at: selectedIndex!.row)
-                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
-                selectedIndex = nil
+                measuresArray.remove(at: tableView.indexPathForSelectedRow!.row)
+                tableView.deleteRows(at: [tableView.indexPathForSelectedRow!], with: UITableView.RowAnimation.left)
                 return
             }
-            tableView.reloadRows(at: [selectedIndex!], with: .none)
+            tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
         }
     }
     
@@ -289,7 +286,6 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 対策画面へ遷移
         if indexPath.section == Section.measures.rawValue {
-            selectedIndex = indexPath
             let measures = measuresArray[indexPath.row]
             delegate?.taskDetailVCMeasuresCellDidTap(measures: measures)
         }

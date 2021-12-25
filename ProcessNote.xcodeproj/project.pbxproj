@@ -612,8 +612,8 @@
 			children = (
 				8D0F86CD270C7AB2004E2A7D /* NoteViewController.swift */,
 				8D09E790275C39F20005F809 /* NoteDetailViewController.swift */,
-				8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */,
 				8D4404722762AFF0003C2CAF /* MemoDetailViewController.swift */,
+				8D09E77A275AE6C00005F809 /* AddNoteViewController.swift */,
 			);
 			path = Note;
 			sourceTree = "<group>";

@@ -21,7 +21,6 @@ class SettingViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
-    var selectedIndex: IndexPath = [0, 0]
     var sectionTitle: [String] = []
     var cellTitle: [[String]] = [[]]
     var delegate: SettingViewControllerDelegate?
@@ -127,8 +126,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath
-        
         switch cellTitle[indexPath.section][indexPath.row] {
         case NSLocalizedString("Theme", comment: ""):
             // TODO: テーマ設定
@@ -152,9 +149,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
-        
-        // タップしたときの選択色を消去
-        tableView.deselectRow(at: selectedIndex as IndexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

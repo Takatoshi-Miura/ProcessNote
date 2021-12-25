@@ -20,7 +20,6 @@ class NoteViewController: UIViewController {
     
     // MARK: - UI,Variable
     @IBOutlet weak var tableView: UITableView!
-    var selectedIndex: IndexPath?
     var sectionTitle: [String] = [""]
     var cellTitle: [[String]] = [[]]
     var delegate: NoteViewControllerDelegate?
@@ -71,18 +70,16 @@ class NoteViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
         if (selectedIndex != nil) {
             // 削除されている場合は一覧から取り除く
-            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
             let note = noteArray[selectedIndex!.section][selectedIndex!.row]
             if note.getIsDeleted() {
                 noteArray[selectedIndex!.section].remove(at: selectedIndex!.row)
                 tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
-                selectedIndex = nil
                 return
             }
             tableView.reloadRows(at: [selectedIndex!], with: .none)
-            selectedIndex = nil
         }
     }
     
@@ -166,7 +163,6 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath
         let note = noteArray[indexPath.section][indexPath.row]
         delegate?.noteVCNoteDidTap(note: note)
     }

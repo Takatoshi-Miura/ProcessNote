@@ -24,7 +24,6 @@ class NoteDetailViewController: UIViewController {
     var memoArray = [[Memo]]()
     var groupArray = [Group]()
     var sectionTitle = [""]
-    private var selectedIndex: IndexPath?
     var delegate: NoteDetailViewControllerDelegate?
     
     // MARK: LifeCycle
@@ -70,14 +69,13 @@ class NoteDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
         if (selectedIndex != nil) {
-            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
             // メモが削除されていれば取り除く
             let memo = memoArray[selectedIndex!.section][selectedIndex!.row]
             if memo.getIsDeleted() {
                 memoArray[selectedIndex!.section].remove(at: selectedIndex!.row)
                 tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
-                selectedIndex = nil
                 return
             }
             tableView.reloadRows(at: [selectedIndex!], with: .none)
@@ -145,7 +143,6 @@ extension NoteDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath
         let memo = memoArray[indexPath.section][indexPath.row]
         delegate?.noteDetailVCMemoCellDidTap(memo: memo)
     }

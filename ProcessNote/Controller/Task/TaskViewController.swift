@@ -29,7 +29,7 @@ class TaskViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
-    private var selectedIndex: IndexPath?
+//    private var selectedIndex: IndexPath?
     private var groupArray: [Group] = [Group]()
     private var taskArray: [[Task]] = [[Task]]()
     var delegate: TaskViewControllerDelegate?
@@ -192,8 +192,8 @@ class TaskViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
         if (selectedIndex != nil) {
-            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
             // 未完了の課題から戻る場合
             if selectedIndex!.row < taskArray[selectedIndex!.section].count {
                 // 課題が完了or削除されていれば取り除く
@@ -201,12 +201,10 @@ class TaskViewController: UIViewController {
                 if task.getIsCompleted() || task.getIsDeleted() {
                     taskArray[selectedIndex!.section].remove(at: selectedIndex!.row)
                     tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
-                    selectedIndex = nil
                     return
                 }
             }
             tableView.reloadRows(at: [selectedIndex!], with: .none)
-            selectedIndex = nil
         } else {
             // グループから戻る場合はリロード
             groupArray = getGroupArrayForTaskView()
@@ -338,7 +336,6 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath
         // 完了済み課題セル
         if indexPath.row >= taskArray[indexPath.section].count {
             let groupID = groupArray[indexPath.section].getGroupID()
@@ -346,7 +343,7 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         // 課題セル
-        let task = taskArray[selectedIndex!.section][selectedIndex!.row]
+        let task = taskArray[indexPath.section][indexPath.row]
         delegate?.taskVCTaskCellDidTap(task: task)
     }
 }

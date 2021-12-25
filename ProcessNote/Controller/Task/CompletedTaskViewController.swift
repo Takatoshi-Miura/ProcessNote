@@ -18,7 +18,6 @@ class CompletedTaskViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
-    var selectedIndex: IndexPath?
     var taskArray: [Task] = [Task]()
     var groupID: String?
     var delegate: CompletedTaskViewControllerDelegate?
@@ -45,18 +44,15 @@ class CompletedTaskViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (selectedIndex != nil) {
-            tableView.deselectRow(at: selectedIndex! as IndexPath, animated: true)
+        if (tableView.indexPathForSelectedRow != nil) {
             // 課題が未完了or削除されていれば取り除く
-            let task = taskArray[selectedIndex!.row]
+            let task = taskArray[tableView.indexPathForSelectedRow!.row]
             if !task.getIsCompleted() || task.getIsDeleted() {
-                taskArray.remove(at: selectedIndex!.row)
-                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
-                selectedIndex = nil
+                taskArray.remove(at: tableView.indexPathForSelectedRow!.row)
+                tableView.deleteRows(at: [tableView.indexPathForSelectedRow!], with: UITableView.RowAnimation.left)
                 return
             }
-            tableView.reloadRows(at: [selectedIndex!], with: .none)
-            selectedIndex = nil
+            tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
         }
     }
 }
@@ -88,7 +84,6 @@ extension CompletedTaskViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath
         delegate?.completedTaskVCTaskCellDidTap(task: taskArray[indexPath.row])
     }
 }
