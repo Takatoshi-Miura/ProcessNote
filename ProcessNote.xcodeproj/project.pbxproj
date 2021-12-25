@@ -289,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F86DC270C8580004E2A7D /* Localizable.strings */,
+				8D594BA32771E9BF002291B5 /* ProcessNote.entitlements */,
 				8D0F86A5270C7771004E2A7D /* Assets.xcassets */,
 				8D0F86AA270C7771004E2A7D /* Info.plist */,
 				8D0F86E02711BDEF004E2A7D /* GoogleService-Info.plist */,
@@ -495,7 +496,6 @@
 		8D0F869B270C776F004E2A7D /* ProcessNote */ = {
 			isa = PBXGroup;
 			children = (
-				8D594BA32771E9BF002291B5 /* ProcessNote.entitlements */,
 				8D09E74327488C660005F809 /* Application */,
 				8D0F86E227127F64004E2A7D /* Model */,
 				8D09E74827488DA40005F809 /* View */,
@@ -1118,7 +1118,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ProcessNote/ProcessNote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9YB68MR5FL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProcessNote/Resource/Info.plist;
@@ -1131,7 +1131,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.it6210.Takatoshi.Miura.ProcessNoteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1148,7 +1148,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ProcessNote/ProcessNote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9YB68MR5FL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ProcessNote/Resource/Info.plist;
@@ -1161,7 +1161,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.it6210.Takatoshi.Miura.ProcessNoteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
