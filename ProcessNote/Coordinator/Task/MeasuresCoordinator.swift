@@ -12,6 +12,7 @@ class MeasuresCoordinator: Coordinator {
     
     var navigationController: UINavigationController?
     var measuresViewController = MeasuresViewController()
+    let memoDetailCoordinator = MemoDetailCoordinator()
     
     func startFlow(in window: UIWindow?) {
     }
@@ -35,6 +36,11 @@ extension MeasuresCoordinator: MeasuresViewControllerDelegate {
     // TaskDetailVC ← MeasuresVC
     func measuresVCDeleteMeasures() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MeasuresVC → MemoDetailVC
+    func measuresVCMemoDidTap(memo: Memo) {
+        memoDetailCoordinator.startFlow(in: navigationController!, withMemo: memo)
     }
     
 }

@@ -11,6 +11,8 @@ import UIKit
 protocol MeasuresViewControllerDelegate: AnyObject {
     // 対策削除時の処理
     func measuresVCDeleteMeasures()
+    // メモタップ時の処理
+    func measuresVCMemoDidTap(memo: Memo)
 }
 
 
@@ -19,7 +21,6 @@ class MeasuresViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     var measures = Measures()
-    var selectedIndex: IndexPath?
     var sectionTitle: [String] = []
     var memoArray = [Memo]()
     var delegate: MeasuresViewControllerDelegate?
@@ -65,6 +66,13 @@ class MeasuresViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if tableView.indexPathForSelectedRow != nil {
+            tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
         }
     }
     
@@ -123,10 +131,10 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case .note:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.numberOfLines = 0 // 全文表示
             let memo = memoArray[indexPath.row]
             cell.textLabel?.text = "\(changeDateString(dateString: memo.getCreated_at(), format: "yyyy-MM-dd HH:mm:ss", goalFormat: "yyyy/MM/dd"))\n\(memo.getDetail())"
             cell.backgroundColor = UIColor.systemGray6
+            cell.textLabel?.numberOfLines = 0 // 全文表示
             let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.3))
             separatorView.backgroundColor = UIColor.gray
             cell.addSubview(separatorView)
@@ -141,6 +149,21 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
         // キーボードを閉じる
         self.view.endEditing(true)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch Section(rawValue: indexPath.section) {
+        case .title:
+            break
+        case .note:
+            if !memoArray.isEmpty {
+                delegate?.measuresVCMemoDidTap(memo: memoArray[indexPath.row])
+            }
+            break
+        default:
+            break
+        }
+    }
+    
 }
 
 
