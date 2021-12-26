@@ -41,14 +41,14 @@ class AddGroupViewController: UIViewController {
      NavigationBarの初期設定
      */
     func initNavigationBar() {
-        naviItem.title = NSLocalizedString("AddGroupTitle", comment: "")
+        naviItem.title = TITLE_ADD_GROUP
     }
     
     /**
      tableViewの初期設定
      */
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""), NSLocalizedString("Color", comment: ""), ""]
+        sectionTitle = [TITLE_TITLE, TITLE_COLOR, ""]
         cellTitle = [[""], [""], [""]]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
@@ -110,7 +110,7 @@ extension AddGroupViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
-            cell.textField.placeholder = NSLocalizedString("GroupExample", comment: "")
+            cell.textField.placeholder = TITLE_GROUP_EXAMPLE
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddGroupViewCell"
             return cell
@@ -187,7 +187,7 @@ extension AddGroupViewController: SaveButtonCellDelegate {
         // 入力チェック
         let cell = tableView.cellForRow(at: [0, 0]) as! TitleCell
         if cell.textField.text!.isEmpty {
-            showErrorAlert(message: "EmptyTitle")
+            showErrorAlert(message: MESSAGE_EMPTY_TITLE)
             return
         }
         
@@ -200,13 +200,13 @@ extension AddGroupViewController: SaveButtonCellDelegate {
         print(group.getOrder())
         group.setUpdated_at(group.getCreated_at())
         if !createRealm(object: group) {
-            showErrorAlert(message: "GroupCreateError")
+            showErrorAlert(message: MESSAGE_GROUP_CREATE_ERROR)
             return
         }
         
         // Firebaseに送信
         if Network.isOnline() {
-            showIndicator(message: "ServerCommunication")
+            showIndicator(message: MESSAGE_SERVER_COMMUNICATION)
             saveGroup(group: group, completion: {
                 self.dismissIndicator()
                 self.dismissWithReload(group: group)

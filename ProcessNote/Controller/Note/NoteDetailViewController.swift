@@ -45,7 +45,7 @@ class NoteDetailViewController: UIViewController {
     
     /// ノートを削除(Firebaseへの反映はviewDidDisappear)
     @objc func deleteNote() {
-        showDeleteAlert(title: "DeleteNoteTitle", message: "DeleteNoteMessage", OKAction: {
+        showDeleteAlert(title: TITLE_DELETE_NOTE, message: MESSAGE_DELETE_NOTE, OKAction: {
             updateNoteIsDeleted(note: self.note)
             for memos in self.memoArray {
                 for memo in memos {

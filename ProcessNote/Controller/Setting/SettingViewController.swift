@@ -33,14 +33,9 @@ class SettingViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [//NSLocalizedString("Basic configuration", comment: ""),
-                        NSLocalizedString("Data", comment: ""),
-                        NSLocalizedString("Help", comment: "")]
-        cellTitle = [//[NSLocalizedString("Theme", comment: ""),
-                      //NSLocalizedString("Notification", comment: "")],
-                     [NSLocalizedString("Data transfer", comment: "")],
-                     [NSLocalizedString("How to use this App?", comment: ""),
-                      NSLocalizedString("Inquiry", comment: "")]]
+        sectionTitle = [TITLE_DATA, TITLE_HELP]
+        cellTitle = [[TITLE_DATA_TRANSFER],
+                     [TITLE_HOW_TO_USE_THIS_APP, TITLE_INQUIRY]]
         tableView.register(UINib(nibName: "SettingCell", bundle: nil), forCellReuseIdentifier: "SettingCell")
     }
     
@@ -100,19 +95,19 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         cell.accessibilityIdentifier = "SettingViewCell"
         
         switch title {
-        case NSLocalizedString("Theme", comment: ""):
+        case TITLE_THEME:
             // TODO: テーマ設定
             break
-        case NSLocalizedString("Notification", comment: ""):
+        case TITLE_NOTIFICATION:
             // TODO: 通知設定
             break
-        case NSLocalizedString("Data transfer", comment: ""):
+        case TITLE_DATA_TRANSFER:
             cell.setIconImage(UIImage(systemName: "icloud.and.arrow.up")!)
             break
-        case NSLocalizedString("How to use this App?", comment: ""):
+        case TITLE_HOW_TO_USE_THIS_APP:
             cell.setIconImage(UIImage(systemName: "questionmark.circle")!)
             break
-        case NSLocalizedString("Inquiry", comment: ""):
+        case TITLE_INQUIRY:
             cell.setIconImage(UIImage(systemName: "envelope")!)
             break
         default:
@@ -127,23 +122,23 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch cellTitle[indexPath.section][indexPath.row] {
-        case NSLocalizedString("Theme", comment: ""):
+        case TITLE_THEME:
             // TODO: テーマ設定
             break
-        case NSLocalizedString("Notification", comment: ""):
+        case TITLE_NOTIFICATION:
             // TODO: 通知設定
             break
-        case NSLocalizedString("Data transfer", comment: ""):
+        case TITLE_DATA_TRANSFER:
             if !Network.isOnline() {
-                showErrorAlert(message: "Internet Error")
+                showErrorAlert(message: MESSAGE_INTERNET_ERROR)
             }
             delegate?.settingVCDataTransferDidTap(self)
             break
-        case NSLocalizedString("How to use this App?", comment: ""):
+        case TITLE_HOW_TO_USE_THIS_APP:
             let url = URL(string: "https://youtu.be/KxLESzQHh0s")
             UIApplication.shared.open(url!)
             break
-        case NSLocalizedString("Inquiry", comment: ""):
+        case TITLE_INQUIRY:
             self.startMailer()
             break
         default:
@@ -156,25 +151,21 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SettingViewController: MFMailComposeViewControllerDelegate {
     
-    /**
-     メーラーを起動
-     */
+    /// メーラーを起動
     func startMailer() {
         if MFMailComposeViewController.canSendMail() == false {
-            showErrorAlert(message: "Mailer Error")
+            showErrorAlert(message: MESSAGE_MAILER_ERROR)
             return
         }
         let mailViewController = MFMailComposeViewController()
         mailViewController.mailComposeDelegate = self
         mailViewController.setToRecipients(["ProcessNote開発者<it6210ge@gmail.com>"])
-        mailViewController.setSubject(NSLocalizedString("Mail Subject", comment: ""))
-        mailViewController.setMessageBody(NSLocalizedString("Mail Message", comment: ""), isHTML: false)
+        mailViewController.setSubject(TITLE_MAIL_SUBJECT)
+        mailViewController.setMessageBody(TITLE_MAIL_MESSAGE, isHTML: false)
         self.present(mailViewController, animated: true, completion: nil)
     }
     
-    /**
-     メーラーを終了
-     */
+    /// メーラーを終了
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
         
@@ -184,10 +175,10 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         case .saved:
             break
         case .sent:
-            showOKAlert(title: "Success", message: "Mail Send Success")
+            showOKAlert(title: TITLE_SUCCESS, message: MESSAGE_MAIL_SEND_SUCCESS)
             break
         case .failed:
-            showErrorAlert(message: "Mail Send Failed")
+            showErrorAlert(message: MESSAGE_MAIL_SEND_FAILED)
             break
         default:
             break

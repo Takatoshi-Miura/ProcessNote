@@ -101,6 +101,7 @@
 		8D9BFF7C2769471D0086EF1D /* UIViewController+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BFF7B2769471D0086EF1D /* UIViewController+UserDefaults.swift */; };
 		8DAA5D4027361BE100FC0FD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */; };
 		8DAA5D482736270A00FC0FD0 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */; };
+		8DB0731327780A4E00EFABB7 /* Definition+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB0731227780A4E00EFABB7 /* Definition+Strings.swift */; };
 		8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */; };
 		8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */; };
 		8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */; };
@@ -230,6 +231,7 @@
 		8D9BFF7B2769471D0086EF1D /* UIViewController+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UserDefaults.swift"; sourceTree = "<group>"; };
 		8DAA5D3F27361BE100FC0FD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		8DAA5D472736270A00FC0FD0 /* TaskViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
+		8DB0731227780A4E00EFABB7 /* Definition+Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Definition+Strings.swift"; sourceTree = "<group>"; };
 		8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeaderView.xib; sourceTree = "<group>"; };
 		8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Indicator.swift"; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 			isa = PBXGroup;
 			children = (
 				8D0F870A271AA938004E2A7D /* Definition.swift */,
+				8DB0731227780A4E00EFABB7 /* Definition+Strings.swift */,
 				8D7E41A62723CC4800D87DD0 /* Network.swift */,
 				8D9BFF7B2769471D0086EF1D /* UIViewController+UserDefaults.swift */,
 				8D0F86DE271191AA004E2A7D /* UIViewController+Alert.swift */,
@@ -880,6 +883,7 @@
 				8D2B24DB273644190078F4B5 /* AppCoordinator.swift in Sources */,
 				8D0F86D2270C7DA7004E2A7D /* SettingViewController.swift in Sources */,
 				8D0F86E82712965C004E2A7D /* Measures.swift in Sources */,
+				8DB0731327780A4E00EFABB7 /* Definition+Strings.swift in Sources */,
 				8D0F86EC2712A8F1004E2A7D /* Memo.swift in Sources */,
 				8D4404772762B550003C2CAF /* MemoDetailCoordinator.swift in Sources */,
 				8D09E7682749CB860005F809 /* FirebaseManager+Group.swift in Sources */,

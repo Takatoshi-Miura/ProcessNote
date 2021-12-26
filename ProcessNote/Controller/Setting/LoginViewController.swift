@@ -79,7 +79,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             if let _ = UserDefaults.standard.object(forKey: "address") as? String,
                let _ = UserDefaults.standard.object(forKey: "password") as? String
             {
-                return NSLocalizedString("AlreadyLogin", comment: "")
+                return TITLE_ALREADY_LOGIN
             }
         }
         return sectionTitle[section]
@@ -95,13 +95,13 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.textField.keyboardType = .emailAddress
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 if indexPath.row == 0 {
-                    cell.textField.placeholder = NSLocalizedString("MailAddress", comment: "")
+                    cell.textField.placeholder = TITLE_MAIL_ADDRESS
                     cell.textField.tag = TextFieldTag.mail.rawValue
                     if let address = UserDefaults.standard.object(forKey: "address") as? String {
                         cell.textField.text = address
                     }
                 } else {
-                    cell.textField.placeholder = NSLocalizedString("Password", comment: "")
+                    cell.textField.placeholder = TITLE_PASSWORD
                     cell.textField.isSecureTextEntry = true
                     cell.textField.tag = TextFieldTag.password.rawValue
                     if let password = UserDefaults.standard.object(forKey: "password") as? String {
@@ -120,18 +120,18 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
                 if let _ = UserDefaults.standard.object(forKey: "address") as? String,
                    let _ = UserDefaults.standard.object(forKey: "password") as? String
                 {
-                    cell.setTitle(NSLocalizedString("Logout", comment: ""))
+                    cell.setTitle(TITLE_LOGOUT)
                     cell.setColor(colorNumber[NSLocalizedString("Red", comment: "")]!)
                 } else {
-                    cell.setTitle(NSLocalizedString("Login", comment: ""))
+                    cell.setTitle(TITLE_LOGIN)
                 }
                 cell.colorButton.tag = ButtonTag.login.rawValue
             } else if indexPath.row == 3 {
-                cell.setTitle(NSLocalizedString("Forgot password", comment: ""))
+                cell.setTitle(TITLE_FORGOT_PASSWORD)
                 cell.colorButton.tag = ButtonTag.forgotPassword.rawValue
             } else {
                 cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
-                cell.setTitle(NSLocalizedString("Create account", comment: ""))
+                cell.setTitle(TITLE_CREATE_ACCOUNT)
                 cell.colorButton.tag = ButtonTag.createAccount.rawValue
             }
             return cell
@@ -139,7 +139,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
             cell.delegate = self
             cell.colorButton.backgroundColor = UIColor.systemGray
-            cell.setTitle(NSLocalizedString("Cancel", comment: ""))
+            cell.setTitle(TITLE_CANCEL)
             cell.colorButton.tag = ButtonTag.cancel.rawValue
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
@@ -184,7 +184,7 @@ extension LoginViewController: ColorCellDelegate {
         case .login:
             if let address = mailCell.textField.text, let password = passwordCell.textField.text {
                 if address.isEmpty || password.isEmpty {
-                    showErrorAlert(message: "EmptyTextError")
+                    showErrorAlert(message: MESSAGE_EMPTY_TEXT_ERROR)
                     return
                 }
                 // ログイン状態によってログイン、ログアウト分岐
@@ -198,18 +198,18 @@ extension LoginViewController: ColorCellDelegate {
             }
         case .forgotPassword:
             if mailText.isEmpty {
-                showErrorAlert(message: "EmptyTextErrorPasswordReset")
+                showErrorAlert(message: MESSAGE_EMPTY_TEXT_ERROR_PASSWORD_RESET)
                 return
             }
-            showOKCancelAlert(title: "PasswordResetTitle", message: "PasswordResetMessage", OKAction: {
+            showOKCancelAlert(title: TITLE_PASSWORD_RESET, message:MESSAGE_PASSWORD_RESET, OKAction: {
                 self.sendPasswordResetMail(mail: mailText)
             })
         case .createAccount:
             if mailText.isEmpty || passwordText.isEmpty {
-                showErrorAlert(message: "EmptyTextError")
+                showErrorAlert(message: MESSAGE_EMPTY_TEXT_ERROR)
                 return
             }
-            showOKCancelAlert(title: "CreateAccountTitle", message: "CreateAccountMessage", OKAction: {
+            showOKCancelAlert(title: TITLE_CREATE_ACCOUNT, message: MESSAGE_CREATE_ACCOUNT, OKAction: {
                 self.createAccount(mail: mailText, password: passwordText)
             })
         case .cancel:
@@ -226,7 +226,7 @@ extension LoginViewController: ColorCellDelegate {
         - password: パスワード
      */
     func login(mail address: String, password pass: String) {
-        SVProgressHUD.show(withStatus: NSLocalizedString("DuringLoginProcess", comment: ""))
+        SVProgressHUD.show(withStatus: MESSAGE_DURING_LOGIN_PROCESS)
         
         Auth.auth().signIn(withEmail: address, password: pass) { authResult, error in
             // エラー処理
@@ -234,11 +234,11 @@ extension LoginViewController: ColorCellDelegate {
                 if let errorCode = AuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .invalidEmail:
-                        SVProgressHUD.showError(withStatus: NSLocalizedString("InvalidEmail", comment: ""))
+                        SVProgressHUD.showError(withStatus: MESSAGE_INVALID_EMAIL)
                     case .wrongPassword:
-                        SVProgressHUD.showError(withStatus: NSLocalizedString("WrongPassword", comment: ""))
+                        SVProgressHUD.showError(withStatus: MESSAGE_WRONG_PASSWORD)
                     default:
-                        SVProgressHUD.showError(withStatus: NSLocalizedString("LoginError", comment: ""))
+                        SVProgressHUD.showError(withStatus: MESSAGE_LOGIN_ERROR)
                     }
                     return
                 }
@@ -250,7 +250,7 @@ extension LoginViewController: ColorCellDelegate {
             UserDefaultsKey.password.set(value: pass)
             
             // メッセージが隠れてしまうため、遅延処理を行ってから画面遷移
-            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("LoginSuccessful", comment: ""))
+            SVProgressHUD.showSuccess(withStatus: MESSAGE_LOGIN_SUCCESSFUL)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 self.delegate?.LoginVCUserDidLogin(self)
             }
@@ -284,13 +284,13 @@ extension LoginViewController: ColorCellDelegate {
             UserDefaultsKey.userID.set(value: NSUUID().uuidString)
             
             // メッセージが隠れてしまうため、遅延処理を行う
-            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("LogoutSuccessful", comment: ""))
+            SVProgressHUD.showSuccess(withStatus: MESSAGE_LOGOUT_SUCCESSFUL)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 self.delegate?.LoginVCUserDidLogin(self)
             }
         } catch _ as NSError {
             SVProgressHUD.dismiss()
-            showErrorAlert(message: NSLocalizedString("LogoutError", comment: ""))
+            showErrorAlert(message: MESSAGE_LOGOUT_ERROR)
         }
     }
     
@@ -302,10 +302,10 @@ extension LoginViewController: ColorCellDelegate {
     func sendPasswordResetMail(mail address: String) {
         Auth.auth().sendPasswordReset(withEmail: address) { (error) in
             if error != nil {
-                self.showErrorAlert(message: "MailSendError")
+                self.showErrorAlert(message: MESSAGE_MAIL_SEND_ERROR)
                 return
             }
-            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("MailSendSuccessful", comment: ""))
+            SVProgressHUD.showSuccess(withStatus: MESSAGE_MAIL_SEND_SUCCESSFUL)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 self.delegate?.LoginVCUserDidLogin(self)
             }
@@ -319,7 +319,7 @@ extension LoginViewController: ColorCellDelegate {
         - password: パスワード
      */
     func createAccount(mail address: String, password pass: String) {
-        showIndicator(message: "DuringCreateAccountProcess")
+        showIndicator(message: MESSAGE_DURING_CREATE_ACCOUNT_PROCESS)
         
         // アカウント作成処理
         Auth.auth().createUser(withEmail: address, password: pass) { authResult, error in
@@ -329,13 +329,13 @@ extension LoginViewController: ColorCellDelegate {
                 if let errorCode = AuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                         case .invalidEmail:
-                            SVProgressHUD.showError(withStatus: NSLocalizedString("InvalidEmail", comment: ""))
+                            SVProgressHUD.showError(withStatus: MESSAGE_INVALID_EMAIL)
                         case .emailAlreadyInUse:
-                            SVProgressHUD.showError(withStatus: NSLocalizedString("EmailAlreadyInUse", comment: ""))
+                            SVProgressHUD.showError(withStatus: MESSAGE_EMAIL_ALREADY_INUSE)
                         case .weakPassword:
-                            SVProgressHUD.showError(withStatus: NSLocalizedString("WeakPassword", comment: ""))
+                            SVProgressHUD.showError(withStatus: MESSAGE_WEAK_PASSWORD)
                         default:
-                            SVProgressHUD.showError(withStatus: NSLocalizedString("CreateAccountError", comment: ""))
+                            SVProgressHUD.showError(withStatus: MESSAGE_CREATE_ACCOUNT_ERROR)
                     }
                     return
                 }
@@ -357,7 +357,7 @@ extension LoginViewController: ColorCellDelegate {
             syncDatabase(completion: {
                 self.dismissIndicator()
                 self.delegate?.LoginVCUserDidLogin(self)
-                SVProgressHUD.showSuccess(withStatus: NSLocalizedString("DataTransferSuccessful", comment: ""))
+                SVProgressHUD.showSuccess(withStatus: MESSAGE_DATA_TRANSFER_SUCCESSFUL)
             })
         }
     }

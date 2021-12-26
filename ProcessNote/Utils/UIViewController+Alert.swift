@@ -17,8 +17,8 @@ public extension UIViewController {
        - actions: [okAction、cancelAction]等
      */
     func showAlert(title: String, message: String, actions: [UIAlertAction]) {
-        let alert = UIAlertController(title: NSLocalizedString(title, comment: ""),
-                                      message: NSLocalizedString(message, comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: title,
+                                      message: message, preferredStyle: .alert)
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true)
     }
@@ -43,7 +43,7 @@ public extension UIViewController {
      */
     func showOKCancelAlert(title: String, message: String, OKAction: @escaping () -> ()) {
         let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction) in OKAction()})
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
+        let cancelAction = UIAlertAction(title: TITLE_CANCEL, style: UIAlertAction.Style.default, handler: nil)
         showAlert(title: title, message: message, actions: [cancelAction, OKAction])
     }
     
@@ -53,7 +53,7 @@ public extension UIViewController {
        - message: 説明文
      */
     func showErrorAlert(message: String) {
-        showOKAlert(title: "Error", message: message)
+        showOKAlert(title: TITLE_ERROR, message: message)
     }
     
     /**
@@ -64,9 +64,9 @@ public extension UIViewController {
         - OKAction: OKをタップした時の処理
      */
     func showDeleteAlert(title: String, message: String, OKAction: @escaping () -> ()) {
-        let OKAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""),
+        let OKAction = UIAlertAction(title: TITLE_DELETE,
                                      style: UIAlertAction.Style.destructive, handler: {(action: UIAlertAction) in OKAction()})
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+        let cancelAction = UIAlertAction(title: TITLE_CANCEL,
                                          style: UIAlertAction.Style.cancel, handler: nil)
         showAlert(title: title, message: message, actions: [OKAction, cancelAction])
     }
@@ -79,10 +79,10 @@ public extension UIViewController {
        - actions: [UIAlertAction]
      */
     func showActionSheet(title: String, message: String, actions: [UIAlertAction]) {
-        let actionSheet = UIAlertController(title: NSLocalizedString(title, comment: ""),
-                                      message: NSLocalizedString(message, comment: ""), preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: title,
+                                      message: message, preferredStyle: .actionSheet)
         actions.forEach { actionSheet.addAction($0) }
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: TITLE_CANCEL, style: .cancel, handler: nil))
         
         if isiPad() {
             actionSheet.popoverPresentationController?.sourceView = self.view

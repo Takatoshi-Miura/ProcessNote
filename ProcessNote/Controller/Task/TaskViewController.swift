@@ -29,7 +29,6 @@ class TaskViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
-//    private var selectedIndex: IndexPath?
     private var groupArray: [Group] = [Group]()
     private var taskArray: [[Task]] = [[Task]]()
     var delegate: TaskViewControllerDelegate?
@@ -56,7 +55,7 @@ class TaskViewController: UIViewController {
     }
     
     func initNavigationController() {
-        self.title = NSLocalizedString("Task", comment: "")
+        self.title = TITLE_TASK
         
         var menuButton: UIBarButtonItem
         let image = UITraitCollection.current.userInterfaceStyle == .dark ? UIImage(named: "humburger_menu_white")! : UIImage(named: "humburger_menu_black")!
@@ -75,34 +74,34 @@ class TaskViewController: UIViewController {
     /// 課題・グループを追加
     @IBAction func addButtonTap(_ sender: Any) {
         // アクションシートを表示
-        let addGroupAction = UIAlertAction(title: NSLocalizedString("Group", comment: ""), style: .default) { _ in
+        let addGroupAction = UIAlertAction(title: TITLE_GROUP, style: .default) { _ in
             self.delegate?.taskVCAddGroupDidTap(self)
         }
         if !groupArray.isEmpty {
-            let addTaskAction = UIAlertAction(title: NSLocalizedString("Task", comment: ""), style: .default) { _ in
+            let addTaskAction = UIAlertAction(title: TITLE_TASK, style: .default) { _ in
                 self.delegate?.taskVCAddTaskDidTap(self)
             }
             if isiPad() {
-                showActionSheetForPad(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+                showActionSheetForPad(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction, addTaskAction])
             } else {
-                showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction, addTaskAction])
+                showActionSheet(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction, addTaskAction])
             }
         } else {
             if isiPad() {
-                showActionSheetForPad(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
+                showActionSheetForPad(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction])
             } else {
-                showActionSheet(title: "AddGroupTaskTitle", message: "AddGroupTaskMessage", actions: [addGroupAction])
+                showActionSheet(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction])
             }
             
         }
     }
     
     func showActionSheetForPad(title: String, message: String, actions: [UIAlertAction]) {
-        let actionSheet = UIAlertController(title: NSLocalizedString(title, comment: ""),
-                                            message: NSLocalizedString(message, comment: ""),
+        let actionSheet = UIAlertController(title: title,
+                                            message: message,
                                             preferredStyle: .actionSheet)
         actions.forEach { actionSheet.addAction($0) }
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: TITLE_CANCEL, style: .cancel, handler: nil))
         actionSheet.popoverPresentationController?.sourceView = self.view
         actionSheet.popoverPresentationController?.sourceRect = addButton.frame
         present(actionSheet, animated: true)
@@ -134,7 +133,7 @@ class TaskViewController: UIViewController {
     /// データの同期処理
     @objc func syncData() {
         if Network.isOnline() {
-            showIndicator(message: "ServerCommunication")
+            showIndicator(message: MESSAGE_SERVER_COMMUNICATION)
             syncDatabase(completion: {
                 self.groupArray = getGroupArrayForTaskView()
                 self.taskArray = getTaskArrayForTaskView()
@@ -173,12 +172,12 @@ class TaskViewController: UIViewController {
     /// 利用規約アラートを表示
     func displayAgreement(_ completion: @escaping () -> ()) {
         // 同意ボタン
-        let agreeAction = UIAlertAction(title: NSLocalizedString("Agree", comment: ""), style: UIAlertAction.Style.default) {(action: UIAlertAction) in
+        let agreeAction = UIAlertAction(title: TITLE_AGREEMENT, style: UIAlertAction.Style.default) {(action: UIAlertAction) in
             self.dismissIndicator()
             completion()
         }
         // 利用規約ボタン
-        let termsAction = UIAlertAction(title: NSLocalizedString("ReadTerms", comment: ""), style: UIAlertAction.Style.default) {(action: UIAlertAction) in
+        let termsAction = UIAlertAction(title: TITLE_READ_TERMS, style: UIAlertAction.Style.default) {(action: UIAlertAction) in
             // 規約画面に遷移
             let url = URL(string: "https://sportnote-b2c92.firebaseapp.com/")
             UIApplication.shared.open(url!)
@@ -187,7 +186,7 @@ class TaskViewController: UIViewController {
                 completion()
             })
         }
-        showAlert(title: "AgreeTitle", message: "AgreeMessage", actions: [termsAction, agreeAction])
+        showAlert(title: TITLE_AGREE, message: MESSAGE_AGREE, actions: [termsAction, agreeAction])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -321,13 +320,13 @@ extension TaskViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         if indexPath.row >= taskArray[indexPath.section].count {
             // 完了済み課題セル
-            cell.textLabel?.text = NSLocalizedString("CompletedTask", comment: "")
+            cell.textLabel?.text = TITLE_COMPLETED_TASK
             cell.textLabel?.textColor = UIColor.systemBlue
         } else {
             // 課題セル
             let task = taskArray[indexPath.section][indexPath.row]
             cell.textLabel?.text = task.getTitle()
-            cell.detailTextLabel?.text = "\(NSLocalizedString("Measures", comment: ""))：\(getMeasuresTitleInTask(ID: task.getTaskID()))"
+            cell.detailTextLabel?.text = "\(TITLE_MEASURES)：\(getMeasuresTitleInTask(ID: task.getTaskID()))"
             cell.detailTextLabel?.textColor = UIColor.lightGray
             cell.accessibilityIdentifier = "TaskViewCell"
         }

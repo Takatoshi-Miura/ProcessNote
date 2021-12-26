@@ -35,7 +35,7 @@ class NoteViewController: UIViewController {
     }
     
     func initNavigationController() {
-        self.title = NSLocalizedString("Note", comment: "")
+        self.title = TITLE_NOTE
     }
     
     func initTableView() {
@@ -52,7 +52,7 @@ class NoteViewController: UIViewController {
     /// データの同期処理
     @objc func syncData() {
         if Network.isOnline() {
-            showIndicator(message: "ServerCommunication")
+            showIndicator(message: MESSAGE_SERVER_COMMUNICATION)
             syncDatabase(completion: {
                 self.sectionTitle = getNoteYearAndMonth()
                 self.noteArray = getNoteArrayForNoteView()
@@ -86,7 +86,7 @@ class NoteViewController: UIViewController {
     /// ノート追加
     @IBAction func addButtonTap(_ sender: Any) {
         if getAllMeasures(isDeleted: false).isEmpty {
-            showErrorAlert(message: "EmptyMeasures")
+            showErrorAlert(message: MESSAGE_EMPTY_MEASURES)
             return
         }
         self.delegate?.noteVCAddButtonDidTap(self)

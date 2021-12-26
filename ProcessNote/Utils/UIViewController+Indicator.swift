@@ -27,7 +27,7 @@ public extension UIViewController {
         vc?.view.addSubview(backgroundView)
         
         // ローディング表示
-        SVProgressHUD.show(withStatus: NSLocalizedString(message, comment: ""))
+        SVProgressHUD.show(withStatus: message)
     }
     
     /**

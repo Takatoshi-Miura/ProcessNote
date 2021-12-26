@@ -31,7 +31,7 @@ class CompletedTaskViewController: UIViewController {
     }
     
     func initNavigationController() {
-        self.title = NSLocalizedString("CompletedTask", comment: "")
+        self.title = TITLE_COMPLETED_TASK
     }
     
     func initTableView() {
@@ -76,7 +76,7 @@ extension CompletedTaskViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         let task = taskArray[indexPath.row]
         cell.textLabel?.text = task.getTitle()
-        cell.detailTextLabel?.text = "\(NSLocalizedString("Measures", comment: ""))：\(getMeasuresTitleInTask(ID: task.getTaskID()))"
+        cell.detailTextLabel?.text = "\(TITLE_MEASURES)：\(getMeasuresTitleInTask(ID: task.getTaskID()))"
         cell.detailTextLabel?.textColor = UIColor.lightGray
         cell.accessibilityIdentifier = "TaskViewCell"
         cell.accessoryType = .disclosureIndicator

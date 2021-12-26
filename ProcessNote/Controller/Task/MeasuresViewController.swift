@@ -38,14 +38,14 @@ class MeasuresViewController: UIViewController {
     }
     
     func initNavigationBar() {
-        self.title = NSLocalizedString("MeasuresTitle", comment: "")
+        self.title = TITLE_MEASURES_DETAIL
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMeasures))
         navigationItem.rightBarButtonItems = [deleteButton]
     }
     
     /// 対策とそれに含まれるメモを削除
     @objc func deleteMeasures() {
-        showDeleteAlert(title: "DeleteMeasuresTitle", message: "DeleteMeasuresMessage", OKAction: {
+        showDeleteAlert(title: TITLE_DELETE_MEASURES, message: MESSAGE_DELETE_MEASURES, OKAction: {
             updateMeasuresIsDeleted(measures: self.measures)
             for memo in self.memoArray {
                 updateMemoIsDeleted(memo: memo)
@@ -61,7 +61,7 @@ class MeasuresViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""), NSLocalizedString("Note", comment: "")]
+        sectionTitle = [TITLE_TITLE, TITLE_NOTE]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         if #available(iOS 15.0, *) {
@@ -183,7 +183,7 @@ extension MeasuresViewController: UITextFieldDelegate {
         
         // 入力チェック
         if textField.text!.isEmpty {
-            showErrorAlert(message: "EmptyTitle")
+            showErrorAlert(message: MESSAGE_EMPTY_TITLE)
             textField.text = measures.getTitle()
             return false
         }

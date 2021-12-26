@@ -42,23 +42,21 @@ class GroupViewController: UIViewController {
     }
     
     func initNavigationBar() {
-        self.title = NSLocalizedString("GroupTitle", comment: "")
+        self.title = TITLE_GROUP_DETAIL
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteGroup))
         navigationItem.rightBarButtonItems = [deleteButton]
     }
     
     /// グループを削除
     @objc func deleteGroup() {
-        showDeleteAlert(title: "DeleteGroupTitle", message: "DeleteGroupMessage", OKAction: {
+        showDeleteAlert(title: TITLE_DELETE_GROUP, message: MESSAGE_DELETE_GROUP, OKAction: {
             updateGroupIsDeleted(group: self.group)
             self.delegate?.groupVCDeleteGroup()
         })
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""),
-                        NSLocalizedString("Color", comment: ""),
-                        NSLocalizedString("GroupOrder", comment: "")]
+        sectionTitle = [TITLE_TITLE, TITLE_COLOR, TITLE_GROUP_ORDER]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -221,7 +219,7 @@ extension GroupViewController: UITextFieldDelegate {
         
         // 入力チェック
         if textField.text!.isEmpty {
-            showErrorAlert(message: "EmptyTitle")
+            showErrorAlert(message: MESSAGE_EMPTY_TITLE)
             textField.text = group.getTitle()
             return false
         }

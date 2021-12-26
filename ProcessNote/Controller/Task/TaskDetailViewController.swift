@@ -43,7 +43,7 @@ class TaskDetailViewController: UIViewController {
     }
     
     func initNavigationBar() {
-        self.title = NSLocalizedString("TaskDetailTitle", comment: "")
+        self.title = TITLE_TASK_DETAIL
         
         var navigationItems: [UIBarButtonItem] = []
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteTask))
@@ -57,7 +57,7 @@ class TaskDetailViewController: UIViewController {
     
     /// 課題を削除
     @objc func deleteTask() {
-        showDeleteAlert(title: "DeleteTaskTitle", message: "DeleteTaskMessage", OKAction: {
+        showDeleteAlert(title: TITLE_DELETE_TASK, message: MESSAGE_DELETE_TASK, OKAction: {
             updateTaskIsDeleted(task: self.task)
             self.delegate?.taskDetailVCDeleteTask(task: self.task)
         })
@@ -66,8 +66,8 @@ class TaskDetailViewController: UIViewController {
     /// 課題を完了(未完了)にする
     @objc func completeTask() {
         let isCompleted = task.getIsCompleted()
-        let message = isCompleted ? "InCompleteTaskMessage" : "CompleteTaskMessage"
-        showOKCancelAlert(title: "CompleteTaskTitle", message: message, OKAction: {
+        let message = isCompleted ? MESSAGE_INCOMPLETE_TASK : MESSAGE_COMPLETE_TASK
+        showOKCancelAlert(title: TITLE_COMPLETE_TASK, message: message, OKAction: {
             updateTaskIsCompleted(task: self.task, isCompleted: !isCompleted)
             self.delegate?.taskDetailVCCompleteTask(task: self.task)
         })
@@ -75,8 +75,8 @@ class TaskDetailViewController: UIViewController {
     
     @IBAction func addButtonTap(_ sender: Any) {
         // 対策を追加
-        let alert = UIAlertController(title: NSLocalizedString("AddMeasuresTitle", comment: ""),
-                                      message: NSLocalizedString("AddMeasuresMessage", comment: ""),
+        let alert = UIAlertController(title: TITLE_ADD_MEASURES,
+                                      message: MESSAGE_ADD_MEASURES,
                                       preferredStyle: .alert)
         
         var alertTextField: UITextField?
@@ -84,17 +84,17 @@ class TaskDetailViewController: UIViewController {
             alertTextField = textField
         })
         
-        let OKAction = UIAlertAction(title: NSLocalizedString("Add", comment: ""),
+        let OKAction = UIAlertAction(title: TITLE_ADD,
                                      style: UIAlertAction.Style.default,
                                      handler: {(action: UIAlertAction) in
             if (alertTextField?.text == nil || alertTextField?.text == "") {
-                self.showErrorAlert(message: "EmptyTitle")
+                self.showErrorAlert(message: MESSAGE_EMPTY_TITLE)
             } else {
                 self.addMeasures(title: alertTextField!.text!)
             }
         })
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+        let cancelAction = UIAlertAction(title: TITLE_CANCEL,
                                          style: UIAlertAction.Style.cancel,
                                          handler: nil)
         
@@ -112,7 +112,7 @@ class TaskDetailViewController: UIViewController {
         measures.setOrder(getMeasuresInTask(ID: task.getTaskID()).count)
         measures.setUpdated_at(measures.getCreated_at())
         if !createRealm(object: measures) {
-            showErrorAlert(message: "TaskCreateError")
+            showErrorAlert(message: MESSAGE_TASK_CREATE_ERROR)
             return
         }
         
@@ -128,9 +128,7 @@ class TaskDetailViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""),
-                        NSLocalizedString("Cause", comment: ""),
-                        NSLocalizedString("Measures", comment: "")]
+        sectionTitle = [TITLE_TITLE, TITLE_CAUSE, TITLE_MEASURES]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -309,7 +307,7 @@ extension TaskDetailViewController: UITextFieldDelegate {
         
         // 入力チェック
         if textField.text!.isEmpty {
-            showErrorAlert(message: "EmptyTitle")
+            showErrorAlert(message: MESSAGE_EMPTY_TITLE)
             textField.text = task.getTitle()
             return false
         }

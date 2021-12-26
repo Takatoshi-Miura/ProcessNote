@@ -46,17 +46,14 @@ class AddTaskViewController: UIViewController {
      NavigationBarの初期設定
      */
     func initNavigationBar() {
-        naviItem.title = NSLocalizedString("AddTaskTitle", comment: "")
+        naviItem.title = TITLE_ADD_TASK
     }
     
     /**
      tableViewの初期設定
      */
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Title", comment: ""),
-                        NSLocalizedString("Cause", comment: ""),
-                        NSLocalizedString("Measures", comment: ""),
-                        NSLocalizedString("Group", comment: ""), ""]
+        sectionTitle = [TITLE_TITLE, TITLE_CAUSE, TITLE_MEASURES, TITLE_GROUP, ""]
         cellTitle = [[""], [""], [""], [""], [""]]
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
@@ -120,7 +117,7 @@ extension AddTaskViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
-            cell.textField.placeholder = NSLocalizedString("TaskExample", comment: "")
+            cell.textField.placeholder = TITLE_TASK_EXAMPLE
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
@@ -135,7 +132,7 @@ extension AddTaskViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
-            cell.textField.placeholder = NSLocalizedString("MeasureExample", comment: "")
+            cell.textField.placeholder = TITLE_MEASURE_EXAMPLE
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             return cell
@@ -222,7 +219,7 @@ extension AddTaskViewController: SaveButtonCellDelegate {
         // 入力チェック
         let titleCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
         if titleCell.textField.text!.isEmpty {
-            showErrorAlert(message: "EmptyTitle")
+            showErrorAlert(message: MESSAGE_EMPTY_TITLE)
             return
         }
         let causeTextCell = tableView.cellForRow(at: [1, 0]) as! TextViewCell
@@ -237,7 +234,7 @@ extension AddTaskViewController: SaveButtonCellDelegate {
         task.setOrder(getTasksInGroup(ID: task.getGroupID(), isCompleted: false).count)
         task.setUpdated_at(task.getCreated_at())
         if !createRealm(object: task) {
-            showErrorAlert(message: "TaskCreateError")
+            showErrorAlert(message: MESSAGE_TASK_CREATE_ERROR)
             return
         }
         
@@ -250,7 +247,7 @@ extension AddTaskViewController: SaveButtonCellDelegate {
         measures.setUpdated_at(measures.getCreated_at())
         if !measuresCell.textField.text!.isEmpty {
             if !createRealm(object: measures) {
-                showErrorAlert(message: "TaskCreateError")
+                showErrorAlert(message: MESSAGE_TASK_CREATE_ERROR)
                 return
             }
         }

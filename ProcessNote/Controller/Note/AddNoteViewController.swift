@@ -40,11 +40,11 @@ class AddNoteViewController: UIViewController {
     }
     
     func initNavigationBar() {
-        naviItem.title = NSLocalizedString("AddNoteTitle", comment: "")
+        naviItem.title = TITLE_ADD_NOTE
     }
     
     func initTableView() {
-        sectionTitle = [NSLocalizedString("Group", comment: ""), NSLocalizedString("Task", comment: ""), ""]
+        sectionTitle = [TITLE_GROUP, TITLE_TASK, ""]
         tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
         tableView.register(UINib(nibName: "NoteTextViewCell", bundle: nil), forCellReuseIdentifier: "NoteTextViewCell")
         tableView.register(UINib(nibName: "SaveButtonCell", bundle: nil), forCellReuseIdentifier: "SaveButtonCell")
@@ -225,7 +225,7 @@ extension AddNoteViewController: SaveButtonCellDelegate {
         
         // 何も入力していなければアラート
         if memoArray.isEmpty {
-            showErrorAlert(message: "EmptyNote")
+            showErrorAlert(message: MESSAGE_EMPTY_NOTE)
             return
         }
         
@@ -246,7 +246,7 @@ extension AddNoteViewController: SaveButtonCellDelegate {
                 memo.setNoteID(note.getNoteID())
             }
             if !createRealm(object: note) {
-                showErrorAlert(message: "NoteCreateError")
+                showErrorAlert(message: MESSAGE_NOTE_CREATE_ERROR)
                 return
             }
             // Firebaseに送信
@@ -258,7 +258,7 @@ extension AddNoteViewController: SaveButtonCellDelegate {
         // メモ保存
         for memo in memoArray {
             if !createRealm(object: memo) {
-                showErrorAlert(message: "NoteCreateError")
+                showErrorAlert(message: MESSAGE_NOTE_CREATE_ERROR)
                 return
             }
         }
