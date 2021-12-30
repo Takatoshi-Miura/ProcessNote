@@ -70,6 +70,11 @@ class MemoDetailViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // キーボード自動起動
+        memoTextView.becomeFirstResponder()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // Firebaseに送信
