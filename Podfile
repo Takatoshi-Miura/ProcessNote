@@ -13,6 +13,7 @@ target 'ProcessNote' do
   pod 'RealmSwift'
   pod 'ReachabilitySwift'
   pod 'SVProgressHUD'
+  pod 'Google-Mobile-Ads-SDK'
   
   # Pods for ProcessNoteTests
   target  'ProcessNoteTests' do

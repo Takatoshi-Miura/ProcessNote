@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import RealmSwift
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Firebase用
         FirebaseApp.configure()
+        
+        // Google AdMob初期化
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         // Realmファイルの場所
         print(Realm.Configuration.defaultConfiguration.fileURL!)
