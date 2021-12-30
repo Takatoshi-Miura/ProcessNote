@@ -71,8 +71,16 @@ class MeasuresViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if tableView.indexPathForSelectedRow != nil {
-            tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
+        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
+        if (selectedIndex != nil) {
+            // メモが削除されていれば取り除く
+            let memo = memoArray[selectedIndex!.row]
+            if memo.getIsDeleted() {
+                memoArray.remove(at: selectedIndex!.row)
+                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                return
+            }
+            tableView.reloadRows(at: [selectedIndex!], with: .none)
         }
     }
     

@@ -17,15 +17,19 @@ protocol MemoDetailViewControllerDelegate: AnyObject {
 class MemoDetailViewController: UIViewController {
     
     // MARK: UI,Variable
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var taskNameLabel: UILabel!
+    @IBOutlet weak var measuresLabel: UILabel!
+    @IBOutlet weak var memoTextView: UITextView!
     var memo = Memo()
     var delegate: MemoDetailViewControllerDelegate?
     
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.systemGray6
         initNavigationBar()
-        initTableView()
+        initLabel()
+        initTextView()
     }
     
     func initNavigationBar() {
@@ -44,13 +48,26 @@ class MemoDetailViewController: UIViewController {
         })
     }
     
-    func initTableView() {
-        tableView.tableFooterView = UIView()
-        tableView.register(UINib(nibName: "NoteTextViewCell", bundle: nil), forCellReuseIdentifier: "NoteTextViewCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+    func initLabel() {
+        let measures = getMeasures(measuresID: memo.getMeasuresID())
+        let task = getTask(taskID: measures.getTaskID())
+        taskNameLabel.text = task.getTitle()
+        measuresLabel.text = "\(TITLE_MEASURES)：\(measures.getTitle())"
+    }
+    
+    func initTextView() {
+        memoTextView.delegate = self
+        memoTextView.text = memo.getDetail()
+        // 余白を追加
+        memoTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        memoTextView.sizeToFit()
+        // キーボードに完了ボタンを追加
+        memoTextView.inputAccessoryView = createToolBar(#selector(completeAction))
+    }
+    
+    /// キーボードを閉じる
+    @objc func completeAction() {
+        self.view.endEditing(true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -61,48 +78,6 @@ class MemoDetailViewController: UIViewController {
         }
     }
 
-}
-
-
-extension MemoDetailViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteTextViewCell", for: indexPath) as! NoteTextViewCell
-        let measures = getMeasures(measuresID: memo.getMeasuresID())
-        let task = getTask(taskID: measures.getTaskID())
-        cell.setLabelText(task: task, measure: measures, detail: memo)
-        cell.memo.delegate = self
-        cell.memo.inputAccessoryView = createToolBar(#selector(completeAction))
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.accessibilityIdentifier = "NoteDetailViewCell"
-        return cell
-    }
-    
-    @objc func completeAction() {
-        // キーボードを閉じる
-        self.view.endEditing(true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 158
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
 }
 
 
