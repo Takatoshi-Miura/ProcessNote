@@ -66,6 +66,21 @@ func updateTaskOrderRealm(taskArray: [[Task]]) {
 }
 
 /**
+ 課題の並び順を更新
+ - Parameters:
+    - task: 課題
+    - order: 並び順
+ */
+func updateTaskOrderRealm(task: Task, order: Int) {
+    let realm = try! Realm()
+    let result = realm.objects(Task.self).filter("taskID == '\(task.getTaskID())'").first
+    try! realm.write {
+        result?.setOrder(order)
+        result?.setUpdated_at(getCurrentTime())
+    }
+}
+
+/**
  課題の属するグループを更新
  - Parameters:
     - task: 課題

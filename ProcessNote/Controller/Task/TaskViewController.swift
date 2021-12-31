@@ -228,14 +228,19 @@ class TaskViewController: UIViewController {
     }
     
     /**
-     課題を挿入
+     課題を挿入(最後尾に追加)
      - Parameters:
         - task: 挿入する課題
      */
     func insertTask(task: Task) {
-        var index: IndexPath = [0, task.getOrder()]
+        var index: IndexPath = [0, 0]
         for group in groupArray {
             if task.getGroupID() == group.getGroupID() {
+                // グループに含まれる課題数を並び順にセットする
+                let tasks = getTasksInGroup(ID: group.getGroupID(), isCompleted: false)
+                updateTaskOrderRealm(task: task, order: tasks.count - 1)
+                // tableViewに課題を追加
+                index = [index.section, tasks.count - 1]
                 taskArray[index.section].append(task)
                 tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
             }
