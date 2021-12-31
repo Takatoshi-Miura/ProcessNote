@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 
 protocol NoteViewControllerDelegate: AnyObject {
@@ -20,10 +21,11 @@ class NoteViewController: UIViewController {
     
     // MARK: - UI,Variable
     @IBOutlet weak var tableView: UITableView!
-    var sectionTitle: [String] = [""]
-    var cellTitle: [[String]] = [[]]
+    private var sectionTitle: [String] = [""]
+    private var cellTitle: [[String]] = [[]]
+    private var noteArray = [[Note]]()
+    private var isAdMobShow: Bool = false
     var delegate: NoteViewControllerDelegate?
-    var noteArray = [[Note]]()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -70,6 +72,8 @@ class NoteViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        showAdMob()
+        
         let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
         if (selectedIndex != nil) {
             // 削除されている場合は一覧から取り除く
@@ -123,6 +127,25 @@ class NoteViewController: UIViewController {
             noteArray.insert([note], at: 0)
             tableView.insertSections(IndexSet(integer: index.section), with: UITableView.RowAnimation.right)
         }
+    }
+    
+    /// バナー広告を表示
+    func showAdMob() {
+        if isAdMobShow { return }
+        
+        // バナー広告を宣言
+        var admobView = GADBannerView()
+        admobView = GADBannerView(adSize: GADAdSizeBanner)
+        admobView.adUnitID = "ca-app-pub-9630417275930781/9800556170"
+        admobView.rootViewController = self
+        admobView.load(GADRequest())
+        
+        // レイアウト調整(画面下部に設置)
+        admobView.frame.origin = CGPoint(x: 0, y: self.view.frame.size.height - admobView.frame.height)
+        admobView.frame.size = CGSize(width: self.view.frame.width, height: admobView.frame.height)
+        
+        self.view.addSubview(admobView)
+        isAdMobShow = true
     }
     
 }

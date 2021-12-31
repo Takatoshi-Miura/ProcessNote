@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,9 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Vgr-SV-ILr">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Vgr-SV-ILr">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="518"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="dvr-oM-FfE"/>
@@ -30,7 +29,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0sK-sI-txy">
-                    <rect key="frame" x="244" y="492" width="56" height="56"/>
+                    <rect key="frame" x="244" y="442" width="56" height="56"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="Plus_Button"/>
                     <connections>
@@ -41,8 +40,12 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="Vgr-SV-ILr" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Io6-HU-vqn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0sK-sI-txy" secondAttribute="trailing" constant="20" id="bGR-Yz-50h"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="0sK-sI-txy" secondAttribute="bottom" constant="20" id="tnB-3V-CVW"/>
+                <constraint firstItem="Vgr-SV-ILr" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-50" id="cZO-hc-w3u"/>
+                <constraint firstItem="Vgr-SV-ILr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="nB0-CM-1ab"/>
+                <constraint firstItem="Vgr-SV-ILr" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="qNs-l5-7Bi"/>
+                <constraint firstItem="Vgr-SV-ILr" firstAttribute="bottom" secondItem="0sK-sI-txy" secondAttribute="bottom" constant="20" id="tnB-3V-CVW"/>
             </constraints>
             <point key="canvasLocation" x="138.75" y="152.11267605633802"/>
         </view>

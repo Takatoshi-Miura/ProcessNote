@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 
 protocol TaskViewControllerDelegate: AnyObject {
@@ -31,8 +32,8 @@ class TaskViewController: UIViewController {
     @IBOutlet weak var addButton: UIButton!
     private var groupArray: [Group] = [Group]()
     private var taskArray: [[Task]] = [[Task]]()
+    private var isAdMobShow: Bool = false
     var delegate: TaskViewControllerDelegate?
-    
     
     // MARK: LifeCycle
     override func viewDidLoad() {
@@ -191,6 +192,8 @@ class TaskViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        showAdMob()
+        
         let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
         if (selectedIndex != nil) {
             // 未完了の課題から戻る場合
@@ -239,6 +242,26 @@ class TaskViewController: UIViewController {
             index = [index.section + 1, task.getOrder()]
         }
     }
+    
+    /// バナー広告を表示
+    func showAdMob() {
+        if isAdMobShow { return }
+        
+        // バナー広告を宣言
+        var admobView = GADBannerView()
+        admobView = GADBannerView(adSize: GADAdSizeBanner)
+        admobView.adUnitID = "ca-app-pub-9630417275930781/9800556170"
+        admobView.rootViewController = self
+        admobView.load(GADRequest())
+        
+        // レイアウト調整(画面下部に設置)
+        admobView.frame.origin = CGPoint(x: 0, y: self.view.frame.size.height - admobView.frame.height)
+        admobView.frame.size = CGSize(width: self.view.frame.width, height: admobView.frame.height)
+        
+        self.view.addSubview(admobView)
+        isAdMobShow = true
+    }
+    
 }
 
 
