@@ -271,7 +271,6 @@ extension LoginViewController: ColorCellDelegate {
             deleteAllTaskRealm()
             deleteAllGroupRealm()
             deleteAllMeasuresRealm()
-            deleteAllNoteRealm()
             deleteAllMemoRealm()
             
             // テキストフィールドをクリア
@@ -350,7 +349,6 @@ extension LoginViewController: ColorCellDelegate {
             updateGroupUserID(userID: Auth.auth().currentUser!.uid)
             updateTaskUserID(userID: Auth.auth().currentUser!.uid)
             updateMeasuresUserID(userID: Auth.auth().currentUser!.uid)
-            updateNoteUserID(userID: Auth.auth().currentUser!.uid)
             updateMemoUserID(userID: Auth.auth().currentUser!.uid)
             
             // Firebaseと同期
