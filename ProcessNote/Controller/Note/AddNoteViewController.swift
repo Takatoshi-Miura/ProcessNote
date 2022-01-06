@@ -229,32 +229,6 @@ extension AddNoteViewController: SaveButtonCellDelegate {
             return
         }
         
-        // ノート作成(今日のノートが存在すれば作成しない)
-        let note = Note()
-        if let todayNote = selectTodayNote() {
-            for memo in memoArray {
-                memo.setNoteID(todayNote.getNoteID())
-            }
-            updateNoteUpdatedAtRealm(ID: todayNote.getNoteID())
-            // Firebaseに送信
-            if Network.isOnline() {
-                updateNote(todayNote)
-            }
-        } else {
-            note.setUpdated_at(getCurrentTime())
-            for memo in memoArray {
-                memo.setNoteID(note.getNoteID())
-            }
-            if !createRealm(object: note) {
-                showErrorAlert(message: MESSAGE_NOTE_CREATE_ERROR)
-                return
-            }
-            // Firebaseに送信
-            if Network.isOnline() {
-                saveNote(note: note, completion: {})
-            }
-        }
-        
         // メモ保存
         for memo in memoArray {
             if !createRealm(object: memo) {
@@ -271,15 +245,15 @@ extension AddNoteViewController: SaveButtonCellDelegate {
         }
         
         // モーダルを閉じる
-        dismissWithInsertNote(note: note)
+        dismissWithInsertMemo(memo: memoArray[0])
     }
     
     /// ノート画面にノートを追加してモーダルを閉じる
-    func dismissWithInsertNote(note: Note) {
+    func dismissWithInsertMemo(memo: Memo) {
         let tabBar = self.presentingViewController as! UITabBarController
         let navigation = tabBar.selectedViewController as! UINavigationController
         let noteView = navigation.viewControllers.first as! NoteViewController
-        noteView.insertNote(note: note)
+        noteView.insertMemo(memo: memo)
         self.dismiss(animated: true, completion: nil)
     }
     

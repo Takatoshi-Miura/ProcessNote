@@ -12,7 +12,7 @@ class NoteCoordinator: Coordinator {
     
     var navigationController: UINavigationController?
     var noteViewController = NoteViewController()
-    let noteDetailCoordinator = NoteDetailCoordinator()
+    let memoDetailCoordinator = MemoDetailCoordinator()
     var addNoteViewController = AddNoteViewController()
     
     func startFlow(in window: UIWindow?) {
@@ -41,8 +41,8 @@ extension NoteCoordinator: NoteViewControllerDelegate {
     }
     
     // NoteVC → NoteDetailVC
-    func noteVCNoteDidTap(note: Note) {
-        noteDetailCoordinator.startFlow(in: navigationController!, withNote: note)
+    func noteVCMemoDidTap(memo: Memo) {
+        memoDetailCoordinator.startFlow(in: navigationController!, withMemo: memo)
     }
     
 }

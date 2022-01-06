@@ -84,6 +84,25 @@ func getAllMemoRealm() -> [Memo] {
 }
 
 /**
+ Realmのメモデータを全取得(NoteViewController用)
+ - Returns: 全メモデータ
+ */
+func getMemoArrayForNoteView() -> [Memo] {
+    var realmMemoArray: [Memo] = []
+    let realm = try! Realm()
+    let sortProperties = [
+        SortDescriptor(keyPath: "created_at", ascending: false),
+    ]
+    let realmArray = realm.objects(Memo.self)
+                            .filter("(isDeleted == false)")
+                            .sorted(by: sortProperties)
+    for memo in realmArray {
+        realmMemoArray.append(memo)
+    }
+    return realmMemoArray
+}
+
+/**
  対策に含まれるメモを取得
  - Parameters:
     - measuresID: 対策ID
