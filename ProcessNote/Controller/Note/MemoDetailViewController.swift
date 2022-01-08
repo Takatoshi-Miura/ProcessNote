@@ -17,6 +17,7 @@ protocol MemoDetailViewControllerDelegate: AnyObject {
 class MemoDetailViewController: UIViewController {
     
     // MARK: UI,Variable
+    @IBOutlet weak var groupColorView: UIImageView!
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var measuresLabel: UILabel!
     @IBOutlet weak var memoTextView: UITextView!
@@ -28,6 +29,7 @@ class MemoDetailViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.systemGray6
         initNavigationBar()
+        initGroupColor()
         initLabel()
         initTextView()
     }
@@ -46,6 +48,11 @@ class MemoDetailViewController: UIViewController {
             updateMemoIsDeleted(memo: self.memo)
             self.delegate?.memoDetailVCDeleteMemo()
         })
+    }
+    
+    func initGroupColor() {
+        let group = getGroup(memo: memo)
+        groupColorView.backgroundColor = color[group.getColor()]
     }
     
     func initLabel() {
