@@ -20,8 +20,8 @@ protocol NoteViewControllerDelegate: AnyObject {
 class NoteViewController: UIViewController {
     
     // MARK: - UI,Variable
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    private var cellTitle: [[String]] = [[]]
     private var memoArray = [Memo]()
     private var isAdMobShow: Bool = false
     var delegate: NoteViewControllerDelegate?
@@ -30,12 +30,17 @@ class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationController()
+        initSearchBar()
         initTableView()
         memoArray = getMemoArrayForNoteView()
     }
     
     func initNavigationController() {
         self.title = TITLE_NOTE
+    }
+    
+    func initSearchBar() {
+        searchBar.delegate = self
     }
     
     func initTableView() {
@@ -120,6 +125,24 @@ class NoteViewController: UIViewController {
         
         self.view.addSubview(admobView)
         isAdMobShow = true
+    }
+    
+}
+
+
+extension NoteViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == "" {
+            memoArray = getMemoArrayForNoteView()
+        } else {
+            memoArray = searchMemo(searchWord: searchBar.text!)
+        }
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
     }
     
 }

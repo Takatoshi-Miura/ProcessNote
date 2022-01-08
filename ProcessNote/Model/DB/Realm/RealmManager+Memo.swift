@@ -103,6 +103,28 @@ func getMemoArrayForNoteView() -> [Memo] {
 }
 
 /**
+ Realmのメモデータを検索
+ - Parameters:
+    - searchWord: 検索文字列
+ - Returns: 検索文字列を含むメモデータ
+ */
+func searchMemo(searchWord: String) -> [Memo] {
+    var realmMemoArray: [Memo] = []
+    let realm = try! Realm()
+    let sortProperties = [
+        SortDescriptor(keyPath: "created_at", ascending: false),
+    ]
+    let realmArray = realm.objects(Memo.self)
+                            .filter("(isDeleted == false)")
+                            .filter("(detail CONTAINS %@)", searchWord)
+                            .sorted(by: sortProperties)
+    for memo in realmArray {
+        realmMemoArray.append(memo)
+    }
+    return realmMemoArray
+}
+
+/**
  対策に含まれるメモを取得
  - Parameters:
     - measuresID: 対策ID
