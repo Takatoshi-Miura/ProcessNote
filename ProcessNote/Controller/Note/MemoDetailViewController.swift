@@ -33,7 +33,7 @@ class MemoDetailViewController: UIViewController {
     }
     
     func initNavigationBar() {
-        self.title = TITLE_EDIT_MEMO
+        self.title = TITLE_EDIT_NOTE
         var navigationItems: [UIBarButtonItem] = []
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMemo))
         navigationItems.append(deleteButton)
@@ -42,7 +42,7 @@ class MemoDetailViewController: UIViewController {
     
     /// メモを削除(Firebaseへの反映はviewDidDisappear)
     @objc func deleteMemo() {
-        showDeleteAlert(title: TITLE_DELETE_MEMO, message: MESSAGE_DELETE_MEMO, OKAction: {
+        showDeleteAlert(title: TITLE_DELETE_NOTE, message: MESSAGE_DELETE_NOTE, OKAction: {
             updateMemoIsDeleted(memo: self.memo)
             self.delegate?.memoDetailVCDeleteMemo()
         })

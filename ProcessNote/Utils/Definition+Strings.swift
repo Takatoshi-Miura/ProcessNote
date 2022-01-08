@@ -91,9 +91,7 @@ let MESSAGE_DELETE_NOTE = NSLocalizedString("DeleteNoteMessage", comment: "")
 
 
 // MARK: - MemoDetailViewController
-let TITLE_EDIT_MEMO = NSLocalizedString("EditMemoTitle", comment: "")
-let TITLE_DELETE_MEMO = NSLocalizedString("DeleteMemoTitle", comment: "")
-let MESSAGE_DELETE_MEMO = NSLocalizedString("DeleteMemoMessage", comment: "")
+let TITLE_EDIT_NOTE = NSLocalizedString("EditNoteTitle", comment: "")
 
 
 // MARK: - SettingViewController
