@@ -13,18 +13,25 @@ class AddNoteViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var naviItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
-    var sectionTitle: [String] = []
-    var groupArray: [Group] = []
-    var taskArray: [Task] = []
-    var pickerView = UIView()
-    let colorPicker = UIPickerView()
-    var pickerIndex: Int = 0
-    var viewOffset: CGPoint?
+    @IBOutlet weak var textView: UITextView!
     
-    enum Section: Int {
+    private var groupArray: [Group] = []
+    private var taskArray: [Task] = []
+    private var measuresArray: [Measures] = []
+    
+    private var pickerView = UIView()
+    private let groupPicker = UIPickerView()
+    private let taskPicker = UIPickerView()
+    private let measuresPicker = UIPickerView()
+    private var groupPickerSelected: Int = 0
+    private var taskPickerSelected: Int = 0
+    private var measuresPickerSelected: Int = 0
+    private var viewOffset: CGPoint?
+    
+    private enum Tag: Int {
         case group = 0
         case task
-        case save
+        case measures
     }
     
     // MARK: LifeCycle
@@ -32,9 +39,11 @@ class AddNoteViewController: UIViewController {
         super.viewDidLoad()
         initNavigationBar()
         initTableView()
-        initColorPicker()
+        initPickerView()
+        initTextView()
         groupArray = getGroupArrayForTaskView()
-        taskArray = getTasksInGroup(ID: groupArray[pickerIndex].getGroupID(), isCompleted: false)
+        taskArray = getTasksInGroup(ID: groupArray[0].getGroupID(), isCompleted: false)
+        measuresArray = getMeasuresInTask(ID: taskArray[0].getTaskID())
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -44,43 +53,49 @@ class AddNoteViewController: UIViewController {
     }
     
     func initTableView() {
-        sectionTitle = [TITLE_GROUP, TITLE_TASK, ""]
-        tableView.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: "ColorCell")
-        tableView.register(UINib(nibName: "NoteTextViewCell", bundle: nil), forCellReuseIdentifier: "NoteTextViewCell")
-        tableView.register(UINib(nibName: "SaveButtonCell", bundle: nil), forCellReuseIdentifier: "SaveButtonCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
     }
     
-    func initColorPicker() {
-        colorPicker.delegate = self
-        colorPicker.dataSource = self
-        colorPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: colorPicker.bounds.size.height + 44)
-        colorPicker.backgroundColor = UIColor.systemGray5
-        pickerView = UIView(frame: colorPicker.bounds)
-        pickerView.addSubview(colorPicker)
-        pickerView.addSubview(createToolBar(#selector(doneAction), #selector(cancelAction)))
+    func initPickerView() {
+        groupPicker.delegate = self
+        groupPicker.dataSource = self
+        groupPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: groupPicker.bounds.size.height + 44)
+        groupPicker.backgroundColor = UIColor.systemGray5
+        groupPicker.tag = Tag.group.rawValue
+        
+        taskPicker.delegate = self
+        taskPicker.dataSource = self
+        taskPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: taskPicker.bounds.size.height + 44)
+        taskPicker.backgroundColor = UIColor.systemGray5
+        taskPicker.tag = Tag.task.rawValue
+        
+        measuresPicker.delegate = self
+        measuresPicker.dataSource = self
+        measuresPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: measuresPicker.bounds.size.height + 44)
+        measuresPicker.backgroundColor = UIColor.systemGray5
+        measuresPicker.tag = Tag.measures.rawValue
     }
     
-    @objc func doneAction() {
-        // 選択したIndexを取得して閉じる
-        pickerIndex = colorPicker.selectedRow(inComponent: 0)
-        closePicker(pickerView)
-        taskArray = getTasksInGroup(ID: groupArray[pickerIndex].getGroupID(), isCompleted: false)
-        tableView.reloadData()
+    func initTextView() {
+        textView.text = ""
+        textView.delegate = self
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        textView.sizeToFit()
+        textView.inputAccessoryView = createToolBar(#selector(completeAction))
     }
     
-    @objc func cancelAction() {
-        // Indexを元に戻して閉じる
-        colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
-        closePicker(pickerView)
+    // キーボードを閉じる
+    @objc func completeAction() {
+        self.view.endEditing(true)
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
-        viewOffset = tableView.contentOffset
+        viewOffset = textView.contentOffset
         if let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
         }
     }
     
@@ -89,8 +104,53 @@ class AddNoteViewController: UIViewController {
             if let unwrappedOffset = self.viewOffset {
                 self.tableView.contentOffset = unwrappedOffset
             }
-            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // キーボード自動起動
+        textView.becomeFirstResponder()
+    }
+    
+    @IBAction func saveButtonDIdTap(_ sender: Any) {
+        // 何も入力していなければアラート
+        if textView.text.isEmpty {
+            showOKAlert(title: TITLE_ERROR, message: MESSAGE_EMPTY_NOTE, OKAction: {
+                self.textView.becomeFirstResponder()
+            })
+            return
+        }
+        
+        // メモ作成＆保存
+        let memo = Memo()
+        let measure = measuresArray[measuresPickerSelected]
+        memo.setMeasuresID(measure.getMeasuresID())
+        memo.setDetail(textView.text)
+        memo.setUpdated_at(getCurrentTime())
+        if !createRealm(object: memo) {
+            showErrorAlert(message: MESSAGE_NOTE_CREATE_ERROR)
+            return
+        }
+        if Network.isOnline() {
+            saveMemo(memo: memo, completion: {})
+        }
+        
+        dismissWithInsertMemo(memo: memo)
+    }
+    
+    /// ノート画面にノートを追加してモーダルを閉じる
+    func dismissWithInsertMemo(memo: Memo) {
+        let tabBar = self.presentingViewController as! UITabBarController
+        let navigation = tabBar.selectedViewController as! UINavigationController
+        let noteView = navigation.viewControllers.first as! NoteViewController
+        noteView.insertMemo(memo: memo)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func cancelButtonDidTap(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -98,75 +158,104 @@ class AddNoteViewController: UIViewController {
 
 extension AddNoteViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionTitle.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        return sectionTitle[section]
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
-            if taskArray.isEmpty {
-                return 0
-            } else {
-                return taskArray.count
-            }
-            
-        }
         return 1
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3    // グループ,課題,対策
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch Section(rawValue: indexPath.section) {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+        switch Tag(rawValue: indexPath.row) {
         case .group:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ColorCell", for: indexPath) as! ColorCell
-            cell.delegate = self
-            let colorNum = groupArray[pickerIndex].getColor()
-            cell.setColor(colorNum)
-            cell.setTitle(groupArray[pickerIndex].getTitle())
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.accessibilityIdentifier = "AddNoteViewCell"
+            cell.textLabel?.text = TITLE_GROUP
+            cell.detailTextLabel?.text = groupArray[groupPickerSelected].getTitle()
+            cell.accessoryType = .disclosureIndicator
             return cell
         case .task:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NoteTextViewCell", for: indexPath) as! NoteTextViewCell
-            cell.memo.delegate = self
-            cell.setLabelText(taskArray[indexPath.row])
-            cell.memo.inputAccessoryView = createToolBar(#selector(completeAction))
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            let separatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.3))
-            separatorView.backgroundColor = UIColor.gray
-            cell.addSubview(separatorView)
-            cell.accessibilityIdentifier = "AddNoteViewCell"
+            cell.textLabel?.text = TITLE_TASK
+            cell.detailTextLabel?.text = taskArray[taskPickerSelected].getTitle()
+            cell.accessoryType = .disclosureIndicator
             return cell
-        case .save:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SaveButtonCell", for: indexPath) as! SaveButtonCell
-            cell.delegate = self
-            cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.accessibilityIdentifier = "AddNoteViewCell"
+        case .measures:
+            cell.textLabel?.text = TITLE_MEASURES
+            cell.detailTextLabel?.text = measuresArray[measuresPickerSelected].getTitle()
+            cell.accessoryType = .disclosureIndicator
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             return cell
         }
     }
     
-    @objc func completeAction() {
-        // キーボードを閉じる
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.view.endEditing(true)
+        closePicker(pickerView)
+        switch Tag(rawValue: indexPath.row) {
+        case .group:
+            groupArray = getGroupArrayForTaskView()
+            pickerView = UIView(frame: groupPicker.bounds)
+            pickerView.tag = Tag.group.rawValue
+            pickerView.addSubview(groupPicker)
+        case .task:
+            let group = groupArray[groupPickerSelected]
+            taskArray = getTasksInGroup(ID: group.getGroupID(), isCompleted: false)
+            pickerView = UIView(frame: taskPicker.bounds)
+            pickerView.tag = Tag.task.rawValue
+            pickerView.addSubview(taskPicker)
+        case .measures:
+            let task = taskArray[taskPickerSelected]
+            measuresArray = getMeasuresInTask(ID: task.getTaskID())
+            pickerView = UIView(frame: measuresPicker.bounds)
+            pickerView.tag = Tag.measures.rawValue
+            pickerView.addSubview(measuresPicker)
+        default:
+            break
+        }
+        pickerView.addSubview(createToolBar(#selector(doneAction), #selector(cancelAction)))
+        openPicker(pickerView)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == Section.task.rawValue {
-            return 158
-        } else {
-            return 44
+    @objc func doneAction() {
+        // 選択したIndexを取得して閉じる
+        switch Tag(rawValue: pickerView.tag) {
+        case .group:
+            groupPickerSelected = groupPicker.selectedRow(inComponent: 0)
+            taskPickerSelected = 0
+            measuresPickerSelected = 0
+            taskPicker.selectRow(taskPickerSelected, inComponent: 0, animated: false)
+            measuresPicker.selectRow(measuresPickerSelected, inComponent: 0, animated: false)
+            taskArray = getTasksInGroup(ID: groupArray[groupPickerSelected].getGroupID(), isCompleted: false)
+            measuresArray = getMeasuresInTask(ID: taskArray[0].getTaskID())
+        case .task:
+            taskPickerSelected = taskPicker.selectedRow(inComponent: 0)
+            measuresPickerSelected = 0
+            measuresPicker.selectRow(measuresPickerSelected, inComponent: 0, animated: false)
+            measuresArray = getMeasuresInTask(ID: taskArray[taskPickerSelected].getTaskID())
+        case .measures:
+            measuresPickerSelected = measuresPicker.selectedRow(inComponent: 0)
+        default:
+            break
         }
+        closePicker(pickerView)
+        tableView.reloadData()
+    }
+    
+    @objc func cancelAction() {
+        // Indexを元に戻して閉じる
+        switch Tag(rawValue: pickerView.tag) {
+        case .group:
+            groupPicker.selectRow(groupPickerSelected, inComponent: 0, animated: false)
+        case .task:
+            taskPicker.selectRow(taskPickerSelected, inComponent: 0, animated: false)
+        case .measures:
+            measuresPicker.selectRow(measuresPickerSelected, inComponent: 0, animated: false)
+        default:
+            break
+        }
+        closePicker(pickerView)
+        tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
     }
     
 }
@@ -174,16 +263,11 @@ extension AddNoteViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension AddNoteViewController: UITextViewDelegate {
     
-    func textViewDidChange(_ textView: UITextView) {
-    }
-    
-}
-
-
-extension AddNoteViewController: ColorCellDelegate {
-    
-    func tapColorButton(_ button: UIButton) {
-        openPicker(pickerView)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        closePicker(pickerView)
+        if let index = tableView.indexPathForSelectedRow {
+            tableView.reloadRows(at: [index], with: .none)
+        }
     }
     
 }
@@ -196,69 +280,29 @@ extension AddNoteViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return groupArray.count  // グループ数
+        switch Tag(rawValue: pickerView.tag) {
+        case .group:
+            return groupArray.count
+        case .task:
+            return taskArray.count
+        case .measures:
+            return measuresArray.count
+        default:
+            return 0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return groupArray[row].getTitle()   // グループ名
-    }
-    
-}
-
-
-extension AddNoteViewController: SaveButtonCellDelegate {
-    
-    func tapSaveButton() {
-        // メモ作成
-        var memoArray = [Memo]()
-        for i in stride(from: 0, to: taskArray.count, by: 1) {
-            // 入力がある場合のみ作成
-            let textCell = tableView.cellForRow(at: [1, i]) as! NoteTextViewCell
-            if textCell.memo.text.isEmpty { continue }
-            let memo = Memo()
-            let measure = getMeasuresInTask(ID: taskArray[i].getTaskID()).first!
-            memo.setMeasuresID(measure.getMeasuresID())
-            memo.setDetail(textCell.memo.text)
-            memo.setUpdated_at(getCurrentTime())
-            memoArray.append(memo)
+        switch Tag(rawValue: pickerView.tag) {
+        case .group:
+            return groupArray[row].getTitle()
+        case .task:
+            return taskArray[row].getTitle()
+        case .measures:
+            return measuresArray[row].getTitle()
+        default:
+            return ""
         }
-        
-        // 何も入力していなければアラート
-        if memoArray.isEmpty {
-            showErrorAlert(message: MESSAGE_EMPTY_NOTE)
-            return
-        }
-        
-        // メモ保存
-        for memo in memoArray {
-            if !createRealm(object: memo) {
-                showErrorAlert(message: MESSAGE_NOTE_CREATE_ERROR)
-                return
-            }
-        }
-        
-        // Firebaseに送信
-        if Network.isOnline() {
-            for memo in memoArray {
-                saveMemo(memo: memo, completion: {})
-            }
-        }
-        
-        // モーダルを閉じる
-        dismissWithInsertMemo(memo: memoArray[0])
-    }
-    
-    /// ノート画面にノートを追加してモーダルを閉じる
-    func dismissWithInsertMemo(memo: Memo) {
-        let tabBar = self.presentingViewController as! UITabBarController
-        let navigation = tabBar.selectedViewController as! UINavigationController
-        let noteView = navigation.viewControllers.first as! NoteViewController
-        noteView.insertMemo(memo: memo)
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func tapCancelButton() {
-        self.dismiss(animated: true, completion: nil)
     }
     
 }

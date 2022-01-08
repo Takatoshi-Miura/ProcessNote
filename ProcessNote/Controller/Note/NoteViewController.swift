@@ -93,9 +93,9 @@ class NoteViewController: UIViewController {
     }
     
     /**
-     ノートを挿入
+     メモを挿入
      - Parameters:
-        - note: 挿入するノート
+        - memo: 挿入するメモ
      */
     func insertMemo(memo: Memo) {
         let index: IndexPath = [0, 0]
@@ -139,9 +139,10 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.textLabel?.text = memoArray[indexPath.row].getDetail()
         cell.detailTextLabel?.text = memoArray[indexPath.row].getCreated_at()
+        cell.detailTextLabel?.textColor = UIColor.lightGray
         cell.accessoryType = .disclosureIndicator
         cell.accessibilityIdentifier = "NoteViewCell"
         return cell

@@ -48,6 +48,18 @@ public extension UIViewController {
     }
     
     /**
+     OKアラートを表示(アクション付き)
+     - Parameters:
+       - title: タイトル
+       - message: 説明文
+       - OKAction: OKをタップした時の処理
+     */
+    func showOKAlert(title: String, message: String, OKAction: @escaping () -> ()) {
+        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction) in OKAction()})
+        showAlert(title: title, message: message, actions: [OKAction])
+    }
+    
+    /**
      エラーアラートを表示
      - Parameters:
        - message: 説明文
