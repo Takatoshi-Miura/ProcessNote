@@ -41,6 +41,7 @@ class NoteViewController: UIViewController {
     
     func initSearchBar() {
         searchBar.delegate = self
+        searchBar.searchTextField.placeholder = TITLE_SEARCH_NOTE
     }
     
     func initTableView() {
@@ -112,14 +113,11 @@ class NoteViewController: UIViewController {
     func showAdMob() {
         if isAdMobShow { return }
         
-        // バナー広告を宣言
         var admobView = GADBannerView()
         admobView = GADBannerView(adSize: GADAdSizeBanner)
         admobView.adUnitID = "ca-app-pub-9630417275930781/9800556170"
         admobView.rootViewController = self
         admobView.load(GADRequest())
-        
-        // レイアウト調整(画面下部に設置)
         admobView.frame.origin = CGPoint(x: 0, y: self.view.frame.size.height - admobView.frame.height)
         admobView.frame.size = CGSize(width: self.view.frame.width, height: admobView.frame.height)
         

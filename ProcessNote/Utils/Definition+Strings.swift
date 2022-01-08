@@ -77,6 +77,7 @@ let MESSAGE_DELETE_MEASURES = NSLocalizedString("DeleteMeasuresMessage", comment
 
 // MARK: - NoteViewController
 let MESSAGE_EMPTY_MEASURES = NSLocalizedString("EmptyMeasures", comment: "")
+let TITLE_SEARCH_NOTE = NSLocalizedString("SearchNoteTitle", comment: "")
 
 
 // MARK: - AddNoteViewController

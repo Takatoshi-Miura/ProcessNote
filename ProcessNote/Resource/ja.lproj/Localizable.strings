@@ -89,6 +89,7 @@
 
 // MARK: - NoteViewController
 "EmptyMeasures" = "対策が未作成です。課題を作成して対策を1つ以上設定して下さい。";
+"SearchNoteTitle" = "ノートを検索";
 
 
 // MARK: - AddNoteViewController

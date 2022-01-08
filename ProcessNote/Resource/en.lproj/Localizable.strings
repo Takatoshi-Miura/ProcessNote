@@ -89,6 +89,7 @@
 
 // MARK: - NoteViewController
 "EmptyMeasures" = "No measures have been created. Create an task and set one or more measures.";
+"SearchNoteTitle" = "Search note";
 
 
 // MARK: - AddNoteViewController
