@@ -47,7 +47,7 @@ class NoteViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(syncData), for: .valueChanged)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UINib(nibName: "NoteCell", bundle: nil), forCellReuseIdentifier: "NoteCell")
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -162,12 +162,8 @@ extension NoteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.textLabel?.text = memoArray[indexPath.row].getDetail()
-        cell.detailTextLabel?.text = memoArray[indexPath.row].getCreated_at()
-        cell.detailTextLabel?.textColor = UIColor.lightGray
-        cell.accessoryType = .disclosureIndicator
-        cell.accessibilityIdentifier = "NoteViewCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
+        cell.setProperty(memo: memoArray[indexPath.row])
         return cell
     }
     
