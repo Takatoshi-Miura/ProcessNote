@@ -18,20 +18,20 @@ class GroupViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
+    private var sectionTitle: [String] = []
+    private var groupArray: [Group] = [Group]()
+    private var pickerView = UIView()
+    private let colorPicker = UIPickerView()
+    private var pickerIndex: Int = 0
     var group = Group()
     var delegate: GroupViewControllerDelegate?
-    var selectedIndex: IndexPath?
-    var sectionTitle: [String] = []
-    enum Section: Int {
+
+    private enum Section: Int {
         case title = 0
         case color
         case order
     }
-    var groupArray: [Group] = [Group]()
-    var pickerView = UIView()
-    let colorPicker = UIPickerView()
-    var pickerIndex: Int = 0
-
+    
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()

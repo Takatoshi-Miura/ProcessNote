@@ -76,16 +76,15 @@ class NoteViewController: UIViewController {
         super.viewDidAppear(animated)
         showAdMob()
         
-        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
-        if (selectedIndex != nil) {
+        if let selectedIndex = tableView.indexPathForSelectedRow {
             // 削除されている場合は一覧から取り除く
-            let memo = memoArray[selectedIndex!.row]
+            let memo = memoArray[selectedIndex.row]
             if memo.getIsDeleted() {
-                memoArray.remove(at: selectedIndex!.row)
-                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                memoArray.remove(at: selectedIndex.row)
+                tableView.deleteRows(at: [selectedIndex], with: UITableView.RowAnimation.left)
                 return
             }
-            tableView.reloadRows(at: [selectedIndex!], with: .none)
+            tableView.reloadRows(at: [selectedIndex], with: .none)
         }
     }
     

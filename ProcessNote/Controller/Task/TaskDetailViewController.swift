@@ -23,11 +23,12 @@ class TaskDetailViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
+    private var sectionTitle: [String] = []
+    private var measuresArray: [Measures] = []
     var task = Task()
-    var sectionTitle: [String] = []
-    var measuresArray: [Measures] = []
     var delegate: TaskDetailViewControllerDelegate?
-    enum Section: Int {
+    
+    private enum Section: Int {
         case title = 0
         case cause
         case measures
@@ -47,7 +48,6 @@ class TaskDetailViewController: UIViewController {
         
         var navigationItems: [UIBarButtonItem] = []
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteTask))
-        
         let image = task.getIsCompleted() ? UIImage(systemName: "exclamationmark.circle") : UIImage(systemName: "checkmark.circle")
         let completeButton = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(completeTask))
         navigationItems.append(deleteButton)
@@ -115,8 +115,6 @@ class TaskDetailViewController: UIViewController {
             showErrorAlert(message: MESSAGE_TASK_CREATE_ERROR)
             return
         }
-        
-        // Firebaseに送信
         if Network.isOnline() {
             saveMeasures(measures: measures, completion: {})
         }
@@ -129,12 +127,12 @@ class TaskDetailViewController: UIViewController {
     
     func initTableView() {
         sectionTitle = [TITLE_TITLE, TITLE_CAUSE, TITLE_MEASURES]
-        tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
-        tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.isEditing = true  // 対策セルの常時並び替え許可
         tableView.allowsSelectionDuringEditing = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
+        tableView.register(UINib(nibName: "TextViewCell", bundle: nil), forCellReuseIdentifier: "TextViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -142,15 +140,15 @@ class TaskDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (tableView.indexPathForSelectedRow != nil) {
+        if let selectedIndex = tableView.indexPathForSelectedRow {
             // 対策が削除されていれば取り除く
-            let measures = measuresArray[tableView.indexPathForSelectedRow!.row]
+            let measures = measuresArray[selectedIndex.row]
             if measures.getIsDeleted() {
-                measuresArray.remove(at: tableView.indexPathForSelectedRow!.row)
-                tableView.deleteRows(at: [tableView.indexPathForSelectedRow!], with: UITableView.RowAnimation.left)
+                measuresArray.remove(at: selectedIndex.row)
+                tableView.deleteRows(at: [selectedIndex], with: UITableView.RowAnimation.left)
                 return
             }
-            tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
+            tableView.reloadRows(at: [selectedIndex], with: .none)
         }
     }
     
@@ -312,7 +310,6 @@ extension TaskDetailViewController: UITextFieldDelegate {
             return false
         }
         
-        // 課題を更新
         updateTaskTitleRealm(ID: task.getTaskID(), title: textField.text!)
         return true
     }
@@ -327,7 +324,6 @@ extension TaskDetailViewController: UITextViewDelegate {
             return
         }
         
-        // 課題を更新
         updateTaskCauseRealm(ID: task.getTaskID(), cause: textView.text!)
     }
 }

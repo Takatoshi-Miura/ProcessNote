@@ -7,23 +7,20 @@
 
 import UIKit
 
+
 class AddTaskViewController: UIViewController {
     
     // MARK: UI,Variable
-    
     @IBOutlet weak var naviItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
+    private var sectionTitle: [String] = []
+    private var cellTitle: [[String]] = [[]]
+    private var realmGroupArray: [Group] = []
+    private var pickerView = UIView()
+    private let colorPicker = UIPickerView()
+    private var pickerIndex: Int = 0
     
-    var sectionTitle: [String] = []
-    var cellTitle: [[String]] = [[]]
-    
-    var realmGroupArray: [Group] = []
-    
-    var pickerView = UIView()
-    let colorPicker = UIPickerView()
-    var pickerIndex: Int = 0
-    
-    enum Section: Int {
+    private enum Section: Int {
         case title
         case cause
         case measures
@@ -31,9 +28,7 @@ class AddTaskViewController: UIViewController {
         case addition
     }
     
-    
     // MARK: LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationBar()
@@ -42,16 +37,10 @@ class AddTaskViewController: UIViewController {
         realmGroupArray = getGroupArrayForTaskView()
     }
     
-    /**
-     NavigationBarの初期設定
-     */
     func initNavigationBar() {
         naviItem.title = TITLE_ADD_TASK
     }
     
-    /**
-     tableViewの初期設定
-     */
     func initTableView() {
         sectionTitle = [TITLE_TITLE, TITLE_CAUSE, TITLE_MEASURES, TITLE_GROUP, ""]
         cellTitle = [[""], [""], [""], [""], [""]]
@@ -64,9 +53,6 @@ class AddTaskViewController: UIViewController {
         }
     }
     
-    /**
-     ColorPickerの初期化
-     */
     func initColorPicker() {
         colorPicker.delegate = self
         colorPicker.dataSource = self
@@ -93,7 +79,6 @@ class AddTaskViewController: UIViewController {
 
 
 extension AddTaskViewController: UITableViewDelegate, UITableViewDataSource {
-    // MARK: 【Delegate】TableViewController
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30

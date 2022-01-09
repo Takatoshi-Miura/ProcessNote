@@ -7,29 +7,25 @@
 
 import UIKit
 
+
 class AddGroupViewController: UIViewController {
 
     // MARK: UI,Variable
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var naviItem: UINavigationItem!
+    private var sectionTitle: [String] = []
+    private var cellTitle: [[String]] = [[]]
+    private var pickerView = UIView()
+    private let colorPicker = UIPickerView()
+    private var pickerIndex: Int = 0
     
-    var sectionTitle: [String] = []
-    var cellTitle: [[String]] = [[]]
-    
-    var pickerView = UIView()
-    let colorPicker = UIPickerView()
-    var pickerIndex: Int = 0
-    
-    enum Section: Int {
+    private enum Section: Int {
         case title
         case color
         case addition
     }
     
-    
     // MARK: LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationBar()
@@ -37,16 +33,10 @@ class AddGroupViewController: UIViewController {
         initColorPicker()
     }
     
-    /**
-     NavigationBarの初期設定
-     */
     func initNavigationBar() {
         naviItem.title = TITLE_ADD_GROUP
     }
     
-    /**
-     tableViewの初期設定
-     */
     func initTableView() {
         sectionTitle = [TITLE_TITLE, TITLE_COLOR, ""]
         cellTitle = [[""], [""], [""]]
@@ -58,9 +48,6 @@ class AddGroupViewController: UIViewController {
         }
     }
     
-    /**
-     ColorPickerの初期化
-     */
     func initColorPicker() {
         colorPicker.delegate = self
         colorPicker.dataSource = self

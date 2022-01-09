@@ -20,11 +20,12 @@ class MeasuresViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
+    private var sectionTitle: [String] = []
+    private var memoArray = [Memo]()
     var measures = Measures()
-    var sectionTitle: [String] = []
-    var memoArray = [Memo]()
     var delegate: MeasuresViewControllerDelegate?
-    enum Section: Int {
+    
+    private enum Section: Int {
         case title = 0
         case note
     }
@@ -71,16 +72,15 @@ class MeasuresViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
-        if (selectedIndex != nil) {
+        if let selectedIndex = tableView.indexPathForSelectedRow {
             // メモが削除されていれば取り除く
-            let memo = memoArray[selectedIndex!.row]
+            let memo = memoArray[selectedIndex.row]
             if memo.getIsDeleted() {
-                memoArray.remove(at: selectedIndex!.row)
-                tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                memoArray.remove(at: selectedIndex.row)
+                tableView.deleteRows(at: [selectedIndex], with: UITableView.RowAnimation.left)
                 return
             }
-            tableView.reloadRows(at: [selectedIndex!], with: .none)
+            tableView.reloadRows(at: [selectedIndex], with: .none)
         }
     }
     

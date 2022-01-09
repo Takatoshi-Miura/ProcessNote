@@ -58,12 +58,12 @@ class TaskViewController: UIViewController {
     func initNavigationController() {
         self.title = TITLE_TASK
         
-        var menuButton: UIBarButtonItem
-        let image = UITraitCollection.current.userInterfaceStyle == .dark ? UIImage(named: "humburger_menu_white")! : UIImage(named: "humburger_menu_black")!
-        menuButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal),
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(openHumburgerMenu(_:)))
+        let isDarkMode = UITraitCollection.current.userInterfaceStyle == .dark
+        let image = isDarkMode ? UIImage(named: "humburger_menu_white")! : UIImage(named: "humburger_menu_black")!
+        let menuButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(openHumburgerMenu(_:)))
         navigationItem.leftBarButtonItems = [menuButton]
     }
     
@@ -112,12 +112,12 @@ class TaskViewController: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(syncData), for: .valueChanged)
+        tableView.isEditing = true
+        tableView.allowsSelectionDuringEditing = true
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(UINib(nibName: String(describing: GroupHeaderView.self), bundle: nil),
                            forHeaderFooterViewReuseIdentifier: String(describing: GroupHeaderView.self))
-        tableView.isEditing = true  // セルの常時並び替え許可
-        tableView.allowsSelectionDuringEditing = true
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
@@ -125,8 +125,7 @@ class TaskViewController: UIViewController {
     
     /// 右スワイプでハンバーガーメニューを開く
     func addRightSwipeGesture() {
-        let rightSwipe = UISwipeGestureRecognizer(target: self,
-                                                 action: #selector(openHumburgerMenu(_:)))
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(openHumburgerMenu(_:)))
         rightSwipe.direction = .right
         self.view.addGestureRecognizer(rightSwipe)
     }
@@ -194,19 +193,17 @@ class TaskViewController: UIViewController {
         super.viewDidAppear(animated)
         showAdMob()
         
-        let selectedIndex: IndexPath? = tableView.indexPathForSelectedRow
-        if (selectedIndex != nil) {
-            // 未完了の課題から戻る場合
-            if selectedIndex!.row < taskArray[selectedIndex!.section].count {
-                // 課題が完了or削除されていれば取り除く
-                let task = taskArray[selectedIndex!.section][selectedIndex!.row]
+        if let selectedIndex = tableView.indexPathForSelectedRow {
+            // 課題が完了or削除されていれば取り除く
+            if selectedIndex.row < taskArray[selectedIndex.section].count {
+                let task = taskArray[selectedIndex.section][selectedIndex.row]
                 if task.getIsCompleted() || task.getIsDeleted() {
-                    taskArray[selectedIndex!.section].remove(at: selectedIndex!.row)
-                    tableView.deleteRows(at: [selectedIndex!], with: UITableView.RowAnimation.left)
+                    taskArray[selectedIndex.section].remove(at: selectedIndex.row)
+                    tableView.deleteRows(at: [selectedIndex], with: UITableView.RowAnimation.left)
                     return
                 }
             }
-            tableView.reloadRows(at: [selectedIndex!], with: .none)
+            tableView.reloadRows(at: [selectedIndex], with: .none)
         } else {
             // グループから戻る場合はリロード
             groupArray = getGroupArrayForTaskView()
@@ -252,14 +249,11 @@ class TaskViewController: UIViewController {
     func showAdMob() {
         if isAdMobShow { return }
         
-        // バナー広告を宣言
         var admobView = GADBannerView()
         admobView = GADBannerView(adSize: GADAdSizeBanner)
         admobView.adUnitID = "ca-app-pub-9630417275930781/9800556170"
         admobView.rootViewController = self
         admobView.load(GADRequest())
-        
-        // レイアウト調整(画面下部に設置)
         admobView.frame.origin = CGPoint(x: 0, y: self.view.frame.size.height - admobView.frame.height)
         admobView.frame.size = CGSize(width: self.view.frame.width, height: admobView.frame.height)
         

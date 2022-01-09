@@ -18,7 +18,7 @@ class CompletedTaskViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
-    var taskArray: [Task] = [Task]()
+    private var taskArray: [Task] = [Task]()
     var groupID: String?
     var delegate: CompletedTaskViewControllerDelegate?
     
@@ -44,15 +44,15 @@ class CompletedTaskViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (tableView.indexPathForSelectedRow != nil) {
+        if let selectedIndex = tableView.indexPathForSelectedRow {
             // 課題が未完了or削除されていれば取り除く
-            let task = taskArray[tableView.indexPathForSelectedRow!.row]
+            let task = taskArray[selectedIndex.row]
             if !task.getIsCompleted() || task.getIsDeleted() {
-                taskArray.remove(at: tableView.indexPathForSelectedRow!.row)
-                tableView.deleteRows(at: [tableView.indexPathForSelectedRow!], with: UITableView.RowAnimation.left)
+                taskArray.remove(at: selectedIndex.row)
+                tableView.deleteRows(at: [selectedIndex], with: UITableView.RowAnimation.left)
                 return
             }
-            tableView.reloadRows(at: [tableView.indexPathForSelectedRow!], with: .none)
+            tableView.reloadRows(at: [selectedIndex], with: .none)
         }
     }
 }

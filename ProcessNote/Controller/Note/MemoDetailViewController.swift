@@ -65,10 +65,8 @@ class MemoDetailViewController: UIViewController {
     func initTextView() {
         memoTextView.delegate = self
         memoTextView.text = memo.getDetail()
-        // 余白を追加
         memoTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         memoTextView.sizeToFit()
-        // キーボードに完了ボタンを追加
         memoTextView.inputAccessoryView = createToolBar(#selector(completeAction))
     }
     
