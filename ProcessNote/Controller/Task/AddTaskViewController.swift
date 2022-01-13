@@ -75,6 +75,11 @@ class AddTaskViewController: UIViewController {
         colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
         closePicker(pickerView)
     }
+    
+    @IBAction func hundleRightSwipeGesture(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 

@@ -153,6 +153,10 @@ class AddNoteViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func hundleRightSwipeGesture(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 
