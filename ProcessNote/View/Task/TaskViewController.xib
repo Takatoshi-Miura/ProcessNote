@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TaskViewController" customModule="ProcessNote" customModuleProvider="target">
             <connections>
+                <outlet property="adView" destination="SU7-NE-2Jt" id="u9F-sm-9xr"/>
                 <outlet property="addButton" destination="jjn-yw-LwQ" id="qG4-y8-mCg"/>
                 <outlet property="tableView" destination="5Rg-xw-Q1b" id="1gU-yz-RWa"/>
                 <outlet property="view" destination="iN0-l3-epB" id="qm0-Da-9yL"/>
@@ -37,14 +38,24 @@
                         <action selector="addButtonTap:" destination="-1" eventType="touchUpInside" id="nyN-es-fBm"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SU7-NE-2Jt">
+                    <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="vnE-1e-OZe"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="5Rg-xw-Q1b" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-50" id="Blj-oR-37r"/>
+                <constraint firstItem="5Rg-xw-Q1b" firstAttribute="bottom" secondItem="SU7-NE-2Jt" secondAttribute="top" id="Blj-oR-37r"/>
+                <constraint firstItem="SU7-NE-2Jt" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="GE7-im-LXh"/>
                 <constraint firstItem="5Rg-xw-Q1b" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="QiF-P9-b5w"/>
+                <constraint firstItem="SU7-NE-2Jt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="UHz-Xe-6If"/>
                 <constraint firstItem="5Rg-xw-Q1b" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="XNn-DS-dwc"/>
                 <constraint firstItem="5Rg-xw-Q1b" firstAttribute="bottom" secondItem="jjn-yw-LwQ" secondAttribute="bottom" constant="20" id="acL-1N-e6e"/>
+                <constraint firstItem="SU7-NE-2Jt" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="jiU-rt-i1F"/>
                 <constraint firstItem="5Rg-xw-Q1b" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="rgC-xR-DnY"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jjn-yw-LwQ" secondAttribute="trailing" constant="20" id="uC8-Qi-fqr"/>
             </constraints>

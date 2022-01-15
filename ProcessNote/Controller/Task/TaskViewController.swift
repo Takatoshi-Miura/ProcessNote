@@ -30,9 +30,10 @@ class TaskViewController: UIViewController {
     // MARK: UI,Variable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var adView: UIView!
     private var groupArray: [Group] = [Group]()
     private var taskArray: [[Task]] = [[Task]]()
-    private var isAdMobShow: Bool = false
+    private var adMobView: GADBannerView?
     var delegate: TaskViewControllerDelegate?
     
     // MARK: LifeCycle
@@ -189,10 +190,29 @@ class TaskViewController: UIViewController {
         showAlert(title: TITLE_AGREE, message: MESSAGE_AGREE, actions: [termsAction, agreeAction])
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        showAdMob()
+    }
+    
+    /// バナー広告を表示
+    func showAdMob() {
+        if let adMobView = adMobView {
+            adMobView.frame.size = CGSize(width: self.view.frame.width, height: adMobView.frame.height)
+            return
+        }
+        adMobView = GADBannerView()
+        adMobView = GADBannerView(adSize: GADAdSizeBanner)
+        adMobView!.adUnitID = "ca-app-pub-9630417275930781/9800556170"
+        adMobView!.rootViewController = self
+        adMobView!.load(GADRequest())
+        adMobView!.frame.origin = CGPoint(x: 0, y: 0)
+        adMobView!.frame.size = CGSize(width: self.view.frame.width, height: adMobView!.frame.height)
+        self.adView.addSubview(adMobView!)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showAdMob()
-        
         if let selectedIndex = tableView.indexPathForSelectedRow {
             // 課題が完了or削除されていれば取り除く
             if selectedIndex.row < taskArray[selectedIndex.section].count {
@@ -243,22 +263,6 @@ class TaskViewController: UIViewController {
             }
             index = [index.section + 1, task.getOrder()]
         }
-    }
-    
-    /// バナー広告を表示
-    func showAdMob() {
-        if isAdMobShow { return }
-        
-        var admobView = GADBannerView()
-        admobView = GADBannerView(adSize: GADAdSizeBanner)
-        admobView.adUnitID = "ca-app-pub-9630417275930781/9800556170"
-        admobView.rootViewController = self
-        admobView.load(GADRequest())
-        admobView.frame.origin = CGPoint(x: 0, y: self.view.frame.size.height - admobView.frame.height)
-        admobView.frame.size = CGSize(width: self.view.frame.width, height: admobView.frame.height)
-        
-        self.view.addSubview(admobView)
-        isAdMobShow = true
     }
     
 }

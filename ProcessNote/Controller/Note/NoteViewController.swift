@@ -19,14 +19,16 @@ protocol NoteViewControllerDelegate: AnyObject {
 
 class NoteViewController: UIViewController {
     
-    // MARK: - UI,Variable
+    // MARK: UI,Variable
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var adView: UIView!
     private var memoArray = [Memo]()
-    private var isAdMobShow: Bool = false
+    private var isFiltered: Bool = false
+    private var adMobView: GADBannerView?
     var delegate: NoteViewControllerDelegate?
     
-    // MARK: - LifeCycle
+    // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavigationController()
@@ -72,10 +74,29 @@ class NoteViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        showAdMob()
+    }
+    
+    /// バナー広告を表示
+    func showAdMob() {
+        if let adMobView = adMobView {
+            adMobView.frame.size = CGSize(width: self.view.frame.width, height: adMobView.frame.height)
+            return
+        }
+        adMobView = GADBannerView()
+        adMobView = GADBannerView(adSize: GADAdSizeBanner)
+        adMobView!.adUnitID = "ca-app-pub-9630417275930781/9800556170"
+        adMobView!.rootViewController = self
+        adMobView!.load(GADRequest())
+        adMobView!.frame.origin = CGPoint(x: 0, y: 0)
+        adMobView!.frame.size = CGSize(width: self.view.frame.width, height: adMobView!.frame.height)
+        self.adView.addSubview(adMobView!)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showAdMob()
-        
         if let selectedIndex = tableView.indexPathForSelectedRow {
             // 削除されている場合は一覧から取り除く
             let memo = memoArray[selectedIndex.row]
@@ -106,22 +127,6 @@ class NoteViewController: UIViewController {
         let index: IndexPath = [0, 0]
         memoArray.insert(memo, at: 0)
         tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
-    }
-    
-    /// バナー広告を表示
-    func showAdMob() {
-        if isAdMobShow { return }
-        
-        var admobView = GADBannerView()
-        admobView = GADBannerView(adSize: GADAdSizeBanner)
-        admobView.adUnitID = "ca-app-pub-9630417275930781/9800556170"
-        admobView.rootViewController = self
-        admobView.load(GADRequest())
-        admobView.frame.origin = CGPoint(x: 0, y: self.view.frame.size.height - admobView.frame.height)
-        admobView.frame.size = CGSize(width: self.view.frame.width, height: admobView.frame.height)
-        
-        self.view.addSubview(admobView)
-        isAdMobShow = true
     }
     
 }

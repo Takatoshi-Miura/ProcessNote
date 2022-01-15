@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteViewController" customModule="ProcessNote" customModuleProvider="target">
             <connections>
+                <outlet property="adView" destination="I7k-H3-ZQV" id="1k1-3U-TFs"/>
                 <outlet property="searchBar" destination="g6U-Mr-mGP" id="btF-J8-HXU"/>
                 <outlet property="tableView" destination="Vgr-SV-ILr" id="xqP-wR-Gen"/>
                 <outlet property="view" destination="iN0-l3-epB" id="cmu-Wm-UUX"/>
@@ -44,17 +45,27 @@
                     </constraints>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I7k-H3-ZQV">
+                    <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="kUi-lh-Ku9"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="g6U-Mr-mGP" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="1sy-83-oi0"/>
+                <constraint firstItem="I7k-H3-ZQV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="4XJ-E9-aIA"/>
+                <constraint firstItem="I7k-H3-ZQV" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="FdA-S3-eXR"/>
                 <constraint firstItem="Vgr-SV-ILr" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Io6-HU-vqn"/>
+                <constraint firstItem="I7k-H3-ZQV" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="L3s-aO-oyn"/>
                 <constraint firstItem="g6U-Mr-mGP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Mcx-zp-oOR"/>
                 <constraint firstItem="g6U-Mr-mGP" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="UwQ-84-yOx"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0sK-sI-txy" secondAttribute="trailing" constant="20" id="bGR-Yz-50h"/>
                 <constraint firstItem="Vgr-SV-ILr" firstAttribute="top" secondItem="g6U-Mr-mGP" secondAttribute="bottom" id="bXA-JD-w97"/>
-                <constraint firstItem="Vgr-SV-ILr" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-50" id="cZO-hc-w3u"/>
+                <constraint firstItem="Vgr-SV-ILr" firstAttribute="bottom" secondItem="I7k-H3-ZQV" secondAttribute="top" id="cZO-hc-w3u"/>
                 <constraint firstItem="Vgr-SV-ILr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="nB0-CM-1ab"/>
                 <constraint firstItem="Vgr-SV-ILr" firstAttribute="bottom" secondItem="0sK-sI-txy" secondAttribute="bottom" constant="20" id="tnB-3V-CVW"/>
             </constraints>
