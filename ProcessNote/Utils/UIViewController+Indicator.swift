@@ -20,7 +20,7 @@ public extension UIViewController {
         let backgroundView = UIView(frame: UIScreen.main.bounds)
         backgroundView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         backgroundView.tag = 999
-        var vc = UIApplication.shared.keyWindow?.rootViewController
+        var vc = UIApplication.shared.windows.filter({$0.isKeyWindow}).first!.rootViewController
         while vc?.presentedViewController != nil {
             vc = vc?.presentedViewController
         }
@@ -34,7 +34,7 @@ public extension UIViewController {
      インジケータを非表示
      */
     func dismissIndicator() {
-        var vc = UIApplication.shared.keyWindow?.rootViewController
+        var vc = UIApplication.shared.windows.filter({$0.isKeyWindow}).first!.rootViewController
         while vc?.presentedViewController != nil {
             vc = vc?.presentedViewController
         }
