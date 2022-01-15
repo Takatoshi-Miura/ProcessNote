@@ -11,6 +11,26 @@ import RealmSwift
 // MARK: - Update
 
 /**
+ 課題を更新(同期用)
+ - Parameters:
+    - task: 更新したい課題
+ */
+func updateTaskRealm(task: Task) {
+    let realm = try! Realm()
+    let result = realm.objects(Task.self).filter("taskID == '\(task.getTaskID())'").first
+    try! realm.write {
+        result?.setGroupID(task.getGroupID())
+        result?.setTitle(task.getTitle())
+        result?.setCause(task.getCause())
+        result?.setOrder(task.getOrder())
+        result?.setUpdated_at(task.getUpdated_at())
+        result?.setCompleted_at(task.getCompleted_at())
+        result?.setIsCompleted(task.getIsCompleted())
+        result?.setIsDeleted(task.getIsDeleted())
+    }
+}
+
+/**
  課題のタイトルを更新
  - Parameters:
     - ID: 更新したい課題のID

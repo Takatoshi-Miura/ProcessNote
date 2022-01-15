@@ -130,7 +130,7 @@ class MemoDetailViewController: UIViewController {
         super.viewDidDisappear(animated)
         // Firebaseに送信
         if Network.isOnline() {
-            updateMemo(memo)
+            updateMemo(memo: memo)
         }
     }
 

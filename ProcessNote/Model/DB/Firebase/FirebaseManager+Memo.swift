@@ -49,7 +49,7 @@ func saveMemo(memo: Memo, completion: @escaping () -> ()) {
  - Parameters:
     - memo: メモデータ
  */
-func updateMemo(_ memo: Memo) {
+func updateMemo(memo: Memo) {
     let db = Firestore.firestore()
     let database = db.collection("Memo").document("\(memo.getUserID())_\(memo.getMemoID())")
     database.updateData([

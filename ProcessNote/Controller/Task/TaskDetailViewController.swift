@@ -156,9 +156,9 @@ class TaskDetailViewController: UIViewController {
         super.viewDidDisappear(animated)
         // Firebaseに送信
         if Network.isOnline() {
-            updateTask(task)
+            updateTask(task: task)
             for measures in measuresArray {
-                updateMeasures(measures)
+                updateMeasures(measures: measures)
             }
         }
     }

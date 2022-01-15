@@ -11,6 +11,25 @@ import RealmSwift
 // MARK: - Update
 
 /**
+ グループを更新(同期用)
+ - Parameters:
+    - group: 更新したいグループ
+ */
+func updateGroupRealm(group: Group) {
+    let realm = try! Realm()
+    let result = realm.objects(Group.self).filter("groupID == '\(group.getGroupID())'").first
+    try! realm.write {
+        result?.setColor(group.getColor())
+        result?.setTitle(group.getTitle())
+        result?.setOrder(group.getOrder())
+        result?.setUpdated_at(group.getUpdated_at())
+        result?.setCompleted_at(group.getCompleted_at())
+        result?.setIsCompleted(group.getIsCompleted())
+        result?.setIsDeleted(group.getIsDeleted())
+    }
+}
+
+/**
  グループのタイトルを更新
  - Parameters:
     - ID: 更新したいグループのID

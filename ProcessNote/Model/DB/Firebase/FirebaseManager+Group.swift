@@ -51,7 +51,7 @@ func saveGroup(group: Group, completion: @escaping () -> ()) {
  - Parameters:
     - group: グループデータ
  */
-func updateGroup(_ group: Group) {
+func updateGroup(group: Group) {
     let db = Firestore.firestore()
     let userID = UserDefaults.standard.object(forKey: "userID") as! String
     let database = db.collection("Group").document("\(userID)_\(group.getGroupID())")

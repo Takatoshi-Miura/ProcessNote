@@ -49,7 +49,7 @@ func saveMeasures(measures: Measures, completion: @escaping () -> ()) {
  - Parameters:
     - measures: 対策データ
  */
-func updateMeasures(_ measures: Measures) {
+func updateMeasures(measures: Measures) {
     let db = Firestore.firestore()
     let userID = UserDefaults.standard.object(forKey: "userID") as! String
     let database = db.collection("Measures").document("\(userID)_\(measures.getMeasuresID())")

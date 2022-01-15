@@ -11,6 +11,22 @@ import RealmSwift
 // MARK: - Update
 
 /**
+ 対策を更新(同期用)
+ - Parameters:
+    - measures: 更新したい対策
+ */
+func updateMeasuresRealm(measures: Measures) {
+    let realm = try! Realm()
+    let result = realm.objects(Measures.self).filter("measuresID == '\(measures.getMeasuresID())'").first
+    try! realm.write {
+        result?.setTitle(measures.getTitle())
+        result?.setOrder(measures.getOrder())
+        result?.setUpdated_at(measures.getUpdated_at())
+        result?.setIsDeleted(measures.getIsDeleted())
+    }
+}
+
+/**
  対策のタイトルを更新
  - Parameters:
     - ID: 更新したい対策のID

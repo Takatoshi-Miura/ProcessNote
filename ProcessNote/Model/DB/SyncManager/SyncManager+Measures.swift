@@ -47,12 +47,10 @@ func syncMeasures(completion: @escaping () -> ()) {
             
             if realmDate > firebaseDate {
                 // Realmデータの方が新しい
-                saveMeasures(measures: realmMeasures, completion: {})
+                updateMeasures(measures: realmMeasures)
             } else if firebaseDate > realmDate  {
                 // Firebaseデータの方が新しい
-                if !createRealm(object: firebaseMeasures) {
-                    return
-                }
+                updateMeasuresRealm(measures: firebaseMeasures)
             }
         }
         completion()

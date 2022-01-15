@@ -47,12 +47,10 @@ func syncGroup(completion: @escaping () -> ()) {
             
             if realmDate > firebaseDate {
                 // Realmデータの方が新しい
-                saveGroup(group: realmGroup, completion: {})
+                updateGroup(group: realmGroup)
             } else if firebaseDate > realmDate  {
                 // Firebaseデータの方が新しい
-                if !createRealm(object: firebaseGroup) {
-                    return
-                }
+                updateGroupRealm(group: firebaseGroup)
             }
         }
         completion()

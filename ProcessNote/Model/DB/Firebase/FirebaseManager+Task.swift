@@ -52,7 +52,7 @@ func saveTask(task: Task, completion: @escaping () -> ()) {
  - Parameters:
     - task: 課題データ
  */
-func updateTask(_ task: Task) {
+func updateTask(task: Task) {
     let db = Firestore.firestore()
     let userID = UserDefaults.standard.object(forKey: "userID") as! String
     let database = db.collection("Task").document("\(userID)_\(task.getTaskID())")

@@ -47,12 +47,10 @@ func syncTask(completion: @escaping () -> ()) {
             
             if realmDate > firebaseDate {
                 // Realmデータの方が新しい
-                saveTask(task: realmTask, completion: {})
+                updateTask(task: realmTask)
             } else if firebaseDate > realmDate  {
                 // Firebaseデータの方が新しい
-                if !createRealm(object: firebaseTask) {
-                    return
-                }
+                updateTaskRealm(task: firebaseTask)
             }
         }
         completion()

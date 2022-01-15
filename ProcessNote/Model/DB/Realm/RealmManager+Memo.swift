@@ -11,6 +11,21 @@ import RealmSwift
 // MARK: - Update
 
 /**
+ メモを更新(同期用)
+ - Parameters:
+    - memo: 更新したいメモ
+ */
+func updateMemoRealm(memo: Memo) {
+    let realm = try! Realm()
+    let result = realm.objects(Memo.self).filter("memoID == '\(memo.getMemoID())'").first
+    try! realm.write {
+        result?.setDetail(memo.getDetail())
+        result?.setUpdated_at(memo.getUpdated_at())
+        result?.setIsDeleted(memo.getIsDeleted())
+    }
+}
+
+/**
  更新日時を更新
  - Parameters:
     - ID: 更新したいメモのID

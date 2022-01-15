@@ -52,9 +52,9 @@ class MeasuresViewController: UIViewController {
                 updateMemoIsDeleted(memo: memo)
             }
             if Network.isOnline() {
-                updateMeasures(self.measures)
+                updateMeasures(measures: self.measures)
                 for memo in self.memoArray {
-                    updateMemo(memo)
+                    updateMemo(memo: memo)
                 }
             }
             self.delegate?.measuresVCDeleteMeasures()
@@ -88,7 +88,7 @@ class MeasuresViewController: UIViewController {
         super.viewDidDisappear(animated)
         // Firebaseに送信
         if Network.isOnline() {
-            updateMeasures(measures)
+            updateMeasures(measures: measures)
         }
     }
     

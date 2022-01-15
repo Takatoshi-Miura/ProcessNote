@@ -47,12 +47,10 @@ func syncMemo(completion: @escaping () -> ()) {
             
             if realmDate > firebaseDate {
                 // Realmデータの方が新しい
-                saveMemo(memo: realmMemo, completion: {})
+                updateMemo(memo: realmMemo)
             } else if firebaseDate > realmDate  {
                 // Firebaseデータの方が新しい
-                if !createRealm(object: firebaseMemo) {
-                    return
-                }
+                updateMemoRealm(memo: firebaseMemo)
             }
         }
         completion()

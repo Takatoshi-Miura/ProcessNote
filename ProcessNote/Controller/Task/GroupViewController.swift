@@ -96,7 +96,7 @@ class GroupViewController: UIViewController {
         super.viewDidDisappear(animated)
         // Firebaseに送信
         if Network.isOnline() {
-            updateGroup(group)
+            updateGroup(group: group)
         }
     }
 
