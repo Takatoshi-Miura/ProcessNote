@@ -14,6 +14,7 @@
                 <outlet property="groupColorView" destination="FOw-U9-twN" id="cXb-qu-87c"/>
                 <outlet property="measuresLabel" destination="Cgy-9V-YFg" id="Bff-Zf-gGS"/>
                 <outlet property="memoTextView" destination="puz-wv-odL" id="NyO-dI-fsI"/>
+                <outlet property="memoTextViewBottom" destination="igO-Y9-8M8" id="9SF-t6-9Ti"/>
                 <outlet property="taskNameLabel" destination="22I-Ut-zge" id="nna-Eb-djN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

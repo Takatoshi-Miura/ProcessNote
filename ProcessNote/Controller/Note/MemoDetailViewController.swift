@@ -21,6 +21,8 @@ class MemoDetailViewController: UIViewController {
     @IBOutlet weak var taskNameLabel: UILabel!
     @IBOutlet weak var measuresLabel: UILabel!
     @IBOutlet weak var memoTextView: UITextView!
+    @IBOutlet weak var memoTextViewBottom: NSLayoutConstraint!
+    private var safeAreaInsetsBottom: CGFloat = 0
     var memo = Memo()
     var delegate: MemoDetailViewControllerDelegate?
     
@@ -32,6 +34,7 @@ class MemoDetailViewController: UIViewController {
         initGroupColor()
         initLabel()
         initTextView()
+        initNotification()
     }
     
     func initNavigationBar() {
@@ -73,6 +76,54 @@ class MemoDetailViewController: UIViewController {
     /// キーボードを閉じる
     @objc func completeAction() {
         self.view.endEditing(true)
+    }
+    
+    func initNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        // キーボードで入力欄が隠れるのを防止
+        guard let keyboardHeight = notification.keyboardHeight,
+              let keyboardAnimationDuration = notification.keybaordAnimationDuration,
+              let KeyboardAnimationCurve = notification.keyboardAnimationCurve
+        else { return }
+        
+        UIView.animate(withDuration: keyboardAnimationDuration,
+                       delay: 0,
+                       options: UIView.AnimationOptions(rawValue: KeyboardAnimationCurve))
+        {
+            let tabBarController = UITabBarController()
+            let tabBarHeight = tabBarController.tabBar.frame.size.height
+            self.memoTextViewBottom.constant = -keyboardHeight + tabBarHeight + self.safeAreaInsetsBottom
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        guard let keyboardAnimationDuration = notification.keybaordAnimationDuration,
+              let KeyboardAnimationCurve = notification.keyboardAnimationCurve
+        else { return }
+        
+        UIView.animate(withDuration: keyboardAnimationDuration,
+                       delay: 0,
+                       options: UIView.AnimationOptions(rawValue: KeyboardAnimationCurve))
+        {
+            self.memoTextViewBottom.constant = 0
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // SafeAreaの余白を取得
+        guard let root = UIApplication.shared.windows.filter({$0.isKeyWindow}).first!.rootViewController else {
+            return
+        }
+        if #available(iOS 11.0, *) {
+            self.safeAreaInsetsBottom = root.view.safeAreaInsets.bottom
+        } else {
+            self.safeAreaInsetsBottom = root.bottomLayoutGuide.length
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
