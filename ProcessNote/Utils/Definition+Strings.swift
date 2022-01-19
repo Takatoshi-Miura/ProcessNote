@@ -46,6 +46,7 @@ let TITLE_COLOR = NSLocalizedString("Color", comment: "")
 let MESSAGE_EMPTY_TITLE = NSLocalizedString("EmptyTitle", comment: "")
 let MESSAGE_GROUP_CREATE_ERROR = NSLocalizedString("GroupCreateError", comment: "")
 let TITLE_GROUP_EXAMPLE = NSLocalizedString("GroupExample", comment: "")
+let MESSAGE_DELETE_INPUT = NSLocalizedString("DeleteInput", comment: "")
 
 
 // MARK: - AddTaskViewController

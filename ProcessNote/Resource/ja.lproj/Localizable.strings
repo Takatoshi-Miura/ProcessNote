@@ -58,6 +58,7 @@
 "EmptyTitle" = "タイトルを入力して下さい。";
 "GroupCreateError" = "グループの作成に失敗しました。";
 "GroupExample" = "例：仕事、健康、お金、人間関係、未分類";
+"DeleteInput" = "入力した内容が削除されます。\nよろしいですか？";
 
 
 // MARK: - AddTaskViewController

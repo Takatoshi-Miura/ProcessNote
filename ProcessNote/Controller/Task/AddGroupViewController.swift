@@ -73,6 +73,18 @@ class AddGroupViewController: UIViewController {
     
     
     @IBAction func hundleRightSwipeGesture(_ sender: Any) {
+        dismissWithInputCheck()
+    }
+    
+    /// 入力済みの場合、確認アラートを表示
+    private func dismissWithInputCheck() {
+        let cell = tableView.cellForRow(at: [0, 0]) as! TitleCell
+        if !cell.textField.text!.isEmpty {
+            showOKCancelAlert(title: "", message: MESSAGE_DELETE_INPUT, OKAction: {
+                self.dismiss(animated: true, completion: nil)
+            })
+            return
+        }
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -220,6 +232,6 @@ extension AddGroupViewController: SaveButtonCellDelegate {
     }
     
     func tapCancelButton() {
-        self.dismiss(animated: true, completion: nil)
+        dismissWithInputCheck()
     }
 }

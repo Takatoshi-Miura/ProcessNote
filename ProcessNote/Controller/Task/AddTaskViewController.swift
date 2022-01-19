@@ -77,6 +77,24 @@ class AddTaskViewController: UIViewController {
     }
     
     @IBAction func hundleRightSwipeGesture(_ sender: Any) {
+        dismissWithInputCheck()
+    }
+    
+    /// 入力済みの場合、確認アラートを表示
+    private func dismissWithInputCheck() {
+        let titleCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
+        let causeTextCell = tableView.cellForRow(at: [1, 0]) as! TextViewCell
+        let measuresCell = tableView.cellForRow(at: [2, 0]) as! TitleCell
+        
+        if !titleCell.textField.text!.isEmpty ||
+           !causeTextCell.textView.text.isEmpty ||
+           !measuresCell.textField.text!.isEmpty
+        {
+            showOKCancelAlert(title: "", message: MESSAGE_DELETE_INPUT, OKAction: {
+                self.dismiss(animated: true, completion: nil)
+            })
+            return
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -264,6 +282,6 @@ extension AddTaskViewController: SaveButtonCellDelegate {
     }
     
     func tapCancelButton() {
-        self.dismiss(animated: true, completion: nil)
+        dismissWithInputCheck()
     }
 }
