@@ -39,10 +39,12 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="puz-wv-odL">
                     <rect key="frame" x="0.0" y="58" width="320" height="510"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <gestureRecognizers/>
                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                     <color key="textColor" systemColor="labelColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
                 </textView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FOw-U9-twN">
                     <rect key="frame" x="0.0" y="0.0" width="15" height="58"/>
@@ -68,8 +70,16 @@
                 <constraint firstItem="Cgy-9V-YFg" firstAttribute="top" secondItem="22I-Ut-zge" secondAttribute="bottom" constant="5" id="voI-oy-39t"/>
                 <constraint firstItem="puz-wv-odL" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="wgm-RD-gUe"/>
             </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="HrQ-FG-en4" appends="YES" id="mTG-TE-9Wc"/>
+            </connections>
             <point key="canvasLocation" x="138.75" y="152.11267605633802"/>
         </view>
+        <tapGestureRecognizer id="HrQ-FG-en4">
+            <connections>
+                <action selector="actionTapMemoTextView:" destination="-1" id="cpB-PY-Q2B"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <systemColor name="labelColor">

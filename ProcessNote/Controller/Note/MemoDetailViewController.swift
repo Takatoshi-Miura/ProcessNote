@@ -71,11 +71,18 @@ class MemoDetailViewController: UIViewController {
         memoTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         memoTextView.sizeToFit()
         memoTextView.inputAccessoryView = createToolBar(#selector(completeAction))
+        memoTextView.isEditable = false // URLリンクを機能させるため基本は編集不可
     }
     
     /// キーボードを閉じる
     @objc func completeAction() {
+        memoTextView.isEditable = false
         self.view.endEditing(true)
+    }
+    
+    @IBAction func actionTapMemoTextView(_ sender: Any) {
+        self.memoTextView.isEditable = true
+        self.memoTextView.becomeFirstResponder()
     }
     
     func initNotification() {
