@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleMobileAds
+import PKHUD
 
 
 protocol TaskViewControllerDelegate: AnyObject {
@@ -134,13 +135,13 @@ class TaskViewController: UIViewController {
     /// データの同期処理
     @objc func syncData() {
         if Network.isOnline() {
-            showIndicator(message: MESSAGE_SERVER_COMMUNICATION)
+            HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_SERVER_COMMUNICATION))
             syncDatabase(completion: {
                 self.groupArray = getGroupArrayForTaskView()
                 self.taskArray = getTaskArrayForTaskView()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
-                self.dismissIndicator()
+                HUD.hide()
             })
         } else {
             groupArray = getGroupArrayForTaskView()

@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleMobileAds
+import PKHUD
 
 
 protocol NoteViewControllerDelegate: AnyObject {
@@ -60,12 +61,12 @@ class NoteViewController: UIViewController {
     /// データの同期処理
     @objc func syncData() {
         if Network.isOnline() {
-            showIndicator(message: MESSAGE_SERVER_COMMUNICATION)
+            HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_SERVER_COMMUNICATION))
             syncDatabase(completion: {
                 self.memoArray = getMemoArrayForNoteView()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
-                self.dismissIndicator()
+                HUD.hide()
             })
         } else {
             memoArray = getMemoArrayForNoteView()

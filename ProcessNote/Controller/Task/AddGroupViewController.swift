@@ -210,9 +210,7 @@ extension AddGroupViewController: SaveButtonCellDelegate {
         
         // Firebaseに送信
         if Network.isOnline() {
-            showIndicator(message: MESSAGE_SERVER_COMMUNICATION)
             saveGroup(group: group, completion: {
-                self.dismissIndicator()
                 self.dismissWithReload(group: group)
             })
         } else {

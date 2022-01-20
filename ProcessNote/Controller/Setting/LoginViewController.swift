@@ -7,7 +7,7 @@
 
 import UIKit
 import Firebase
-import SVProgressHUD
+import PKHUD
 
 
 protocol LoginViewControllerDelegate: AnyObject {
@@ -226,7 +226,7 @@ extension LoginViewController: ColorCellDelegate {
         - password: パスワード
      */
     func login(mail address: String, password pass: String) {
-        SVProgressHUD.show(withStatus: MESSAGE_DURING_LOGIN_PROCESS)
+        HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_DURING_LOGIN_PROCESS))
         
         Auth.auth().signIn(withEmail: address, password: pass) { authResult, error in
             // エラー処理
@@ -234,11 +234,11 @@ extension LoginViewController: ColorCellDelegate {
                 if let errorCode = AuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .invalidEmail:
-                        SVProgressHUD.showError(withStatus: MESSAGE_INVALID_EMAIL)
+                        HUD.show(.labeledError(title: "", subtitle: MESSAGE_INVALID_EMAIL))
                     case .wrongPassword:
-                        SVProgressHUD.showError(withStatus: MESSAGE_WRONG_PASSWORD)
+                        HUD.show(.labeledError(title: "", subtitle: MESSAGE_WRONG_PASSWORD))
                     default:
-                        SVProgressHUD.showError(withStatus: MESSAGE_LOGIN_ERROR)
+                        HUD.show(.labeledError(title: "", subtitle: MESSAGE_LOGIN_ERROR))
                     }
                     return
                 }
@@ -250,7 +250,7 @@ extension LoginViewController: ColorCellDelegate {
             UserDefaultsKey.password.set(value: pass)
             
             // メッセージが隠れてしまうため、遅延処理を行ってから画面遷移
-            SVProgressHUD.showSuccess(withStatus: MESSAGE_LOGIN_SUCCESSFUL)
+            HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_LOGIN_SUCCESSFUL))
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 self.delegate?.LoginVCUserDidLogin(self)
             }
@@ -283,12 +283,12 @@ extension LoginViewController: ColorCellDelegate {
             UserDefaultsKey.userID.set(value: NSUUID().uuidString)
             
             // メッセージが隠れてしまうため、遅延処理を行う
-            SVProgressHUD.showSuccess(withStatus: MESSAGE_LOGOUT_SUCCESSFUL)
+            HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_LOGOUT_SUCCESSFUL))
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 self.delegate?.LoginVCUserDidLogin(self)
             }
         } catch _ as NSError {
-            SVProgressHUD.dismiss()
+            HUD.hide()
             showErrorAlert(message: MESSAGE_LOGOUT_ERROR)
         }
     }
@@ -304,7 +304,7 @@ extension LoginViewController: ColorCellDelegate {
                 self.showErrorAlert(message: MESSAGE_MAIL_SEND_ERROR)
                 return
             }
-            SVProgressHUD.showSuccess(withStatus: MESSAGE_MAIL_SEND_SUCCESSFUL)
+            HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_MAIL_SEND_SUCCESSFUL))
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 self.delegate?.LoginVCUserDidLogin(self)
             }
@@ -318,7 +318,7 @@ extension LoginViewController: ColorCellDelegate {
         - password: パスワード
      */
     func createAccount(mail address: String, password pass: String) {
-        showIndicator(message: MESSAGE_DURING_CREATE_ACCOUNT_PROCESS)
+        HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_DURING_CREATE_ACCOUNT_PROCESS))
         
         // アカウント作成処理
         Auth.auth().createUser(withEmail: address, password: pass) { authResult, error in
@@ -328,13 +328,13 @@ extension LoginViewController: ColorCellDelegate {
                 if let errorCode = AuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                         case .invalidEmail:
-                            SVProgressHUD.showError(withStatus: MESSAGE_INVALID_EMAIL)
+                            HUD.show(.labeledError(title: "", subtitle: MESSAGE_INVALID_EMAIL))
                         case .emailAlreadyInUse:
-                            SVProgressHUD.showError(withStatus: MESSAGE_EMAIL_ALREADY_INUSE)
+                            HUD.show(.labeledError(title: "", subtitle: MESSAGE_EMAIL_ALREADY_INUSE))
                         case .weakPassword:
-                            SVProgressHUD.showError(withStatus: MESSAGE_WEAK_PASSWORD)
+                            HUD.show(.labeledError(title: "", subtitle: MESSAGE_WEAK_PASSWORD))
                         default:
-                            SVProgressHUD.showError(withStatus: MESSAGE_CREATE_ACCOUNT_ERROR)
+                            HUD.show(.labeledError(title: "", subtitle: MESSAGE_CREATE_ACCOUNT_ERROR))
                     }
                     return
                 }
@@ -355,7 +355,7 @@ extension LoginViewController: ColorCellDelegate {
             syncDatabase(completion: {
                 self.dismissIndicator()
                 self.delegate?.LoginVCUserDidLogin(self)
-                SVProgressHUD.showSuccess(withStatus: MESSAGE_DATA_TRANSFER_SUCCESSFUL)
+                HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_DATA_TRANSFER_SUCCESSFUL))
             })
         }
     }
