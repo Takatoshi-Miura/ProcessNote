@@ -487,6 +487,7 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - PKHUD (5.3.0)
   - PromisesObjC (2.0.0)
   - ReachabilitySwift (5.0.0)
   - Realm (10.17.0):
@@ -494,7 +495,6 @@ PODS:
   - Realm/Headers (10.17.0)
   - RealmSwift (10.17.0):
     - Realm (= 10.17.0)
-  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Firebase
@@ -503,9 +503,9 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Google-Mobile-Ads-SDK
+  - PKHUD
   - ReachabilitySwift
   - RealmSwift
-  - SVProgressHUD
 
 SPEC REPOS:
   trunk:
@@ -528,11 +528,11 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - PKHUD
     - PromisesObjC
     - ReachabilitySwift
     - Realm
     - RealmSwift
-    - SVProgressHUD
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -554,12 +554,12 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Realm: 9533276bd76f66aa2fd0d3ffe700c1f6023dcab6
   RealmSwift: 57f5d59aa29852587aad1e861989e7af139894b5
-  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: df813f2ec7aa9e332c78e71595ac11cbc289ae83
+PODFILE CHECKSUM: 36a66ff83c728d02920bd0371d72f377c9ef7674
 
 COCOAPODS: 1.10.2

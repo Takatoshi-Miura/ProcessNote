@@ -12,7 +12,7 @@ target 'ProcessNote' do
   pod 'Firebase/Firestore'
   pod 'RealmSwift'
   pod 'ReachabilitySwift'
-  pod 'SVProgressHUD'
+  pod 'PKHUD'
   pod 'Google-Mobile-Ads-SDK'
   
   # Pods for ProcessNoteTests
