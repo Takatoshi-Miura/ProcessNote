@@ -323,7 +323,7 @@ extension LoginViewController: ColorCellDelegate {
         // アカウント作成処理
         Auth.auth().createUser(withEmail: address, password: pass) { authResult, error in
             if error != nil {
-                self.dismissIndicator()
+                HUD.hide()
                 // エラーのハンドリング
                 if let errorCode = AuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
@@ -353,7 +353,7 @@ extension LoginViewController: ColorCellDelegate {
             
             // Firebaseと同期
             syncDatabase(completion: {
-                self.dismissIndicator()
+                HUD.hide()
                 self.delegate?.LoginVCUserDidLogin(self)
                 HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_DATA_TRANSFER_SUCCESSFUL))
             })

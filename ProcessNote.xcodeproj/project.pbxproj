@@ -93,7 +93,6 @@
 		8DB0731327780A4E00EFABB7 /* Definition+Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB0731227780A4E00EFABB7 /* Definition+Strings.swift */; };
 		8DB5799B271BF40F005F8625 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */; };
 		8DB5799D271C0A2E005F8625 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */; };
-		8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */; };
 		8DB579A1271C3CBD005F8625 /* UIViewController+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB579A0271C3CBD005F8625 /* UIViewController+TextField.swift */; };
 		8DD465AE279248A80087962D /* NSNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD465AD279248A80087962D /* NSNotification.swift */; };
 		B163AFD74602C720D765194D /* Pods_ProcessNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EAD993DB9D1FA2F0ACF7D /* Pods_ProcessNoteTests.framework */; };
@@ -213,7 +212,6 @@
 		8DB0731227780A4E00EFABB7 /* Definition+Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Definition+Strings.swift"; sourceTree = "<group>"; };
 		8DB5799A271BF40F005F8625 /* GroupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupHeaderView.xib; sourceTree = "<group>"; };
 		8DB5799C271C0A2E005F8625 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Indicator.swift"; sourceTree = "<group>"; };
 		8DB579A0271C3CBD005F8625 /* UIViewController+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+TextField.swift"; sourceTree = "<group>"; };
 		8DD465AD279248A80087962D /* NSNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotification.swift; sourceTree = "<group>"; };
 		A8C21E028BEA1BD922754EE7 /* Pods-ProcessNoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProcessNoteTests.release.xcconfig"; path = "Target Support Files/Pods-ProcessNoteTests/Pods-ProcessNoteTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -518,7 +516,6 @@
 				8D9BFF7B2769471D0086EF1D /* UIViewController+UserDefaults.swift */,
 				8D0F86DE271191AA004E2A7D /* UIViewController+Alert.swift */,
 				8D0F8706271A9D54004E2A7D /* UIViewController+PickerView.swift */,
-				8DB5799E271C18DF005F8625 /* UIViewController+Indicator.swift */,
 				8DB579A0271C3CBD005F8625 /* UIViewController+TextField.swift */,
 			);
 			path = Utils;
@@ -861,7 +858,6 @@
 				8D09E789275B12940005F809 /* FirebaseManager+Memo.swift in Sources */,
 				8D0F870D271BD1A2004E2A7D /* RealmManager.swift in Sources */,
 				8D0F86EE2712AC1F004E2A7D /* Setting.swift in Sources */,
-				8DB5799F271C18DF005F8625 /* UIViewController+Indicator.swift in Sources */,
 				8D09E74F274897F40005F809 /* CompletedTaskCoordinator.swift in Sources */,
 				8D09E78D275B2D160005F809 /* SyncManager+Memo.swift in Sources */,
 				8D4404742762AFF0003C2CAF /* MemoDetailViewController.swift in Sources */,

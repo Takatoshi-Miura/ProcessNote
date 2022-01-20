@@ -175,7 +175,7 @@ class TaskViewController: UIViewController {
     func displayAgreement(_ completion: @escaping () -> ()) {
         // 同意ボタン
         let agreeAction = UIAlertAction(title: TITLE_AGREEMENT, style: UIAlertAction.Style.default) {(action: UIAlertAction) in
-            self.dismissIndicator()
+            HUD.hide()
             completion()
         }
         // 利用規約ボタン
