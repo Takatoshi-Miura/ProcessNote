@@ -15,6 +15,8 @@ protocol NoteViewControllerDelegate: AnyObject {
     func noteVCAddButtonDidTap(_ viewController: NoteViewController)
     // ノートタップ時の処理
     func noteVCMemoDidTap(memo: Memo)
+    // フィルターボタンタップ時の処理
+    func noteVCFilterDidTap(_ viewController: NoteViewController)
 }
 
 
@@ -40,6 +42,13 @@ class NoteViewController: UIViewController {
     
     func initNavigationController() {
         self.title = TITLE_NOTE
+        let filterButton = UIBarButtonItem(image: UIImage(named: "icon_filter_empty")!, style: .done, target: self, action: #selector(filterNote))
+        navigationItem.rightBarButtonItems = [filterButton]
+    }
+    
+    /// ノートの絞り込み
+    @objc func filterNote() {
+        delegate?.noteVCFilterDidTap(self)
     }
     
     func initSearchBar() {
