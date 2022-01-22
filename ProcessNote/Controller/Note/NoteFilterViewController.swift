@@ -75,7 +75,7 @@ class NoteFilterViewController: UIViewController {
         groupArray.insert(dummyGroup, at: 0)
         
         let dummyTask = Task()
-        taskArray = getTasksInGroup(ID: groupArray[groupPickerSelected].getGroupID(), isCompleted: false)
+        taskArray = getTasksInGroup(ID: groupArray[groupPickerSelected].getGroupID())
         taskArray.insert(dummyTask, at: 0)
     }
     
