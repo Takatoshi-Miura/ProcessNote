@@ -118,6 +118,40 @@ func getMemoArrayForNoteView() -> [Memo] {
 }
 
 /**
+ グループに含まれるメモを取得
+ - Returns: 検索フィルタの条件に合致するメモ
+ */
+func getMemoArrayWithGroupID(ID: String) -> [Memo] {
+    var memoArray: [Memo] = []
+    let realmMemoArray = getMemoArrayForNoteView()
+    for memo in realmMemoArray {
+        let memoGroupID = getGroup(memo: memo).getGroupID()
+        if memoGroupID == ID {
+            memoArray.append(memo)
+        }
+    }
+    return memoArray
+}
+
+/**
+ 課題に含まれるメモを取得
+ - Returns: 条件に合致するメモ
+ */
+func getMemoArrayWithTaskID(ID: String) -> [Memo] {
+    var memoArray: [Memo] = []
+    let realmMemoArray = getMemoArrayForNoteView()
+    let measuresArray = getMeasuresInTask(ID: ID)
+    for memo in realmMemoArray {
+        for measures in measuresArray {
+            if memo.getMeasuresID() == measures.getMeasuresID() {
+                memoArray.append(memo)
+            }
+        }
+    }
+    return memoArray
+}
+
+/**
  Realmのメモデータを検索
  - Parameters:
     - searchWord: 検索文字列
@@ -157,52 +191,6 @@ func getMemo(measuresID: String) -> [Memo] {
     for memo in results {
         memoArray.append(memo)
     }
-    return memoArray
-}
-
-/**
- ノートに含まれるメモを取得
- - Parameters:
-    - noteID: ノートID
- - Returns: ノートに含まれるメモ
- */
-func getMemo(noteID: String) -> [Memo] {
-    var memoArray: [Memo] = []
-    let realm = try! Realm()
-    let sortProperties = [
-        SortDescriptor(keyPath: "created_at", ascending: false),
-    ]
-    let results = realm.objects(Memo.self)
-                        .filter("(noteID == '\(noteID)') && (isDeleted == false)")
-                        .sorted(by: sortProperties)
-    for memo in results {
-        memoArray.append(memo)
-    }
-    return memoArray
-}
-
-/**
- グループに含まれるメモを取得
- - Parameters:
-    - noteID: ノートID
-    - groupArray: グループ配列
- - Returns: メモ配列[[Memo]]
- */
-func getMemo(noteID: String, groupArray: [Group]) -> [[Memo]] {
-    var memoArray: [[Memo]] = []
-    
-    let memoInNote = getMemo(noteID: noteID)
-    for group in groupArray {
-        var array: [Memo] = []
-        for memo in memoInNote {
-            let groupID = getGroup(memo: memo).getGroupID()
-            if groupID == group.getGroupID() {
-                array.append(memo)
-            }
-        }
-        memoArray.append(array)
-    }
-    
     return memoArray
 }
 

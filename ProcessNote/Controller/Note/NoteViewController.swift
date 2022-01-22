@@ -26,6 +26,7 @@ class NoteViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var adView: UIView!
+    private var filterButton: UIBarButtonItem!
     private var memoArray = [Memo]()
     private var isFiltered: Bool = false
     private var adMobView: GADBannerView?
@@ -37,12 +38,16 @@ class NoteViewController: UIViewController {
         initNavigationController()
         initSearchBar()
         initTableView()
-        memoArray = getMemoArrayForNoteView()
+        searchNoteWithFilter()
     }
     
     func initNavigationController() {
         self.title = TITLE_NOTE
-        let filterButton = UIBarButtonItem(image: UIImage(named: "icon_filter_empty")!, style: .done, target: self, action: #selector(filterNote))
+        let iconImage = isFiltered ? UIImage(named: "icon_filter_fill")! : UIImage(named: "icon_filter_empty")!
+        filterButton = UIBarButtonItem(image: iconImage,
+                                       style: .done,
+                                       target: self,
+                                       action: #selector(filterNote))
         navigationItem.rightBarButtonItems = [filterButton]
     }
     
@@ -72,13 +77,13 @@ class NoteViewController: UIViewController {
         if Network.isOnline() {
             HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_SERVER_COMMUNICATION))
             syncDatabase(completion: {
-                self.memoArray = getMemoArrayForNoteView()
+                self.searchNoteWithFilter()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
                 HUD.hide()
             })
         } else {
-            memoArray = getMemoArrayForNoteView()
+            self.searchNoteWithFilter()
             tableView.refreshControl?.endRefreshing()
             tableView.reloadData()
         }
@@ -137,6 +142,28 @@ class NoteViewController: UIViewController {
         let index: IndexPath = [0, 0]
         memoArray.insert(memo, at: 0)
         tableView.insertRows(at: [index], with: UITableView.RowAnimation.right)
+    }
+    
+    /// 検索フィルタによる検索
+    func searchNoteWithFilter() {
+        if let filterTaskID = UserDefaultsKey.filterTaskID.object() as? String {
+            isFiltered = true
+            initNavigationController()
+            memoArray = getMemoArrayWithTaskID(ID: filterTaskID)
+            tableView.reloadData()
+            return
+        }
+        if let filterGroupID = UserDefaultsKey.filterGroupID.object() as? String {
+            isFiltered = true
+            initNavigationController()
+            memoArray = getMemoArrayWithGroupID(ID: filterGroupID)
+            tableView.reloadData()
+            return
+        }
+        isFiltered = false
+        initNavigationController()
+        memoArray = getMemoArrayForNoteView()
+        tableView.reloadData()
     }
     
 }

@@ -93,6 +93,12 @@
 "SearchNoteTitle" = "Search note";
 
 
+// MARK: - NoteFilterViewController
+"FilterNote" = "Search filter";
+"Period" = "Period";
+"ShowAll" = "Show all";
+
+
 // MARK: - AddNoteViewController
 "AddNoteTitle" = "Add note";
 "NoteCreateError" = "Failed to create a note.";

@@ -165,29 +165,6 @@ func getGroupArrayForTaskView() -> [Group] {
     return realmGroupArray
 }
 
-/**
- NoteDetailViewController用Group配列を取得
- - Parameters:
-    - noteID: ノートID
- - Returns: Group配列
- */
-func getGroupArrayForNoteDetailView(noteID: String) -> [Group] {
-    // ノートに所属するメモを取得
-    let memoArray = getMemo(noteID: noteID)
-    
-    // メモが所属するグループを重複なく取得
-    var groupArray: [Group] = []
-    for memo in memoArray {
-        let group = getGroup(memo: memo)
-        groupArray.append(group)
-    }
-    var groups: [Group] = []
-    for group in Set(groupArray) {
-        groups.append(group)
-    }
-    return groups
-}
-
 
 // MARK: - Delete
 

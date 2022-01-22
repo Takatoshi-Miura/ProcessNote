@@ -60,7 +60,7 @@ public extension UIViewController {
     func createToolBar(_ doneAction:Selector, _ cancelAction:Selector) -> UIToolbar {
         // ツールバーを作成
         let toolbar = UIToolbar()
-        toolbar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44)
+        toolbar.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44)
         // ボタン作成＆セット
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: doneAction)
         let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: cancelAction)

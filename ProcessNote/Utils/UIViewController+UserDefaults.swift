@@ -12,11 +12,13 @@ public extension UIViewController {
     
     enum UserDefaultsKey: String {
         // 保存Key一覧
-        case firstLaunch = "firstLaunch"    // 初回起動判定
-        case userID      = "userID"         // アカウント持ちならFirebaseID、なければ端末のUID
-        case address     = "address"        // アカウントのメールアドレス
-        case password    = "password"       // アカウントのパスワード
-        case agree       = "agree"          // 利用規約への同意状況
+        case firstLaunch   = "firstLaunch"      // 初回起動判定
+        case userID        = "userID"           // アカウント持ちならFirebaseID、なければ端末のUID
+        case address       = "address"          // アカウントのメールアドレス
+        case password      = "password"         // アカウントのパスワード
+        case agree         = "agree"            // 利用規約への同意状況
+        case filterGroupID = "filterGroupID"    // 検索フィルタ(グループ)
+        case filterTaskID  = "filterTaskID"     // 検索フィルタ(グループ)
         
         // 保存＆取得
         func set(value: Int) {

@@ -81,6 +81,12 @@ let MESSAGE_EMPTY_MEASURES = NSLocalizedString("EmptyMeasures", comment: "")
 let TITLE_SEARCH_NOTE = NSLocalizedString("SearchNoteTitle", comment: "")
 
 
+// MARK: - NoteFilterViewController
+let TITLE_FILTER_NOTE = NSLocalizedString("FilterNote", comment: "")
+let TITLE_PERIOD = NSLocalizedString("Period", comment: "")
+let TITLE_SHOW_ALL = NSLocalizedString("ShowAll", comment: "")
+
+
 // MARK: - AddNoteViewController
 let TITLE_ADD_NOTE = NSLocalizedString("AddNoteTitle", comment: "")
 let MESSAGE_NOTE_CREATE_ERROR = NSLocalizedString("NoteCreateError", comment: "")

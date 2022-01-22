@@ -93,6 +93,12 @@
 "SearchNoteTitle" = "ノートを検索";
 
 
+// MARK: - NoteFilterViewController
+"FilterNote" = "検索フィルタ";
+"Period" = "期間";
+"ShowAll" = "すべて表示";
+
+
 // MARK: - AddNoteViewController
 "AddNoteTitle" = "ノートの追加";
 "NoteCreateError" = "ノートの作成に失敗しました。";
