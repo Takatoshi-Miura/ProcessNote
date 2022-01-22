@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteFilterViewController" customModule="ProcessNote" customModuleProvider="target">
             <connections>
                 <outlet property="applyButton" destination="hVt-eW-2Jw" id="9SP-Fw-qZ8"/>
+                <outlet property="clearButton" destination="c5a-Db-ieq" id="THc-yc-6oV"/>
                 <outlet property="dateLabel" destination="pZc-Bh-3lr" id="omS-Kg-GF3"/>
                 <outlet property="naviItem" destination="Uyp-Bf-duD" id="Wzp-Ic-RZk"/>
                 <outlet property="tableView" destination="UZO-qt-M5Q" id="Vhw-Wc-r1a"/>
@@ -33,6 +34,11 @@
                             <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="kCl-xQ-O2v">
                                 <connections>
                                     <action selector="cancelButtonAction:" destination="-1" id="nNX-9i-hZd"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="c5a-Db-ieq">
+                                <connections>
+                                    <action selector="clearButtonAction:" destination="-1" id="NPB-CC-Te7"/>
                                 </connections>
                             </barButtonItem>
                         </navigationItem>

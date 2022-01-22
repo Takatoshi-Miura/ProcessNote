@@ -85,6 +85,7 @@ let TITLE_SEARCH_NOTE = NSLocalizedString("SearchNoteTitle", comment: "")
 let TITLE_FILTER_NOTE = NSLocalizedString("FilterNote", comment: "")
 let TITLE_PERIOD = NSLocalizedString("Period", comment: "")
 let TITLE_SHOW_ALL = NSLocalizedString("ShowAll", comment: "")
+let TITLE_CLEAR = NSLocalizedString("Clear", comment: "")
 
 
 // MARK: - AddNoteViewController

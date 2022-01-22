@@ -20,6 +20,7 @@ class NoteFilterViewController: UIViewController {
     
     // MARK: UI,Variable
     @IBOutlet weak var naviItem: UINavigationItem!
+    @IBOutlet weak var clearButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var applyButton: UIButton!
@@ -50,6 +51,7 @@ class NoteFilterViewController: UIViewController {
     
     func initNavigationBar() {
         naviItem.title = TITLE_FILTER_NOTE
+        clearButton.title = TITLE_CLEAR
     }
     
     func initPickerView() {
@@ -102,6 +104,18 @@ class NoteFilterViewController: UIViewController {
     
     @IBAction func cancelButtonAction(_ sender: Any) {
         delegate?.noteFilterVCCancelDidTap(self)
+    }
+    
+    @IBAction func clearButtonAction(_ sender: Any) {
+        // 検索フィルタをクリア
+        UserDefaultsKey.filterGroupID.remove()
+        UserDefaultsKey.filterTaskID.remove()
+        groupPickerSelected = 0
+        taskPickerSelected = 0
+        groupPicker.selectRow(groupPickerSelected, inComponent: 0, animated: false)
+        taskPicker.selectRow(taskPickerSelected, inComponent: 0, animated: false)
+        initGroupTaskData()
+        tableView.reloadData()
     }
     
     @IBAction func applyButtonAction(_ sender: Any) {

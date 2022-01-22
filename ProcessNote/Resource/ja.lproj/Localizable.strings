@@ -97,6 +97,7 @@
 "FilterNote" = "検索フィルタ";
 "Period" = "期間";
 "ShowAll" = "すべて表示";
+"Clear" = "クリア";
 
 
 // MARK: - AddNoteViewController

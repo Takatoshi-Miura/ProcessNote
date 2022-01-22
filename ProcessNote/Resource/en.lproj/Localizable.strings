@@ -97,6 +97,7 @@
 "FilterNote" = "Search filter";
 "Period" = "Period";
 "ShowAll" = "Show all";
+"Clear" = "Clear";
 
 
 // MARK: - AddNoteViewController
