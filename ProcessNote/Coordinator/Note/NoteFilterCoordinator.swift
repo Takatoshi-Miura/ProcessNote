@@ -26,9 +26,6 @@ class NoteFilterCoordinator: Coordinator {
         if #available(iOS 13.0, *) {
             noteFilterViewController.isModalInPresentation = true
         }
-        if isiPad() {
-            noteFilterViewController.modalPresentationStyle = .fullScreen
-        }
         previousViewController!.present(noteFilterViewController, animated: true)
     }
     

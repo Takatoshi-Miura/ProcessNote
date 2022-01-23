@@ -35,9 +35,6 @@ extension NoteCoordinator: NoteViewControllerDelegate {
         if #available(iOS 13.0, *) {
             addNoteViewController.isModalInPresentation = true
         }
-        if isiPad() {
-            addNoteViewController.modalPresentationStyle = .fullScreen
-        }
         viewController.present(addNoteViewController, animated: true)
     }
     

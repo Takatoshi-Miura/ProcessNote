@@ -62,19 +62,19 @@ class AddNoteViewController: UIViewController {
     func initPickerView() {
         groupPicker.delegate = self
         groupPicker.dataSource = self
-        groupPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: groupPicker.bounds.size.height + 44)
+        groupPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: groupPicker.bounds.size.height + 44)
         groupPicker.backgroundColor = UIColor.systemGray5
         groupPicker.tag = Tag.group.rawValue
         
         taskPicker.delegate = self
         taskPicker.dataSource = self
-        taskPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: taskPicker.bounds.size.height + 44)
+        taskPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: taskPicker.bounds.size.height + 44)
         taskPicker.backgroundColor = UIColor.systemGray5
         taskPicker.tag = Tag.task.rawValue
         
         measuresPicker.delegate = self
         measuresPicker.dataSource = self
-        measuresPicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: measuresPicker.bounds.size.height + 44)
+        measuresPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: measuresPicker.bounds.size.height + 44)
         measuresPicker.backgroundColor = UIColor.systemGray5
         measuresPicker.tag = Tag.measures.rawValue
     }
@@ -106,6 +106,14 @@ class AddNoteViewController: UIViewController {
             }
             self.textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         })
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // マルチタスクビュー対策
+        groupPicker.frame.size.width = self.view.bounds.size.width
+        taskPicker.frame.size.width = self.view.bounds.size.width
+        measuresPicker.frame.size.width = self.view.bounds.size.width
     }
     
     override func viewDidAppear(_ animated: Bool) {
