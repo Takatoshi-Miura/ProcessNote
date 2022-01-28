@@ -22,7 +22,6 @@ class NoteFilterViewController: UIViewController {
     @IBOutlet weak var naviItem: UINavigationItem!
     @IBOutlet weak var clearButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var applyButton: UIButton!
     var delegate: NoteFilterViewControllerDelegate?
     
@@ -42,7 +41,6 @@ class NoteFilterViewController: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        dateLabel.text = TITLE_PERIOD
         initNavigationBar()
         initPickerView()
         initGroupTaskData()
