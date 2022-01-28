@@ -77,13 +77,15 @@ class NoteViewController: UIViewController {
         if Network.isOnline() {
             HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_SERVER_COMMUNICATION))
             syncDatabase(completion: {
+                self.searchBar.searchTextField.text = ""
                 self.searchNoteWithFilter()
                 self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
                 HUD.hide()
             })
         } else {
-            self.searchNoteWithFilter()
+            searchBar.searchTextField.text = ""
+            searchNoteWithFilter()
             tableView.refreshControl?.endRefreshing()
             tableView.reloadData()
         }
@@ -172,12 +174,41 @@ class NoteViewController: UIViewController {
 extension NoteViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // 未入力の場合は全検索
         if searchBar.text == "" {
-            memoArray = getMemoArrayForNoteView()
+            if isFiltered {
+                if let filterTaskID = UserDefaultsKey.filterTaskID.object() as? String {
+                    memoArray = getMemoArrayWithTaskID(ID: filterTaskID)
+                    tableView.reloadData()
+                    return
+                }
+                if let filterGroupID = UserDefaultsKey.filterGroupID.object() as? String {
+                    memoArray = getMemoArrayWithGroupID(ID: filterGroupID)
+                    tableView.reloadData()
+                    return
+                }
+            } else {
+                memoArray = getMemoArrayForNoteView()
+                tableView.reloadData()
+                return
+            }
+        }
+        // 検索
+        if isFiltered {
+            if let filterTaskID = UserDefaultsKey.filterTaskID.object() as? String {
+                memoArray = searchMemoWithTaskFilter(searchWord: searchBar.text!, ID: filterTaskID)
+                tableView.reloadData()
+                return
+            }
+            if let filterGroupID = UserDefaultsKey.filterGroupID.object() as? String {
+                memoArray = searchMemoWithGroupFilter(searchWord: searchBar.text!, ID: filterGroupID)
+                tableView.reloadData()
+                return
+            }
         } else {
             memoArray = searchMemo(searchWord: searchBar.text!)
+            tableView.reloadData()
         }
-        tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

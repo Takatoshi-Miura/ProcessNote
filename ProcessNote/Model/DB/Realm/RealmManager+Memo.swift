@@ -174,6 +174,46 @@ func searchMemo(searchWord: String) -> [Memo] {
 }
 
 /**
+ Realmのメモデータを検索(課題フィルタ付き)
+ - Parameters:
+    - searchWord: 検索文字列
+    - ID: 課題ID
+ - Returns: 検索文字列を含むメモデータ
+ */
+func searchMemoWithTaskFilter(searchWord: String, ID: String) -> [Memo] {
+    var memoArray: [Memo] = []
+    let realmMemoArray = searchMemo(searchWord: searchWord)
+    let measuresArray = getMeasuresInTask(ID: ID)
+    for memo in realmMemoArray {
+        for measures in measuresArray {
+            if memo.getMeasuresID() == measures.getMeasuresID() {
+                memoArray.append(memo)
+            }
+        }
+    }
+    return memoArray
+}
+
+/**
+ Realmのメモデータを検索(グループフィルタ付き)
+ - Parameters:
+    - searchWord: 検索文字列
+    - ID: グループID
+ - Returns: 検索文字列を含むメモデータ
+ */
+func searchMemoWithGroupFilter(searchWord: String, ID: String) -> [Memo] {
+    var memoArray: [Memo] = []
+    let realmMemoArray = searchMemo(searchWord: searchWord)
+    for memo in realmMemoArray {
+        let memoGroupID = getGroup(memo: memo).getGroupID()
+        if memoGroupID == ID {
+            memoArray.append(memo)
+        }
+    }
+    return memoArray
+}
+
+/**
  対策に含まれるメモを取得
  - Parameters:
     - measuresID: 対策ID
