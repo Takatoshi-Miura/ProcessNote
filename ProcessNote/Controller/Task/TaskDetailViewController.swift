@@ -171,6 +171,14 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
         return 30
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == Section.cause.rawValue {
+            return 60
+        } else {
+            return 44
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitle.count
     }
