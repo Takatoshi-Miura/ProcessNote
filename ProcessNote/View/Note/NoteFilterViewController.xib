@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoteFilterViewController" customModule="ProcessNote" customModuleProvider="target">
             <connections>
-                <outlet property="applyButton" destination="hVt-eW-2Jw" id="9SP-Fw-qZ8"/>
+                <outlet property="applyButton" destination="h66-n7-Zvl" id="dlR-0j-W8V"/>
                 <outlet property="clearButton" destination="c5a-Db-ieq" id="THc-yc-6oV"/>
                 <outlet property="naviItem" destination="Uyp-Bf-duD" id="Wzp-Ic-RZk"/>
                 <outlet property="tableView" destination="UZO-qt-M5Q" id="Vhw-Wc-r1a"/>
@@ -43,30 +43,6 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVt-eW-2Jw">
-                    <rect key="frame" x="16" y="184" width="288" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="WLK-7y-B4p"/>
-                    </constraints>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain">
-                        <backgroundConfiguration key="background">
-                            <color key="backgroundColor" systemColor="linkColor"/>
-                        </backgroundConfiguration>
-                        <attributedString key="attributedTitle">
-                            <fragment content="適用">
-                                <attributes>
-                                    <font key="NSFont" size="17" name="HiraginoSans-W3"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                    </buttonConfiguration>
-                    <connections>
-                        <action selector="applyButtonAction:" destination="-1" eventType="touchUpInside" id="ESa-89-kRH"/>
-                    </connections>
-                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UZO-qt-M5Q">
                     <rect key="frame" x="0.0" y="44" width="320" height="90"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -78,29 +54,42 @@
                         <outlet property="delegate" destination="-1" id="dqJ-l1-LkA"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h66-n7-Zvl">
+                    <rect key="frame" x="16" y="184" width="288" height="40"/>
+                    <color key="backgroundColor" systemColor="systemBlueColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="ST6-Wj-bcz"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                    <connections>
+                        <action selector="applyButtonAction:" destination="-1" eventType="touchUpInside" id="KK5-h9-akr"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="h66-n7-Zvl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="0cl-Mk-jqT"/>
                 <constraint firstItem="ueq-Yb-8fQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="3qM-v4-ytc"/>
                 <constraint firstItem="ueq-Yb-8fQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="BEI-aj-NzN"/>
-                <constraint firstItem="hVt-eW-2Jw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ICY-cg-qUM"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hVt-eW-2Jw" secondAttribute="trailing" constant="16" id="RPl-cw-xn1"/>
                 <constraint firstItem="UZO-qt-M5Q" firstAttribute="top" secondItem="ueq-Yb-8fQ" secondAttribute="bottom" id="Uky-Bl-Y34"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="h66-n7-Zvl" secondAttribute="trailing" constant="16" id="ZtP-tG-zvf"/>
                 <constraint firstItem="UZO-qt-M5Q" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dqZ-fk-4Wb"/>
+                <constraint firstItem="h66-n7-Zvl" firstAttribute="top" secondItem="UZO-qt-M5Q" secondAttribute="bottom" constant="50" id="hfY-3a-qz7"/>
                 <constraint firstItem="ueq-Yb-8fQ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="oUI-A1-JKk"/>
-                <constraint firstItem="hVt-eW-2Jw" firstAttribute="top" secondItem="UZO-qt-M5Q" secondAttribute="bottom" constant="50" id="odx-QC-o4I"/>
                 <constraint firstItem="UZO-qt-M5Q" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="oi9-kT-gp6"/>
             </constraints>
             <point key="canvasLocation" x="138.75" y="134.1549295774648"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

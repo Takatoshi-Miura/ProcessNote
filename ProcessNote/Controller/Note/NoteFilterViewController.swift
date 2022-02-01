@@ -50,6 +50,7 @@ class NoteFilterViewController: UIViewController {
     func initNavigationBar() {
         naviItem.title = TITLE_FILTER_NOTE
         clearButton.title = TITLE_CLEAR
+        applyButton.setTitle(TITLE_APPLY, for: .normal)
     }
     
     func initPickerView() {

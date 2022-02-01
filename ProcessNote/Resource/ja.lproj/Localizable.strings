@@ -98,6 +98,7 @@
 "Period" = "期間";
 "ShowAll" = "すべて表示";
 "Clear" = "クリア";
+"Apply" = "適用";
 
 
 // MARK: - AddNoteViewController
