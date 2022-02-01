@@ -91,7 +91,9 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 || indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
                 cell.textField.delegate = self
-                cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+                if !isiPad() {
+                    cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+                }
                 cell.textField.keyboardType = .emailAddress
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 if indexPath.row == 0 {

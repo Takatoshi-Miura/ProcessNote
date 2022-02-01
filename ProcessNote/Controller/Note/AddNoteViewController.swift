@@ -84,7 +84,9 @@ class AddNoteViewController: UIViewController {
         textView.delegate = self
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.sizeToFit()
-        textView.inputAccessoryView = createToolBar(#selector(completeAction))
+        if !isiPad() {
+            textView.inputAccessoryView = createToolBar(#selector(completeAction))
+        }
     }
     
     // キーボードを閉じる

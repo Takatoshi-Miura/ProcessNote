@@ -129,7 +129,9 @@ extension MeasuresViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.setTitle(measures.getTitle())
-            cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            if !isiPad() {
+                cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            }
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "MeasuresViewCell"
             let task = getTask(taskID: measures.getTaskID())

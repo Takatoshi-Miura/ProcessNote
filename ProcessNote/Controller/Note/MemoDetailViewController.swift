@@ -70,7 +70,9 @@ class MemoDetailViewController: UIViewController {
         memoTextView.text = memo.getDetail()
         memoTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         memoTextView.sizeToFit()
-        memoTextView.inputAccessoryView = createToolBar(#selector(completeAction))
+        if !isiPad() {
+            memoTextView.inputAccessoryView = createToolBar(#selector(completeAction))
+        }
         memoTextView.isEditable = false // URLリンクを機能させるため基本は編集不可
     }
     

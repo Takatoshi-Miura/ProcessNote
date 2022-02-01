@@ -171,7 +171,9 @@ extension GroupViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.setTitle(group.getTitle())
-            cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            if !isiPad() {
+                cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            }
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case .color:

@@ -249,7 +249,9 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
             cell.textField.delegate = self
             cell.setTitle(task.getTitle())
-            cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            if !isiPad() {
+                cell.textField.inputAccessoryView = createToolBar(#selector(completeAction))
+            }
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             if task.getIsCompleted() {
@@ -260,7 +262,9 @@ extension TaskDetailViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewCell", for: indexPath) as! TextViewCell
             cell.textView.delegate = self
             cell.setText(task.getCause())
-            cell.textView.inputAccessoryView = createToolBar(#selector(completeAction))
+            if !isiPad() {
+                cell.textView.inputAccessoryView = createToolBar(#selector(completeAction))
+            }
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.accessibilityIdentifier = "AddTaskViewCell"
             if task.getIsCompleted() {
