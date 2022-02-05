@@ -213,7 +213,7 @@ extension AddTaskViewController: ColorCellDelegate {
         // 選択したIndexを取得して閉じる
         pickerIndex = colorPicker.selectedRow(inComponent: 0)
         closePicker(pickerView)
-        tableView.reloadData()
+        tableView.reloadRows(at: [[Section.group.rawValue, 0]], with: .none)
     }
     
     @objc func cancelAction() {
