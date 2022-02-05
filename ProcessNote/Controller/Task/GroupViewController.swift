@@ -73,23 +73,12 @@ class GroupViewController: UIViewController {
         colorPicker.backgroundColor = UIColor.systemGray5
         pickerIndex = group.getColor()
         colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
-        pickerView = UIView(frame: colorPicker.bounds)
-        pickerView.addSubview(colorPicker)
-        pickerView.addSubview(createToolBar(#selector(doneAction), #selector(cancelAction)))
     }
     
-    @objc func doneAction() {
-        // 選択したIndexを取得して閉じる
-        pickerIndex = colorPicker.selectedRow(inComponent: 0)
-        closePicker(pickerView)
-        updateGroupColorRealm(ID: group.getGroupID(), colorNumber: colorNumber[colorTitle[pickerIndex]]!)
-        tableView.reloadData()
-    }
-    
-    @objc func cancelAction() {
-        // Indexを元に戻して閉じる
-        colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
-        closePicker(pickerView)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // マルチタスクビュー対策
+        colorPicker.frame.size.width = self.view.bounds.size.width
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -237,7 +226,25 @@ extension GroupViewController: UITextFieldDelegate {
 extension GroupViewController: ColorCellDelegate {
     
     func tapColorButton(_ button: UIButton) {
+        closePicker(pickerView)
+        pickerView = UIView(frame: colorPicker.bounds)
+        pickerView.addSubview(colorPicker)
+        pickerView.addSubview(createToolBar(#selector(doneAction), #selector(cancelAction)))
         openPicker(pickerView)
+    }
+    
+    @objc func doneAction() {
+        // 選択したIndexを取得して閉じる
+        pickerIndex = colorPicker.selectedRow(inComponent: 0)
+        closePicker(pickerView)
+        updateGroupColorRealm(ID: group.getGroupID(), colorNumber: colorNumber[colorTitle[pickerIndex]]!)
+        tableView.reloadRows(at: [[Section.color.rawValue, 0]], with: .none)
+    }
+    
+    @objc func cancelAction() {
+        // Indexを元に戻して閉じる
+        colorPicker.selectRow(pickerIndex, inComponent: 0, animated: false)
+        closePicker(pickerView)
     }
     
 }
