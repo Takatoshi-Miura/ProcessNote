@@ -13,7 +13,7 @@ class TaskCoordinator: Coordinator {
     var navigationController: UINavigationController?
     var taskViewController = TaskViewController()
     var addGroupViewController = AddGroupViewController()
-    var addTaskViewController = AddTaskViewController()
+    let addTaskViewCoordinator = AddTaskCoordinator()
     let taskDetailCoordinator = TaskDetailCoordinator()
     let completedTaskCoordinator = CompletedTaskCoordinator()
     let groupCoordinator = GroupCoordinator()
@@ -59,11 +59,7 @@ extension TaskCoordinator: TaskViewControllerDelegate {
     
     // TaskVC → AddTaskVC
     func taskVCAddTaskDidTap(_ viewController: UIViewController) {
-        addTaskViewController = AddTaskViewController()
-        if #available(iOS 13.0, *) {
-            addTaskViewController.isModalInPresentation = true
-        }
-        viewController.present(addTaskViewController, animated: true)
+        addTaskViewCoordinator.startFlow(in: viewController)
     }
     
     // TaskVC → completedTaskVC

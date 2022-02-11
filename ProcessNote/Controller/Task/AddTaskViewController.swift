@@ -8,6 +8,12 @@
 import UIKit
 
 
+protocol AddTaskViewControllerDelegate: AnyObject {
+    // モーダルを閉じる時の処理
+    func AddTaskVCDismiss(_ viewController: UIViewController)
+}
+
+
 class AddTaskViewController: UIViewController {
     
     // MARK: UI,Variable
@@ -19,6 +25,7 @@ class AddTaskViewController: UIViewController {
     private var pickerView = UIView()
     private let colorPicker = UIPickerView()
     private var pickerIndex: Int = 0
+    var delegate: AddTaskViewControllerDelegate?
     
     private enum Section: Int {
         case title
@@ -81,11 +88,11 @@ class AddTaskViewController: UIViewController {
            !measuresCell.textField.text!.isEmpty
         {
             showOKCancelAlert(title: "", message: MESSAGE_DELETE_INPUT, OKAction: {
-                self.dismiss(animated: true, completion: nil)
+                self.delegate?.AddTaskVCDismiss(self)
             })
             return
         }
-        self.dismiss(animated: true, completion: nil)
+        self.delegate?.AddTaskVCDismiss(self)
     }
     
 }
@@ -299,7 +306,7 @@ extension AddTaskViewController: SaveButtonCellDelegate {
         let navigation = tabBar.selectedViewController as! UINavigationController
         let taskView = navigation.viewControllers.first as! TaskViewController
         taskView.insertTask(task: task)
-        self.dismiss(animated: true, completion: nil)
+        self.delegate?.AddTaskVCDismiss(self)
     }
     
     func tapCancelButton() {

@@ -98,6 +98,7 @@
 		8DC0E1EB279B65D100197C26 /* NoteFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DC0E1E9279B65D100197C26 /* NoteFilterViewController.xib */; };
 		8DC0E1ED279B6E5700197C26 /* NoteFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC0E1EC279B6E5700197C26 /* NoteFilterCoordinator.swift */; };
 		8DD465AE279248A80087962D /* NSNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD465AD279248A80087962D /* NSNotification.swift */; };
+		8DF55C5527B6216F007DDA8A /* AddTaskCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF55C5427B6216F007DDA8A /* AddTaskCoordinator.swift */; };
 		B163AFD74602C720D765194D /* Pods_ProcessNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EAD993DB9D1FA2F0ACF7D /* Pods_ProcessNoteTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -220,6 +221,7 @@
 		8DC0E1E9279B65D100197C26 /* NoteFilterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteFilterViewController.xib; sourceTree = "<group>"; };
 		8DC0E1EC279B6E5700197C26 /* NoteFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFilterCoordinator.swift; sourceTree = "<group>"; };
 		8DD465AD279248A80087962D /* NSNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotification.swift; sourceTree = "<group>"; };
+		8DF55C5427B6216F007DDA8A /* AddTaskCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskCoordinator.swift; sourceTree = "<group>"; };
 		A8C21E028BEA1BD922754EE7 /* Pods-ProcessNoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProcessNoteTests.release.xcconfig"; path = "Target Support Files/Pods-ProcessNoteTests/Pods-ProcessNoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		AE478A9D4CF8D4A66167466B /* Pods-ProcessNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProcessNote.release.xcconfig"; path = "Target Support Files/Pods-ProcessNote/Pods-ProcessNote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -357,6 +359,7 @@
 				8D09E7762749E0D90005F809 /* GroupCoordinator.swift */,
 				8D2B24E62736532E0078F4B5 /* TaskDetailCoordinator.swift */,
 				8D09E7582749BB5C0005F809 /* MeasuresCoordinator.swift */,
+				8DF55C5427B6216F007DDA8A /* AddTaskCoordinator.swift */,
 				8D09E74E274897F40005F809 /* CompletedTaskCoordinator.swift */,
 			);
 			path = Task;
@@ -863,6 +866,7 @@
 				8D09E7682749CB860005F809 /* FirebaseManager+Group.swift in Sources */,
 				8DB579A1271C3CBD005F8625 /* UIViewController+TextField.swift in Sources */,
 				8D0F8713271BDF07004E2A7D /* GroupHeaderView.swift in Sources */,
+				8DF55C5527B6216F007DDA8A /* AddTaskCoordinator.swift in Sources */,
 				8D0F86F6271A65CE004E2A7D /* AddTaskViewController.swift in Sources */,
 				8D09E7662749CACB0005F809 /* FirebaseManager+Task.swift in Sources */,
 				8D09E74C27488FC10005F809 /* CompletedTaskViewController.swift in Sources */,
