@@ -89,17 +89,15 @@ public extension UIViewController {
        - title: タイトル
        - message: 説明文
        - actions: [UIAlertAction]
+       - frame: フレーム(iPadの場合のみ必要)
      */
-    func showActionSheet(title: String, message: String, actions: [UIAlertAction]) {
-        let actionSheet = UIAlertController(title: title,
-                                      message: message, preferredStyle: .actionSheet)
+    func showActionSheet(title: String, message: String, actions: [UIAlertAction], frame: CGRect?) {
+        let actionSheet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         actions.forEach { actionSheet.addAction($0) }
         actionSheet.addAction(UIAlertAction(title: TITLE_CANCEL, style: .cancel, handler: nil))
-        
         if isiPad() {
             actionSheet.popoverPresentationController?.sourceView = self.view
-            let screenSize = UIScreen.main.bounds
-            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width / 2, y: screenSize.size.height, width: 0, height: 0)
+            actionSheet.popoverPresentationController?.sourceRect = frame!
         }
         present(actionSheet, animated: true)
     }

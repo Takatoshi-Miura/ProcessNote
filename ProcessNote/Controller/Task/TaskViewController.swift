@@ -76,38 +76,20 @@ class TaskViewController: UIViewController {
     
     /// 課題・グループを追加
     @IBAction func addButtonTap(_ sender: Any) {
-        // アクションシートを表示
         let addGroupAction = UIAlertAction(title: TITLE_GROUP, style: .default) { _ in
             self.delegate?.taskVCAddGroupDidTap(self)
         }
-        if !groupArray.isEmpty {
-            let addTaskAction = UIAlertAction(title: TITLE_TASK, style: .default) { _ in
-                self.delegate?.taskVCAddTaskDidTap(self)
-            }
-            if isiPad() {
-                showActionSheetForPad(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction, addTaskAction])
-            } else {
-                showActionSheet(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction, addTaskAction])
-            }
-        } else {
-            if isiPad() {
-                showActionSheetForPad(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction])
-            } else {
-                showActionSheet(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: [addGroupAction])
-            }
-            
+        let addTaskAction = UIAlertAction(title: TITLE_TASK, style: .default) { _ in
+            self.delegate?.taskVCAddTaskDidTap(self)
         }
-    }
-    
-    func showActionSheetForPad(title: String, message: String, actions: [UIAlertAction]) {
-        let actionSheet = UIAlertController(title: title,
-                                            message: message,
-                                            preferredStyle: .actionSheet)
-        actions.forEach { actionSheet.addAction($0) }
-        actionSheet.addAction(UIAlertAction(title: TITLE_CANCEL, style: .cancel, handler: nil))
-        actionSheet.popoverPresentationController?.sourceView = self.view
-        actionSheet.popoverPresentationController?.sourceRect = addButton.frame
-        present(actionSheet, animated: true)
+        
+        var alertActions: [UIAlertAction] = []
+        alertActions.append(addGroupAction)
+        if !groupArray.isEmpty {
+            alertActions.append(addTaskAction)
+        }
+        
+        showActionSheet(title: TITLE_ADD_GROUP_TASK, message: MESSAGE_ADD_GROUP_TASK, actions: alertActions, frame: addButton.frame)
     }
     
     func initTableView() {
