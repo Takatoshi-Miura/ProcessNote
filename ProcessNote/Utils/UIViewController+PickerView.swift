@@ -23,20 +23,6 @@ public extension UIViewController {
     }
     
     /**
-     PickerViewを画面下から出現(スクロール有)
-     - Parameters:
-        - pickerView: PickerVIewを載せたUIView
-        - scrollPosition: 現在のスクロール位置
-        - bottomPadding: SafeArea外の余白
-     */
-    func openPicker(_ pickerView:UIView, _ scrollPosition:CGFloat, _ bottomPadding:CGFloat) {
-        pickerView.frame.origin.y = scrollPosition
-        UIView.animate(withDuration: 0.3) {
-            pickerView.frame.origin.y = scrollPosition - pickerView.bounds.size.height - bottomPadding
-        }
-    }
-    
-    /**
      PickerViewを閉じる
      - Parameters:
         - pickerView: PickerVIewを載せたUIView
