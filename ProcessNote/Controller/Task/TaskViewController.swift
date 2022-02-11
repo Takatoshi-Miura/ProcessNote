@@ -119,18 +119,20 @@ class TaskViewController: UIViewController {
         if Network.isOnline() {
             HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_SERVER_COMMUNICATION))
             syncDatabase(completion: {
-                self.groupArray = getGroupArrayForTaskView()
-                self.taskArray = getTaskArrayForTaskView()
-                self.tableView.refreshControl?.endRefreshing()
-                self.tableView.reloadData()
+                self.refreshData()
                 HUD.hide()
             })
         } else {
-            groupArray = getGroupArrayForTaskView()
-            taskArray = getTaskArrayForTaskView()
-            tableView.refreshControl?.endRefreshing()
-            tableView.reloadData()
+            refreshData()
         }
+    }
+    
+    /// データを再取得
+    func refreshData() {
+        groupArray = getGroupArrayForTaskView()
+        taskArray = getTaskArrayForTaskView()
+        tableView.refreshControl?.endRefreshing()
+        tableView.reloadData()
     }
     
     func displayAgreement() {
@@ -209,9 +211,7 @@ class TaskViewController: UIViewController {
             tableView.reloadRows(at: [selectedIndex], with: .none)
         } else {
             // グループから戻る場合はリロード
-            groupArray = getGroupArrayForTaskView()
-            taskArray = getTaskArrayForTaskView()
-            tableView.reloadData()
+            refreshData()
         }
     }
     
