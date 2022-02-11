@@ -8,6 +8,12 @@
 import UIKit
 
 
+protocol AddGroupViewControllerDelegate: AnyObject {
+    // モーダルを閉じる時の処理
+    func addGroupVCDismiss(_ viewController: UIViewController)
+}
+
+
 class AddGroupViewController: UIViewController {
 
     // MARK: UI,Variable
@@ -18,6 +24,7 @@ class AddGroupViewController: UIViewController {
     private var pickerView = UIView()
     private let colorPicker = UIPickerView()
     private var pickerIndex: Int = 0
+    var delegate: AddGroupViewControllerDelegate?
     
     private enum Section: Int {
         case title
@@ -70,11 +77,11 @@ class AddGroupViewController: UIViewController {
         let cell = tableView.cellForRow(at: [0, 0]) as! TitleCell
         if !cell.textField.text!.isEmpty {
             showOKCancelAlert(title: "", message: MESSAGE_DELETE_INPUT, OKAction: {
-                self.dismiss(animated: true, completion: nil)
+                self.delegate?.addGroupVCDismiss(self)
             })
             return
         }
-        self.dismiss(animated: true, completion: nil)
+        self.delegate?.addGroupVCDismiss(self)
     }
 }
 
@@ -234,7 +241,7 @@ extension AddGroupViewController: SaveButtonCellDelegate {
         let navigation = tabBar.selectedViewController as! UINavigationController
         let taskView = navigation.viewControllers.first as! TaskViewController
         taskView.insertGroup(group: group)
-        self.dismiss(animated: true, completion: nil)
+        self.delegate?.addGroupVCDismiss(self)
     }
     
     func tapCancelButton() {

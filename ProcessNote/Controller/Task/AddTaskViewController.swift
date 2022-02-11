@@ -10,7 +10,7 @@ import UIKit
 
 protocol AddTaskViewControllerDelegate: AnyObject {
     // モーダルを閉じる時の処理
-    func AddTaskVCDismiss(_ viewController: UIViewController)
+    func addTaskVCDismiss(_ viewController: UIViewController)
 }
 
 
@@ -88,11 +88,11 @@ class AddTaskViewController: UIViewController {
            !measuresCell.textField.text!.isEmpty
         {
             showOKCancelAlert(title: "", message: MESSAGE_DELETE_INPUT, OKAction: {
-                self.delegate?.AddTaskVCDismiss(self)
+                self.delegate?.addTaskVCDismiss(self)
             })
             return
         }
-        self.delegate?.AddTaskVCDismiss(self)
+        self.delegate?.addTaskVCDismiss(self)
     }
     
 }
@@ -306,7 +306,7 @@ extension AddTaskViewController: SaveButtonCellDelegate {
         let navigation = tabBar.selectedViewController as! UINavigationController
         let taskView = navigation.viewControllers.first as! TaskViewController
         taskView.insertTask(task: task)
-        self.delegate?.AddTaskVCDismiss(self)
+        self.delegate?.addTaskVCDismiss(self)
     }
     
     func tapCancelButton() {

@@ -1,5 +1,5 @@
 //
-//  AddTaskCoordinator.swift
+//  AddGroupCoordinator.swift
 //  ProcessNote
 //
 //  Created by Takatoshi Miura on 2022/02/11.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class AddTaskCoordinator: Coordinator {
+class AddGroupCoordinator: Coordinator {
     
     var navigationController: UINavigationController?
     var previousViewController: UIViewController?
-    var addTaskViewController = AddTaskViewController()
+    var addGroupViewController = AddGroupViewController()
     
     func startFlow(in window: UIWindow?) {
     }
@@ -21,21 +21,22 @@ class AddTaskCoordinator: Coordinator {
     
     func startFlow(in viewController: UIViewController) {
         previousViewController = viewController
-        addTaskViewController = AddTaskViewController()
-        addTaskViewController.delegate = self
+        addGroupViewController = AddGroupViewController()
+        addGroupViewController.delegate = self
         if #available(iOS 13.0, *) {
-            addTaskViewController.isModalInPresentation = true
+            addGroupViewController.isModalInPresentation = true
         }
-        previousViewController!.present(addTaskViewController, animated: true)
+        previousViewController!.present(addGroupViewController, animated: true)
     }
     
 }
 
-extension AddTaskCoordinator: AddTaskViewControllerDelegate {
+extension AddGroupCoordinator: AddGroupViewControllerDelegate {
     
-    // TaskVC ← AddTaskVC
-    func addTaskVCDismiss(_ viewController: UIViewController) {
+    // TaskVC ← AddGroupVC
+    func addGroupVCDismiss(_ viewController: UIViewController) {
         viewController.dismiss(animated: true, completion: nil)
     }
     
 }
+
