@@ -83,8 +83,10 @@ class MemoDetailViewController: UIViewController {
     }
     
     @IBAction func actionTapMemoTextView(_ sender: Any) {
-        self.memoTextView.isEditable = true
-        self.memoTextView.becomeFirstResponder()
+        if !memoTextView.isEditable {
+            memoTextView.isEditable = true
+            memoTextView.becomeFirstResponder()
+        }
     }
     
     func initNotification() {
@@ -119,6 +121,10 @@ class MemoDetailViewController: UIViewController {
                        options: UIView.AnimationOptions(rawValue: KeyboardAnimationCurve))
         {
             self.memoTextViewBottom.constant = 0
+            if isiPad() {
+                self.memoTextView.isEditable = false
+                self.view.endEditing(true)
+            }
         }
     }
     
