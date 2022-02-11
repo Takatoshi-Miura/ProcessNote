@@ -12,7 +12,7 @@ class NoteCoordinator: Coordinator {
     
     var navigationController: UINavigationController?
     var noteViewController = NoteViewController()
-    var addNoteViewController = AddNoteViewController()
+    let addNoteCoordinator = AddNoteCoordinator()
     let memoDetailCoordinator = MemoDetailCoordinator()
     let noteFilterCoordinator = NoteFilterCoordinator()
     
@@ -31,11 +31,7 @@ extension NoteCoordinator: NoteViewControllerDelegate {
     
     // NoteVC → AddNoteVC
     func noteVCAddButtonDidTap(_ viewController: NoteViewController) {
-        addNoteViewController = AddNoteViewController()
-        if #available(iOS 13.0, *) {
-            addNoteViewController.isModalInPresentation = true
-        }
-        viewController.present(addNoteViewController, animated: true)
+        addNoteCoordinator.startFlow(in: viewController)
     }
     
     // NoteVC → NoteDetailVC

@@ -8,6 +8,12 @@
 import UIKit
 
 
+protocol AddNoteViewControllerDelegate: AnyObject {
+    // モーダルを閉じる時の処理
+    func addNoteVCDismiss(_ viewController: UIViewController)
+}
+
+
 class AddNoteViewController: UIViewController {
     
     // MARK: UI,Variable
@@ -27,6 +33,7 @@ class AddNoteViewController: UIViewController {
     private var taskPickerSelected: Int = 0
     private var measuresPickerSelected: Int = 0
     private var viewOffset: CGPoint?
+    var delegate: AddNoteViewControllerDelegate?
     
     private enum Tag: Int {
         case group = 0
@@ -156,7 +163,7 @@ class AddNoteViewController: UIViewController {
         let navigation = tabBar.selectedViewController as! UINavigationController
         let noteView = navigation.viewControllers.first as! NoteViewController
         noteView.insertMemo(memo: memo)
-        self.dismiss(animated: true, completion: nil)
+        self.delegate?.addNoteVCDismiss(self)
     }
     
     @IBAction func cancelButtonDidTap(_ sender: Any) {
@@ -171,11 +178,11 @@ class AddNoteViewController: UIViewController {
     private func dismissWithInputCheck() {
         if !textView.text.isEmpty {
             showOKCancelAlert(title: "", message: MESSAGE_DELETE_INPUT, OKAction: {
-                self.dismiss(animated: true, completion: nil)
+                self.delegate?.addNoteVCDismiss(self)
             })
             return
         }
-        self.dismiss(animated: true, completion: nil)
+        self.delegate?.addNoteVCDismiss(self)
     }
     
 }
