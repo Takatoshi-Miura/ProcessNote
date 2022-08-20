@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
         case login
         case forgotPassword
         case createAccount
+        case deleteAccount
         case cancel
     }
 
@@ -69,7 +70,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if Section(rawValue: section) == .login {
-            return 5
+            return 6
         }
         return 1
     }
@@ -131,10 +132,12 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             } else if indexPath.row == 3 {
                 cell.setTitle(TITLE_FORGOT_PASSWORD)
                 cell.colorButton.tag = ButtonTag.forgotPassword.rawValue
-            } else {
-                cell.setColor(colorNumber[NSLocalizedString("Blue", comment: "")]!)
+            } else  if indexPath.row == 4 {
                 cell.setTitle(TITLE_CREATE_ACCOUNT)
                 cell.colorButton.tag = ButtonTag.createAccount.rawValue
+            } else {
+                cell.setTitle(TITLE_DELETE_ACCOUNT)
+                cell.colorButton.tag = ButtonTag.deleteAccount.rawValue
             }
             return cell
         case .cancel:
@@ -214,6 +217,17 @@ extension LoginViewController: ColorCellDelegate {
             showOKCancelAlert(title: TITLE_CREATE_ACCOUNT, message: MESSAGE_CREATE_ACCOUNT, OKAction: {
                 self.createAccount(mail: mailText, password: passwordText)
             })
+        case .deleteAccount:
+            if let _ = UserDefaults.standard.object(forKey: "address") as? String,
+               let _ = UserDefaults.standard.object(forKey: "password") as? String
+            {
+                showOKCancelAlert(title: TITLE_DELETE_ACCOUNT, message: MESSAGE_DELETE_ACCOUNT, OKAction: {
+                    self.deleteAccount()
+                })
+            } else {
+                showErrorAlert(message: MESSAGE_PLEASE_LOGIN)
+                return
+            }
         case .cancel:
             self.delegate?.LoginVCCancelDidTap(self)
         default:
@@ -264,25 +278,7 @@ extension LoginViewController: ColorCellDelegate {
         do {
             try Auth.auth().signOut()
             
-            // UserDefaultsのユーザー情報を削除
-            UserDefaultsKey.userID.remove()
-            UserDefaultsKey.address.remove()
-            UserDefaultsKey.password.remove()
-            
-            // Realmデータを全削除
-            deleteAllTaskRealm()
-            deleteAllGroupRealm()
-            deleteAllMeasuresRealm()
-            deleteAllMemoRealm()
-            
-            // テキストフィールドをクリア
-            let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
-            let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell
-            mailCell.textField.text = ""
-            passwordCell.textField.text = ""
-            
-            // ユーザーIDを作成(初期値を登録)
-            UserDefaultsKey.userID.set(value: NSUUID().uuidString)
+            self.actionAfterLogout()
             
             // メッセージが隠れてしまうため、遅延処理を行う
             HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_LOGOUT_SUCCESSFUL))
@@ -360,6 +356,46 @@ extension LoginViewController: ColorCellDelegate {
                 HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_DATA_TRANSFER_SUCCESSFUL))
             })
         }
+    }
+    
+    /// アカウント削除処理
+    private func deleteAccount() {
+        HUD.show(.labeledProgress(title: "", subtitle: MESSAGE_DURING_DELETE_ACCOUNT))
+        Auth.auth().currentUser?.delete { (error) in
+            if error == nil {
+                self.actionAfterLogout()
+                
+                // メッセージが隠れてしまうため、遅延処理を行う
+                HUD.show(.labeledSuccess(title: "", subtitle: MESSAGE_DELETE_ACCOUNT_SUCCESSFUL))
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                    self.delegate?.LoginVCUserDidLogin(self)
+                }
+            } else {
+                HUD.hide()
+                self.showErrorAlert(message: MESSAGE_DELETE_ACCOUNT_ERROR)
+            }
+        }
+    }
+    
+    /// ログアウト時の共通処理
+    private func actionAfterLogout() {
+        // テキストフィールドをクリア
+        let mailCell = tableView.cellForRow(at: [0, 0]) as! TitleCell
+        let passwordCell = tableView.cellForRow(at: [0, 1]) as! TitleCell
+        mailCell.textField.text = ""
+        passwordCell.textField.text = ""
+        
+        // Realmデータを全削除
+        deleteAllTaskRealm()
+        deleteAllGroupRealm()
+        deleteAllMeasuresRealm()
+        deleteAllMemoRealm()
+        
+        // UserDefaultsのユーザー情報を削除&新規作成
+        UserDefaultsKey.userID.remove()
+        UserDefaultsKey.address.remove()
+        UserDefaultsKey.password.remove()
+        UserDefaultsKey.userID.set(value: NSUUID().uuidString)
     }
     
 }
